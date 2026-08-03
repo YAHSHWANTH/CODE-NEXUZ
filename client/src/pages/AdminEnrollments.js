@@ -100,23 +100,23 @@ const AdminEnrollments = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-pink-50 to-purple-50 p-8">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl p-6">
+    <div className="min-h-screen bg-gradient-to-r from-pink-50 to-purple-50 p-4 sm:p-8 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 text-center sm:text-left">
+          <h1 className="text-2.5xl sm:text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
             📋 Enrollments Dashboard
           </h1>
-          <div className="space-x-3">
+          <div className="flex flex-wrap gap-2 justify-center sm:justify-end">
             <button
               onClick={() => setShowForm(true)}
-              className="bg-green-500 text-white px-4 py-2 rounded-xl font-semibold shadow hover:scale-105 transition"
+              className="bg-green-500 text-white px-4 py-2 rounded-xl font-semibold shadow hover:scale-105 transition text-sm sm:text-base"
             >
               ➕ Add Enrollment
             </button>
             <button
               onClick={handleDownloadCSV}
-              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold shadow hover:scale-105 transition"
+              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-5 py-2 rounded-xl font-semibold shadow hover:scale-105 transition text-sm sm:text-base"
             >
               ⬇️ Download CSV
             </button>

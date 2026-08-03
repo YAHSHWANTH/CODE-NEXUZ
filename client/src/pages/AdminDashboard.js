@@ -270,7 +270,7 @@ const AdminDashboard = () => {
     return (
       <div className="space-y-8 animate-slideIn">
         {/* Metric Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1: Users */}
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
             <div className="flex justify-between items-center mb-4">
@@ -430,25 +430,25 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-8 py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 text-center sm:text-left">
+          <h2 className="text-2.5xl sm:text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
             Admin Dashboard
           </h2>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 justify-center sm:justify-end">
             <button
               onClick={() => setShowModal(true)}
-              className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-xl font-semibold shadow hover:scale-105 transition"
+              className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-5 sm:px-6 py-2 rounded-xl font-semibold shadow hover:scale-105 transition text-sm sm:text-base"
             >
               Data Entry
             </button>
 
             <button
               onClick={handleLogout}
-              className="bg-gray-300 text-gray-800 px-4 py-2 rounded-xl font-semibold shadow hover:bg-gray-400 transition"
+              className="bg-gray-300 text-gray-800 px-4 py-2 rounded-xl font-semibold shadow hover:bg-gray-400 transition text-sm sm:text-base"
             >
               Logout
             </button>
@@ -456,25 +456,27 @@ const AdminDashboard = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-3 mb-6">
-          {["users", "enrollments", "certificates", "analyze"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-lg font-semibold ${
-                activeTab === tab
-                  ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
-            >
-              {tab === "analyze" ? "Analyze 📊" : tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 items-center w-full">
+          <div className="flex flex-wrap gap-2">
+            {["users", "enrollments", "certificates", "analyze"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-sm sm:text-base ${
+                  activeTab === tab
+                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                {tab === "analyze" ? "Analyze 📊" : tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
 
           {activeTab !== "analyze" && (
             <button
               onClick={() => handleDownload(activeTab)}
-              className="ml-auto bg-gradient-to-r from-green-400 to-blue-500 text-white px-4 py-2 rounded-lg shadow hover:scale-105 transition"
+              className="w-full sm:w-auto ml-0 sm:ml-auto bg-gradient-to-r from-green-400 to-blue-500 text-white px-4 py-2 rounded-lg shadow hover:scale-105 transition text-sm sm:text-base text-center"
             >
               Download CSV
             </button>
