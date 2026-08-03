@@ -13,18 +13,18 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100 flex flex-col items-center justify-center p-6">
-      <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-3xl text-center">
-        <h1 className="text-4xl font-bold text-pink-600 mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-purple-100 flex flex-col items-center justify-center p-4 sm:p-6 py-12 sm:py-16">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 sm:p-10 w-full max-w-3xl text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold text-pink-600 mb-4">
           Welcome, {firstName}! 🌸
         </h1>
 
-        <p className="text-gray-600 text-lg mb-6">
+        <p className="text-gray-600 text-base sm:text-lg mb-6">
           Begin your journey with CodeNexus — explore, enroll, and grow your skills.
         </p>
 
         {/* ✅ Important Notice */}
-        <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-200 p-6 rounded-xl shadow-inner text-gray-700 text-left">
+        <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 border border-pink-200 p-4 sm:p-6 rounded-xl shadow-inner text-gray-700 text-left">
           <h2 className="text-xl font-semibold text-purple-700 mb-3">
             📋 Important Instructions
           </h2>

@@ -148,8 +148,8 @@ const EnrollForm = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-100 to-purple-100 p-6">
-        <div className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md text-center transform transition duration-300">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-100 to-purple-100 p-4 sm:p-6">
+        <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-2xl w-full max-w-md text-center transform transition duration-300 animate-fadeIn">
           {/* Big Green Tick Mark */}
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center border-4 border-emerald-200 animate-bounce">
@@ -170,11 +170,11 @@ const EnrollForm = () => {
             </div>
           </div>
 
-          <h2 className="text-4xl font-extrabold mb-4 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
             Thank you
           </h2>
 
-          <p className="text-gray-600 text-base mb-8 leading-relaxed font-medium">
+          <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed font-medium">
             check mail for further updates and u will be notified through mail shortly
           </p>
 
@@ -183,7 +183,7 @@ const EnrollForm = () => {
               localStorage.clear();
               navigate("/");
             }}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl font-semibold text-lg hover:opacity-95 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl font-semibold text-base sm:text-lg hover:opacity-95 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
           >
             Logout
           </button>
@@ -193,13 +193,13 @@ const EnrollForm = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-100 to-purple-100 p-6">
-      <div className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-3xl relative">
-        <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-100 to-purple-100 p-4 sm:p-6 py-12 sm:py-16">
+      <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-2xl w-full max-w-3xl relative">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
           Internship Registration Form
         </h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div className="flex flex-col">
             <label className="font-semibold mb-1">Full Name *</label>
@@ -371,7 +371,7 @@ const EnrollForm = () => {
           </div>
 
           {/* Social Media Section */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 md:col-span-2">
             <label className="font-semibold text-gray-700">Follow our Social Media Pages *</label>
 
             {/* LinkedIn */}
@@ -463,7 +463,7 @@ const EnrollForm = () => {
           </div>
 
           {/* Referrals */}
-          <div className="flex flex-col">
+          <div className="flex flex-col md:col-span-2">
             <label className="font-semibold mb-1">Refer Any 2 (Name, Phone No.) *</label>
             <textarea
               name="referrals"
@@ -477,7 +477,7 @@ const EnrollForm = () => {
           </div>
 
           {/* Terms */}
-          <div className="flex items-start gap-3 mt-2">
+          <div className="flex items-start gap-3 mt-2 md:col-span-2">
             <input
               type="checkbox"
               name="agree"
@@ -500,13 +500,15 @@ const EnrollForm = () => {
           </div>
 
           {/* Submit */}
-          <button
-          onClick={handleSubmit}
-            type="submit"
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold text-lg hover:scale-105 transition"
-          >
-            Submit Application
-          </button>
+          <div className="md:col-span-2">
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold text-lg hover:scale-102 hover:opacity-95 transition"
+            >
+              Submit Application
+            </button>
+          </div>
         </form>
 
         {/* Terms Modal */}

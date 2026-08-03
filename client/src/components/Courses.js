@@ -32,10 +32,10 @@ const courses = [
 
 const Courses = () => {
   return (
-    <main className="pt-24 ">
+    <main className="pt-6 md:pt-16">
       <section
         id="how-it-works"
-        className="py-20 bg-white min-h-screen"
+        className="py-12 md:py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
           {/* Heading */}

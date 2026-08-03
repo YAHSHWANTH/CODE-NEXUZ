@@ -144,13 +144,13 @@ const Careers = () => {
   return (
     <div className="bg-white">
       {/* Top Section */}
-      <section className="bg-white min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-24 items-center w-full">
-          <div>
-            <h2 className="text-5xl font-bold text-gray-900 mb-8">
+      <section className="bg-white min-h-screen flex items-center pt-28 pb-16 md:py-0">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center w-full">
+          <div className="text-center md:text-left">
+            <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight">
               Join With Us, Shape Your Future
             </h2>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-base sm:text-lg text-gray-600 mb-6 max-w-xl mx-auto md:mx-0">
               At Code Nexus, we are passionate about transforming ideas into reality. 
               We foster a culture of innovation, collaboration, and continuous learning. 
               Whether you are a developer, designer, or strategist, every contribution 
@@ -158,25 +158,25 @@ const Careers = () => {
             </p>
             <button
               onClick={() => document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" })}
-              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-4 rounded-lg shadow-md hover:opacity-90 transition text-lg"
+              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
             >
               Start your journey
             </button>
           </div>
-          <div>
-            <img src="/stlogo.png" alt="Careers" />
+          <div className="flex justify-center">
+            <img src="/stlogo.png" alt="Careers" className="max-w-full h-auto max-h-[350px] md:max-h-full" />
           </div>
         </div>
       </section>
 
       {/* Signup/Login Section */}
-      <section id="signup-form" className="bg-gray-50 min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-32 items-center w-full">
-          <div>
-            <img src="/logos.png" alt="Sign Up" />
+      <section id="signup-form" className="bg-gray-50 min-h-screen flex items-center py-16 md:py-0">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-center w-full">
+          <div className="flex justify-center order-2 md:order-1">
+            <img src="/logos.png" alt="Sign Up" className="max-w-full h-auto max-h-[300px] md:max-h-full" />
           </div>
 
-          <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full max-w-md mx-auto">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full max-w-md mx-auto order-1 md:order-2">
             {!showLogin ? (
               <>
                 <h3 className="text-2xl font-bold text-center text-purple-600 mb-6">

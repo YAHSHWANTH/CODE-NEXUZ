@@ -21,7 +21,7 @@ const Home = ({ animateKey }) => {
   };
 
   return (
-    <section id="home" className="bg-white text-black pt-52 pb-40 overflow-hidden">
+    <section id="home" className="bg-white text-black pt-32 pb-24 md:pt-52 md:pb-40 overflow-hidden">
 
   <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -29,29 +29,27 @@ const Home = ({ animateKey }) => {
       <AnimatePresence>
         <motion.div
           key={animateKey}
-          className="space-y-6 text-center"
+          className="space-y-6 text-center md:text-left"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -100, opacity: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* WELCOME LINE */}
-          <p className="uppercase tracking-widest text-sm text-gray-600">
+          <p className="uppercase tracking-widest text-xs sm:text-sm text-gray-600">
             Welcome to Code Nexus
           </p>
 
           {/* MAIN QUOTE */}
-          {/* MAIN QUOTE */}
-<h2 className="text-4xl md:text-5xl font-extrabold leading-tight whitespace-normal md:whitespace-nowrap">
-  Learn. Grow.{" "}
-  <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-    Get Certified
-  </span>
-</h2>
-
+          <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold leading-tight whitespace-normal md:whitespace-nowrap">
+            Learn. Grow.{" "}
+            <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+              Get Certified
+            </span>
+          </h2>
 
           {/* FEATURE TAGS */}
-          <div className="flex flex-wrap justify-center gap-4 mt-6">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mt-6">
             <motion.span
               whileHover={{ scale: 1.1 }}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow"
@@ -76,7 +74,7 @@ const Home = ({ animateKey }) => {
           </div>
 
           {/* SHORT DESCRIPTION */}
-          <p className="text-lg text-gray-700 leading-relaxed mt-6 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-700 leading-relaxed mt-6 max-w-2xl mx-auto md:mx-0">
             Code Nexus Technology is a forward-thinking software and IT services
             company dedicated to building scalable, secure, and innovative
             digital solutions. We help organizations modernize their systems,
@@ -85,7 +83,7 @@ const Home = ({ animateKey }) => {
 
           {/* EXPLORE BUTTON */}
           <button
-            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-4 rounded-lg shadow-md hover:opacity-90 transition text-lg"
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
             onClick={() => {
               const element = document.getElementById("signup-form");
               if (element) {

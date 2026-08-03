@@ -57,11 +57,11 @@ const FAQ = () => {
 
   return (
     // 👇 add id here for react-scroll
-    <section id="faq" className="py-24 bg-gray-50">
+    <section id="faq" className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold mb-6">
             Why Choose <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">Code Nexus?</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
