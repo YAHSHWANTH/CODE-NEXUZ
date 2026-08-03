@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Common QR Code URL (verify page)
-const VERIFY_URL = "http://localhost:3000/verify"; // change to your production URL
+const VERIFY_URL = `${process.env.FRONTEND_URL || "https://codenexusz-gamma.vercel.app"}/verify`;
 const QR_DIR = path.join(__dirname, "../public/qrs");
 const COMMON_QR_PATH = path.join(QR_DIR, "commonQR.png");
 
