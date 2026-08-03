@@ -21,7 +21,7 @@ const Careers = () => {
   const navigate = useNavigate();
 
   // ✅ Configure backend base URL for cleaner code
-  const API_BASE = (process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "";
+  const API_BASE = (process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "";
 
   // ---------------- Send OTP ----------------
   const sendOtp = async () => {

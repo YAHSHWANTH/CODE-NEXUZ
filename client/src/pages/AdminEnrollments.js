@@ -19,7 +19,7 @@ const AdminEnrollments = () => {
   // ✅ Fetch all enrollments
   const fetchEnrollments = async () => {
     try {
-      const res = await fetch((process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "/api/enroll/all");
+      const res = await fetch((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/enroll/all");
       const data = await res.json();
       setEnrollments(data.data || []);
     } catch (err) {
@@ -43,7 +43,7 @@ const AdminEnrollments = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch((process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "/api/enroll", {
+      const res = await fetch((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/enroll", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -78,7 +78,7 @@ const AdminEnrollments = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this enrollment?")) return;
     try {
-      await fetch(`http://localhost:5000/api/enroll/${id}`, { method: "DELETE" });
+      await fetch(`${process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com"}/api/enroll/${id}`, { method: "DELETE" });
       alert("Enrollment deleted successfully!");
       fetchEnrollments();
     } catch (err) {
@@ -88,7 +88,7 @@ const AdminEnrollments = () => {
 
   // ✅ Export CSV
   const handleDownloadCSV = () => {
-    window.open((process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "/api/enroll/export", "_blank");
+    window.open((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/enroll/export", "_blank");
   };
 
   // ✅ Search filter

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import DocumentFormModal from "../components/DataEntryModal";
 
-const BASE_URL = (process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "/api/admin";
+const BASE_URL = (process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/admin";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("users");

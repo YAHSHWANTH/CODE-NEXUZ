@@ -46,7 +46,7 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
         mentor: form.mentor,
       };
 
-      const res = await axios.post((process.env.REACT_APP_API_BASE_URL || "http://localhost:5000") + "/api/certificates/create", payload);
+      const res = await axios.post((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/certificates/create", payload);
 
 
       if (res.data && res.data.success) {
