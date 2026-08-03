@@ -366,6 +366,8 @@ app.get("/api/verify/:uniqueId", async (req, res) => {
     console.error("❌ Verification Error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
+});
+
 // debug endpoint
 app.get("/api/debug-env", (req, res) => {
   res.json({
