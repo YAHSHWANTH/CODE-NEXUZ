@@ -366,6 +366,16 @@ app.get("/api/verify/:uniqueId", async (req, res) => {
     console.error("❌ Verification Error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
+// debug endpoint
+app.get("/api/debug-env", (req, res) => {
+  res.json({
+    has_brevo_key: !!process.env.BREVO_API_KEY,
+    has_resend_key: !!process.env.RESEND_API_KEY,
+    has_smtp_user: !!process.env.SMTP_USER,
+    has_smtp_pass: !!process.env.SMTP_PASS,
+    smtp_user: process.env.SMTP_USER,
+    node_env: process.env.NODE_ENV
+  });
 });
 
 // --------------------- SERVER START ---------------------
