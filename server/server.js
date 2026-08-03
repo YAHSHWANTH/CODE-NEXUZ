@@ -54,7 +54,37 @@ app.post("/send-otp", async (req, res) => {
   console.log(`🔑 [DEV MODE] Generated OTP for ${email}: ${otp}`);
 
   try {
-    // If RESEND_API_KEY is available, prioritize Resend HTTP API (completely open on Render free tier)
+    // 1. If BREVO_API_KEY is available, prioritize Brevo HTTP API (highly recommended, works with any domain on Render free tier)
+    if (process.env.BREVO_API_KEY) {
+      console.log("📨 Attempting to send OTP via Brevo HTTP API...");
+      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json",
+          "accept": "application/json"
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "Code Nexus",
+            email: process.env.SMTP_USER || "codenexus032@gmail.com"
+          },
+          to: [{ email: email }],
+          subject: "Your OTP Code - Code Nexus",
+          htmlContent: `<p>Your OTP for Code Nexus is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Brevo API returned status ${response.status}`);
+      }
+
+      console.log(`✅ OTP sent successfully to ${email} via Brevo`);
+      return res.json({ success: true, message: "OTP sent successfully" });
+    }
+
+    // 2. If RESEND_API_KEY is available, prioritize Resend HTTP API (completely open on Render free tier)
     if (process.env.RESEND_API_KEY) {
       console.log("📨 Attempting to send OTP via Resend HTTP API...");
       const response = await fetch("https://api.resend.com/emails", {
@@ -80,7 +110,7 @@ app.post("/send-otp", async (req, res) => {
       return res.json({ success: true, message: "OTP sent successfully" });
     }
 
-    // Fallback to Nodemailer SMTP
+    // 3. Fallback to Nodemailer SMTP
     console.log("📨 Attempting to send OTP via Nodemailer SMTP...");
     const cleanPass = process.env.SMTP_PASS ? process.env.SMTP_PASS.replace(/\s+/g, "") : "";
     const transporter = nodemailer.createTransport({
@@ -104,10 +134,10 @@ app.post("/send-otp", async (req, res) => {
     res.json({ success: true, message: "OTP sent successfully" });
   } catch (err) {
     console.error("❌ Email Sending Error:", err);
-    // If SMTP/Resend fails (e.g. Render Free Tier blocks SMTP ports), we still allow them to proceed using the OTP printed in the console
-    res.json({ 
-      success: true, 
-      message: "OTP generated. (If you do not receive the email due to server network restrictions, please check your server logs for the OTP)." 
+    // Return a structured error to the client so the user knows if email delivery failed
+    res.status(500).json({ 
+      success: false, 
+      message: `Failed to deliver OTP: ${err.message || err}. (Developer notice: Check your Render console or configure a valid BREVO_API_KEY/RESEND_API_KEY).`
     });
   }
 });
