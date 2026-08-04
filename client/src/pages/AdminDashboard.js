@@ -149,8 +149,6 @@ const AdminDashboard = () => {
         setData((prevData) =>
           prevData.map((row) => (row._id === id ? { ...row, status: nextStatus } : row))
         );
-        // Refresh analysis tab stats
-        loadStats();
       }
     } catch (err) {
       console.error("❌ Error toggling status:", err);
