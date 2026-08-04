@@ -24,7 +24,7 @@ const Touch = () => {
         {/* LEFT SIDE - Logo + Social Media */}
         <div className="flex flex-col items-start md:flex-row md:items-center md:space-x-10 lg:space-x-14">
           {/* Logo */}
-          <img src="/logo.png" alt="KODNEXUZ TECH Logo" className="w-40 mb-4 md:mb-0" />
+          <img src="/logo.png" alt="KodNexuz Logo" className="w-40 mb-4 md:mb-0" />
 
           {/* Social Media Section */}
           <div className="flex flex-col items-start md:items-center">
@@ -126,7 +126,7 @@ const Touch = () => {
       {/* FOOTER */}
       <footer className="bg-[#001933] border-t border-gray-700 py-3 mt-6">
         <div className="max-w-6xl mx-auto flex justify-center items-center text-xs text-gray-400 px-4">
-          <p>© 2025 KODNEXUZ TECH. All rights reserved.</p>
+          <p>© 2025 KodNexuz. All rights reserved.</p>
         </div>
       </footer>
     </section>

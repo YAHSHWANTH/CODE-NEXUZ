@@ -396,7 +396,7 @@ const AdminDashboard = () => {
             <div>
               <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-3">Earnings & Financial Tracker</h3>
               <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                KODNEXUZ TECH provides a default processing payout of **₹150** per certificate successfully generated and registered.
+                KodNexuz provides a default processing payout of **₹150** per certificate successfully generated and registered.
               </p>
               
               <div className="space-y-4">

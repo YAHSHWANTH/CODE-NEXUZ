@@ -28,7 +28,7 @@ const RunningMessage = () => {
         <div className="running-marquee text-sm font-medium tracking-wide px-6 opacity-90">
           💡 Important Update: New internships and courses are live now! | 🎓 Join
           our latest Python Bootcamp starting soon! | 🚀 Learn, build, and grow
-          with KODNEXUZ TECH!
+          with KodNexuz!
         </div>
       </div>
     </>

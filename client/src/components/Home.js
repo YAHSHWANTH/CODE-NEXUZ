@@ -37,7 +37,7 @@ const Home = ({ animateKey }) => {
         >
           {/* WELCOME LINE */}
           <p className="uppercase tracking-widest text-xs sm:text-sm text-gray-600">
-            Welcome to KODNEXUZ TECH
+            Welcome to KodNexuz
           </p>
 
           {/* MAIN QUOTE */}
@@ -75,7 +75,7 @@ const Home = ({ animateKey }) => {
 
           {/* SHORT DESCRIPTION */}
           <p className="text-base sm:text-lg text-gray-700 leading-relaxed mt-6 max-w-2xl mx-auto md:mx-0">
-            KODNEXUZ TECH is a forward-thinking software and IT services
+            KodNexuz is a forward-thinking software and IT services
             company dedicated to building scalable, secure, and innovative
             digital solutions. We help organizations modernize their systems,
             adopt AI-powered tools, and move seamlessly to the cloud.
