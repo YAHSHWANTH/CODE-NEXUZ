@@ -82,7 +82,7 @@ const Home = ({ animateKey }) => {
         <Slider {...settings}>
           <div>
             <img
-              src="https://images.ctfassets.net/5i1m3im8l2b5/uP8R4sj9jDRbqawg3vfhb/fb307cebbd6f38a50a10813633c7cdba/You-can-use-remote-access-to-work-from-home.jpg?w=450&h=236&fl=progressive&q=75&fm=webp&fit=fill"
+              src="https://images.ctfassets.net/5i1m3im8l2b5/uP8R4sj9jDRbqawg3vfhb/fb307cebbd6f38a50a10813633c7cdba/You-can-use-remote-access-to-work-from-home.jpg?w=450&h=236&q=75&fm=webp&fit=fill"
               alt="Workspace with remote access setup"
               width="450"
               height="288"
