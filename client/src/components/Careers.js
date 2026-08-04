@@ -151,7 +151,7 @@ const Careers = () => {
               Join With Us, Shape Your Future
             </h2>
             <p className="text-base sm:text-lg text-gray-600 mb-6 max-w-xl mx-auto md:mx-0">
-              At Code Nexus, we are passionate about transforming ideas into reality. 
+              At KODNEXUZ TECH, we are passionate about transforming ideas into reality. 
               We foster a culture of innovation, collaboration, and continuous learning. 
               Whether you are a developer, designer, or strategist, every contribution 
               drives progress and shapes the future of technology.

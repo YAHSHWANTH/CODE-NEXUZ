@@ -352,7 +352,7 @@ const EnrollForm = () => {
           {/* Source */}
           <div className="flex flex-col">
             <label className="font-semibold mb-1">
-              Where did you hear about Code Nexus? *
+              Where did you hear about KODNEXUZ TECH? *
             </label>
             <select
               name="source"

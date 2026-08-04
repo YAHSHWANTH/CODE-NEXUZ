@@ -29,11 +29,11 @@ const Features = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
         {/* Title */}
         <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          Features of <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">Code Nexus?</span>
+          Features of <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">KODNEXUZ TECH?</span>
         </h2>
         
         <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-          At Code Nexus Technology, we provide end-to-end solutions that combine innovation, efficiency, and security.
+          At KODNEXUZ TECH, we provide end-to-end solutions that combine innovation, efficiency, and security.
           Our team ensures seamless collaboration, cutting-edge technology, and personalized strategies for every client.
           Partner with us to accelerate growth and transform your business digitally.
         </p>

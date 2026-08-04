@@ -46,7 +46,7 @@ const Courses = () => {
             </span>
           </h2>
           <p className="text-gray-600 mb-12 text-lg">
-            Get started with Code Nexus Technology Internships & Courses!
+            Get started with KODNEXUZ TECH Internships & Courses!
           </p>
 
           {/* Courses Grid */}

@@ -57,7 +57,7 @@ const VerifyPage = () => {
             </svg>
           </div>
           <span className="text-xl font-extrabold tracking-tight text-slate-900 uppercase">
-            Code Nexus
+            KODNEXUZ TECH
           </span>
         </div>
         <div className="hidden md:flex items-center space-x-2 text-xs font-semibold text-slate-500 uppercase tracking-widest">
@@ -78,7 +78,7 @@ const VerifyPage = () => {
               Credential Verification
             </h1>
             <p className="text-slate-500 text-sm max-w-md mx-auto leading-relaxed">
-              Verify the authenticity of internship certificates and training credentials issued by Code Nexus.
+              Verify the authenticity of internship certificates and training credentials issued by KODNEXUZ TECH.
             </p>
           </div>
 
@@ -253,7 +253,7 @@ const VerifyPage = () => {
 
       {/* Footer Info */}
       <footer className="w-full bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 font-semibold uppercase tracking-wider">
-        &copy; {new Date().getFullYear()} Code Nexus. All rights reserved.
+        &copy; {new Date().getFullYear()} KODNEXUZ TECH. All rights reserved.
       </footer>
 
     </div>

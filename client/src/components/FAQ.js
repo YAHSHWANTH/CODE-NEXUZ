@@ -62,7 +62,7 @@ const FAQ = () => {
         {/* Header */}
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold mb-6">
-            Why Choose <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">Code Nexus?</span>
+            Why Choose <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">KODNEXUZ TECH?</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             We solve the biggest challenges in modern tech learning.
@@ -100,7 +100,7 @@ const FAQ = () => {
           <div className="space-y-8">
             <div className="text-center lg:text-left mb-8">
               <h3 className="text-2xl font-bold text-green-500 mb-4">Our Solutions</h3>
-              <p className="text-gray-600">How Code Nexus bridges the gap</p>
+              <p className="text-gray-600">How KODNEXUZ TECH bridges the gap</p>
             </div>
             {solutions.map((solution, index) => (
               <div

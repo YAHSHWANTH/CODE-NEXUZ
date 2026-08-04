@@ -67,12 +67,12 @@ app.post("/send-otp", async (req, res) => {
       },
       body: JSON.stringify({
         sender: {
-          name: "Code Nexus",
+          name: "KODNEXUZ TECH",
           email: process.env.SMTP_USER || "codenexus032@gmail.com"
         },
         to: [{ email: email }],
-        subject: "Your OTP Code - Code Nexus",
-        htmlContent: `<p>Your OTP for Code Nexus is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
+        subject: "Your OTP Code - KODNEXUZ TECH",
+        htmlContent: `<p>Your OTP for KODNEXUZ TECH is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
       })
     });
 
