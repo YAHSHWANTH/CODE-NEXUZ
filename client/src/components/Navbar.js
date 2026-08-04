@@ -31,15 +31,9 @@ const Navbar = () => {
     <nav className="bg-white shadow-md fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 flex justify-between h-16 items-center">
         
-        {/* Logo + Gradient Text */}
+        {/* Logo */}
         <div className="flex items-center space-x-3">
           <img src="/logoo.png" alt="KodNexuz Logo" className="h-10 w-auto" />
-          <span
-            className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
-            style={{ fontFamily: "Garalama, sans-serif" }}
-          >
-            KodNexuz
-          </span>
         </div>
 
         {/* Desktop Navigation Links */}
