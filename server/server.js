@@ -47,13 +47,15 @@ app.post("/send-otp", async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ success: false, message: "Email is required" });
 
+  const cleanEmail = email.trim();
+
   // Rate Limiting Checks
   const now = Date.now();
-  if (!otpRequestHistory[email]) {
-    otpRequestHistory[email] = { lastRequestedAt: 0, hourlyRequests: [] };
+  if (!otpRequestHistory[cleanEmail]) {
+    otpRequestHistory[cleanEmail] = { lastRequestedAt: 0, hourlyRequests: [] };
   }
 
-  const history = otpRequestHistory[email];
+  const history = otpRequestHistory[cleanEmail];
   const timeSinceLast = now - history.lastRequestedAt;
   if (timeSinceLast < 60000) {
     const secondsLeft = Math.ceil((60000 - timeSinceLast) / 1000);
@@ -73,18 +75,18 @@ app.post("/send-otp", async (req, res) => {
   }
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  otps[email] = otp;
+  otps[cleanEmail] = otp;
 
   // Automatically clear OTP from memory after 5 minutes
   setTimeout(() => {
-    if (otps[email] === otp) {
-      delete otps[email];
-      console.log(`⏰ OTP expired and cleared for ${email}`);
+    if (otps[cleanEmail] === otp) {
+      delete otps[cleanEmail];
+      console.log(`⏰ OTP expired and cleared for ${cleanEmail}`);
     }
   }, 300000);
 
   // Log OTP immediately to console so that local developers can proceed even if SMTP fails
-  console.log(`🔑 [DEV MODE] Generated OTP for ${email}: ${otp}`);
+  console.log(`🔑 [DEV MODE] Generated OTP for ${cleanEmail}: ${otp}`);
 
   try {
     if (!process.env.BREVO_API_KEY) {
@@ -104,7 +106,7 @@ app.post("/send-otp", async (req, res) => {
           name: "KodNexuz",
           email: process.env.SMTP_USER || "codenexus032@gmail.com"
         },
-        to: [{ email: email }],
+        to: [{ email: cleanEmail }],
         subject: "Your OTP Code - KodNexuz",
         htmlContent: `<p>Your OTP for KodNexuz is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
       })
@@ -119,7 +121,7 @@ app.post("/send-otp", async (req, res) => {
     history.lastRequestedAt = now;
     history.hourlyRequests.push(now);
 
-    console.log(`✅ OTP sent successfully to ${email} via Brevo`);
+    console.log(`✅ OTP sent successfully to ${cleanEmail} via Brevo`);
     res.json({ success: true, message: "OTP sent successfully" });
   } catch (err) {
     console.error("❌ Email Sending Error:", err);
@@ -133,8 +135,13 @@ app.post("/send-otp", async (req, res) => {
 // --------------------- VERIFY OTP ---------------------
 app.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
-  if (otps[email] && otps[email] === otp) {
-    delete otps[email];
+  if (!email || !otp) return res.status(400).json({ success: false, message: "Email and OTP are required" });
+
+  const cleanEmail = email.trim();
+  const cleanOtp = otp.trim();
+
+  if (otps[cleanEmail] && otps[cleanEmail] === cleanOtp) {
+    delete otps[cleanEmail];
     return res.json({ success: true, message: "OTP verified successfully" });
   }
   res.status(400).json({ success: false, message: "Invalid or expired OTP" });
@@ -180,12 +187,15 @@ app.post("/signup", async (req, res) => {
 // --------------------- LOGIN ---------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("🟢 Login attempt:", email);
+  if (!email) return res.status(400).json({ success: false, message: "Email is required" });
+
+  const cleanEmail = email.trim();
+  console.log("🟢 Login attempt:", cleanEmail);
 
   try {
     // Admin login
-    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS) {
-      const token = jwt.sign({ email, role: "admin" }, process.env.JWT_SECRET, {
+    if (cleanEmail === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS) {
+      const token = jwt.sign({ email: cleanEmail, role: "admin" }, process.env.JWT_SECRET, {
         expiresIn: "2h",
       });
       console.log("✅ Admin login successful");
@@ -198,7 +208,7 @@ app.post("/login", async (req, res) => {
     }
 
     // User login
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: cleanEmail });
     if (!user || user.password !== password)
       return res
         .status(400)

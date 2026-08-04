@@ -19,6 +19,8 @@ const Careers = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [showLogin, setShowLogin] = useState(false);
   const [cooldown, setCooldown] = useState(0);
+  const [loadingLogin, setLoadingLogin] = useState(false);
+  const [signingUp, setSigningUp] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Careers = () => {
     setSuccessMsg("");
 
     try {
-      const res = await axios.post(`${API_BASE}/verify-otp`, { email, otp });
+      const res = await axios.post(`${API_BASE}/verify-otp`, { email: email.trim(), otp: otp.trim() });
 
       if (res.data?.success) {
         setIsVerified(true);
@@ -104,6 +106,7 @@ const Careers = () => {
 
     console.log("🟡 Sending signup data:", signupData);
 
+    setSigningUp(true);
     try {
       const res = await axios.post(`${API_BASE}/signup`, signupData, {
         headers: { "Content-Type": "application/json" },
@@ -114,13 +117,14 @@ const Careers = () => {
 
       if (res.status === 200 && res.data?.success) {
         setSuccessMsg("Signup successful! Please login now.");
-        setShowLogin(true);
       } else {
         setErrorMsg(res.data?.message || "Signup failed. Please check your details.");
       }
     } catch (err) {
       console.error("🔴 Signup error:", err.response?.data || err.message);
       setErrorMsg(err.response?.data?.message || "Error signing up. Check backend logs.");
+    } finally {
+      setSigningUp(false);
     }
   };
 
@@ -132,13 +136,14 @@ const Careers = () => {
 
     if (!email || !password) return setErrorMsg("Enter email and password");
 
+    setLoadingLogin(true);
     try {
-      const res = await axios.post(`${API_BASE}/login`, { email, password });
+      const res = await axios.post(`${API_BASE}/login`, { email: email.trim(), password });
 
       if (res.data?.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
-        localStorage.setItem("email", email);
+        localStorage.setItem("email", email.trim());
 
         if (res.data.role === "admin") navigate("/admin-dashboard");
         else navigate("/dashboard");
@@ -148,6 +153,8 @@ const Careers = () => {
     } catch (err) {
       console.error("🔴 Login error:", err.response?.data || err.message);
       setErrorMsg(err.response?.data?.message || "Error logging in. Check backend logs.");
+    } finally {
+      setLoadingLogin(false);
     }
   };
 
@@ -287,14 +294,14 @@ const Careers = () => {
 
                   <button
                     type="submit"
-                    disabled={!isVerified}
+                    disabled={!isVerified || signingUp}
                     className={`w-full py-3 rounded-lg font-semibold text-lg transition ${
-                      isVerified
+                      isVerified && !signingUp
                         ? "bg-purple-600 text-white hover:bg-purple-700"
                         : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     }`}
                   >
-                    Sign Up
+                    {signingUp ? "Signing up..." : "Sign Up"}
                   </button>
                 </form>
 
@@ -334,9 +341,14 @@ const Careers = () => {
                   />
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-lg font-semibold text-lg bg-purple-600 text-white hover:bg-purple-700 transition"
+                    disabled={loadingLogin}
+                    className={`w-full py-3 rounded-lg font-semibold text-lg transition ${
+                      loadingLogin
+                        ? "bg-purple-400 text-white cursor-not-allowed"
+                        : "bg-purple-600 text-white hover:bg-purple-700"
+                    }`}
                   >
-                    Login
+                    {loadingLogin ? "Signing in..." : "Login"}
                   </button>
                 </form>
 
