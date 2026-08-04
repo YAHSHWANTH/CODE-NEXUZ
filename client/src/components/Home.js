@@ -82,7 +82,7 @@ const Home = ({ animateKey }) => {
         <Slider {...settings}>
           <div>
             <img
-              src="https://images.ctfassets.net/5i1m3im8l2b5/uP8R4sj9jDRbqawg3vfhb/fb307cebbd6f38a50a10813633c7cdba/You-can-use-remote-access-to-work-from-home.jpg?w=450&h=236&fl=progressive&q=75&fm=jpg&fit=fill"
+              src="https://images.ctfassets.net/5i1m3im8l2b5/uP8R4sj9jDRbqawg3vfhb/fb307cebbd6f38a50a10813633c7cdba/You-can-use-remote-access-to-work-from-home.jpg?w=450&h=236&fl=progressive&q=75&fm=webp&fit=fill"
               alt="Workspace with remote access setup"
               width="450"
               height="288"
@@ -92,7 +92,7 @@ const Home = ({ animateKey }) => {
           </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&w=1000&q=80"
+              src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&w=540&h=360&fm=webp&q=75"
               alt="Team collaboration at office table"
               width="450"
               height="288"
@@ -101,7 +101,7 @@ const Home = ({ animateKey }) => {
           </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80"
+              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=540&h=360&fm=webp&q=75"
               alt="Modern tech office workstations"
               width="450"
               height="288"
