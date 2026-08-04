@@ -38,16 +38,50 @@ mongoose
   .then(() => console.log("✅ MongoDB Connected Successfully"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// --------------------- OTP STORE ---------------------
+// --------------------- OTP STORE & HISTORY ---------------------
 const otps = {};
+const otpRequestHistory = {};
 
 // --------------------- SEND OTP ---------------------
 app.post("/send-otp", async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ success: false, message: "Email is required" });
 
+  // Rate Limiting Checks
+  const now = Date.now();
+  if (!otpRequestHistory[email]) {
+    otpRequestHistory[email] = { lastRequestedAt: 0, hourlyRequests: [] };
+  }
+
+  const history = otpRequestHistory[email];
+  const timeSinceLast = now - history.lastRequestedAt;
+  if (timeSinceLast < 60000) {
+    const secondsLeft = Math.ceil((60000 - timeSinceLast) / 1000);
+    return res.status(429).json({
+      success: false,
+      message: `Please wait ${secondsLeft} seconds before requesting another OTP.`
+    });
+  }
+
+  // Hourly Limit Check (max 5 per hour)
+  history.hourlyRequests = history.hourlyRequests.filter(t => now - t < 3600000);
+  if (history.hourlyRequests.length >= 5) {
+    return res.status(429).json({
+      success: false,
+      message: "You have exceeded the maximum of 5 OTP requests per hour. Please try again later."
+    });
+  }
+
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   otps[email] = otp;
+
+  // Automatically clear OTP from memory after 5 minutes
+  setTimeout(() => {
+    if (otps[email] === otp) {
+      delete otps[email];
+      console.log(`⏰ OTP expired and cleared for ${email}`);
+    }
+  }, 300000);
 
   // Log OTP immediately to console so that local developers can proceed even if SMTP fails
   console.log(`🔑 [DEV MODE] Generated OTP for ${email}: ${otp}`);
@@ -80,6 +114,10 @@ app.post("/send-otp", async (req, res) => {
       const errorData = await response.json();
       throw new Error(errorData.message || `Brevo API returned status ${response.status}`);
     }
+
+    // Save successful request history
+    history.lastRequestedAt = now;
+    history.hourlyRequests.push(now);
 
     console.log(`✅ OTP sent successfully to ${email} via Brevo`);
     res.json({ success: true, message: "OTP sent successfully" });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -18,7 +18,16 @@ const Careers = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [showLogin, setShowLogin] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer;
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   // ✅ Configure backend base URL for cleaner code
   const API_BASE = (process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "";
@@ -36,6 +45,7 @@ const Careers = () => {
 
       if (res.data?.success) {
         setOtpSent(true);
+        setCooldown(60);
         setSuccessMsg("OTP sent successfully!");
         document.getElementById("otp-input")?.focus();
       } else {
@@ -225,14 +235,20 @@ const Careers = () => {
                     <button
                       type="button"
                       onClick={sendOtp}
-                      disabled={!email || otpSent || loadingOtp}
+                      disabled={!email || loadingOtp || cooldown > 0}
                       className={`px-4 py-2 rounded-lg font-medium transition ${
-                        email && !otpSent && !loadingOtp
+                        email && !loadingOtp && cooldown === 0
                           ? "bg-purple-600 text-white hover:bg-purple-700"
                           : "bg-gray-300 text-gray-500 cursor-not-allowed"
                       }`}
                     >
-                      {loadingOtp ? "Sending..." : otpSent ? "OTP Sent" : "Send OTP"}
+                      {loadingOtp 
+                        ? "Sending..." 
+                        : cooldown > 0 
+                          ? `Resend in ${cooldown}s` 
+                          : otpSent 
+                            ? "Resend OTP" 
+                            : "Send OTP"}
                     </button>
                   </div>
 
