@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -13,14 +13,12 @@ import Careers from "./components/Careers";
 import Touch from "./components/Touch";
 // import Footer from "./components/Footer";
 
-// 🔐 Pages
-// import Login from "./pages/Login";
-import AdminDashboard from "./pages/AdminDashboard";
-import UserDashboard from "./pages/UserDashboard";
-import EnrollForm from "./pages/EnrollForm";
-import AdminEnrollments from "./pages/AdminEnrollments";
-import VerifyPage from "./pages/VerifyPage";
- // ✅ updated import
+// 🔐 Pages (Lazy Loaded for performance/code-splitting)
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const EnrollForm = lazy(() => import("./pages/EnrollForm"));
+const AdminEnrollments = lazy(() => import("./pages/AdminEnrollments"));
+const VerifyPage = lazy(() => import("./pages/VerifyPage"));
 
 // 🧭 Scroll-to-top on route change
 const ScrollToTop = () => {
@@ -89,75 +87,81 @@ const App = () => {
       {!hideLayout && <Navbar />}
       {!hideLayout && <RunningMessage />}
 
-      <Routes>
-        {/* Public Landing Page */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Home />
-              <Features />
-              <Courses />
-              <FAQ />
-              <Careers />
-              <Touch />
-            </>
-          }
-        />
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-white">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-600"></div>
+        </div>
+      }>
+        <Routes>
+          {/* Public Landing Page */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Home />
+                <Features />
+                <Courses />
+                <FAQ />
+                <Careers />
+                <Touch />
+              </>
+            }
+          />
 
-        {/* Admin Dashboard */}
-        <Route
-          path="/admin-dashboard"
-          element={
-            <ProtectedRoute role="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* Admin Dashboard */}
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Admin - View Enrollments */}
-        <Route
-          path="/admin/enrollments"
-          element={
-            <ProtectedRoute role="admin">
-              <AdminEnrollments />
-            </ProtectedRoute>
-          }
-        />
+          {/* Admin - View Enrollments */}
+          <Route
+            path="/admin/enrollments"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminEnrollments />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* User Dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute role="user">
-              <UserDashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* User Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute role="user">
+                <UserDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Enrollment Form */}
-        <Route
-          path="/enroll"
-          element={
-            <ProtectedRoute role="user">
-              <EnrollForm />
-            </ProtectedRoute>
-          }
-        />
+          {/* Enrollment Form */}
+          <Route
+            path="/enroll"
+            element={
+              <ProtectedRoute role="user">
+                <EnrollForm />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* ✅ Certificate Verification Page */}
-        <Route path="/verify" element={<VerifyPage />} />
+          {/* ✅ Certificate Verification Page */}
+          <Route path="/verify" element={<VerifyPage />} />
 
-        {/* 404 */}
-        <Route
-          path="*"
-          element={
-            <div className="min-h-screen flex items-center justify-center text-gray-600 text-xl">
-              404 — Page Not Found
-            </div>
-          }
-        />
-      </Routes>
+          {/* 404 */}
+          <Route
+            path="*"
+            element={
+              <div className="min-h-screen flex items-center justify-center text-gray-600 text-xl">
+                404 — Page Not Found
+              </div>
+            }
+          />
+        </Routes>
+      </Suspense>
 
       {/* Footer */}
       {/* {!hideLayout && <Footer />} */}
