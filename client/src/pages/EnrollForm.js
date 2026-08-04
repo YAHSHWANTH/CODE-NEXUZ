@@ -379,7 +379,7 @@ const EnrollForm = () => {
               <span>
                 LinkedIn –{" "}
                 <a
-                  href="https://www.linkedin.com/in/code-nexus-tech-26a557427/"
+                  href="https://www.linkedin.com/in/kodnexuz-tech-65bb99426/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-600 font-semibold underline"
@@ -532,7 +532,7 @@ const EnrollForm = () => {
                 <ul className="list-disc list-inside text-blue-600">
                   <li>
                     <a
-                      href="https://www.linkedin.com/in/code-nexus-tech-26a557427/"
+                      href="https://www.linkedin.com/in/kodnexuz-tech-65bb99426/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline"

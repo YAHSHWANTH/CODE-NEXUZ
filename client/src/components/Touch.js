@@ -24,7 +24,7 @@ const Touch = () => {
         {/* LEFT SIDE - Logo + Social Media */}
         <div className="flex flex-col items-start md:flex-row md:items-center md:space-x-10 lg:space-x-14">
           {/* Logo */}
-          <img src="/logo.jpeg" alt="KodNexuz Logo" className="w-64 mb-4 md:mb-0" />
+          <img src="/logo.png" alt="KodNexuz Logo" className="w-36 mb-4 md:mb-0" />
 
           {/* Social Media Section */}
           <div className="flex flex-col items-start md:items-center">
@@ -39,7 +39,7 @@ const Touch = () => {
                 <FaYoutube />
               </a>
               <a
-                href="https://www.linkedin.com/in/code-nexus-tech-26a557427/"
+                href="https://www.linkedin.com/in/kodnexuz-tech-65bb99426/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-500 transition"
