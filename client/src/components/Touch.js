@@ -24,7 +24,7 @@ const Touch = () => {
         {/* LEFT SIDE - Logo + Social Media */}
         <div className="flex flex-col items-start md:flex-row md:items-center md:space-x-10 lg:space-x-14">
           {/* Logo */}
-          <img src="/logo.png" alt="KodNexuz Logo" className="w-40 mb-4 md:mb-0" />
+          <img src="/logo.png" alt="KodNexuz Logo" className="w-56 mb-4 md:mb-0" />
 
           {/* Social Media Section */}
           <div className="flex flex-col items-start md:items-center">
