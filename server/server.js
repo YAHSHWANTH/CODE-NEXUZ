@@ -318,8 +318,15 @@ app.post("/api/admin/generate-certificate", async (req, res) => {
 app.get("/api/admin/generate-qr/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    // 🔗 Replace with your actual deployed frontend verify page
-    const verifyUrl = "https://kodnexuz.vercel.app/verify";
+    
+    // Find the certificate to get its uniqueId
+    const certificate = await Certificate.findById(id);
+    if (!certificate) {
+      return res.status(404).json({ success: false, message: "Certificate not found" });
+    }
+
+    // Point to verify page with uniqueId query param
+    const verifyUrl = `https://kodnexuz.vercel.app/verify?id=${certificate.uniqueId}`;
 
     const qrImageData = await QRCode.toDataURL(verifyUrl);
 

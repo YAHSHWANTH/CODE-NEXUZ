@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const VerifyPage = () => {
@@ -7,8 +7,8 @@ const VerifyPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleVerify = async () => {
-    if (!uniqueId.trim()) {
+  const verifyCredential = useCallback(async (idToVerify) => {
+    if (!idToVerify || !idToVerify.trim()) {
       setError("Please enter a valid Credential ID");
       setCertificate(null);
       return;
@@ -20,7 +20,7 @@ const VerifyPage = () => {
 
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com"}/api/verify/${uniqueId.trim()}`
+        `${process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com"}/api/verify/${idToVerify.trim()}`
       );
       setCertificate(res.data.certificate);
       setError("");
@@ -34,7 +34,22 @@ const VerifyPage = () => {
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  const handleVerify = () => {
+    verifyCredential(uniqueId);
   };
+
+  // Auto-verify on mount if ID is in the query params
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+      const cleanId = id.trim();
+      setUniqueId(cleanId);
+      verifyCredential(cleanId);
+    }
+  }, [verifyCredential]);
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
