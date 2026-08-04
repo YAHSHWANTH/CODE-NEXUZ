@@ -21,7 +21,7 @@
 /* 🚀 Premium hardware-accelerated CSS animations to replace framer-motion */
 @keyframes slideInLeft {
   from {
-    transform: translateX(-40px);
+    transform: translateX(-100px);
     opacity: 0;
   }
   to {
@@ -31,7 +31,7 @@
 }
 @keyframes slideInRight {
   from {
-    transform: translateX(40px);
+    transform: translateX(100px);
     opacity: 0;
   }
   to {
@@ -40,11 +40,11 @@
   }
 }
 .animate-fade-in-left {
-  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .animate-fade-in-right {
-  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.15s;
+  animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
   opacity: 0;
 }
 

@@ -41,7 +41,7 @@ const Home = ({ animateKey }) => {
 
           {/* FEATURE TAGS */}
           <div className="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mt-6">
-            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-105">
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-110">
               <FaBook className="text-indigo-600 text-sm animate-pulse" />
               Free Courses
             </span>
@@ -49,7 +49,7 @@ const Home = ({ animateKey }) => {
               <FaGraduationCap className="text-indigo-600 text-sm animate-bounce" />
               Quality Education
             </span>
-            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-105">
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-110">
               <FaCertificate className="text-indigo-600 text-sm animate-spin" />
               Certificates & Badges
             </span>
