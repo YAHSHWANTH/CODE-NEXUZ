@@ -4,7 +4,6 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import fs from "fs";
@@ -54,69 +53,41 @@ app.post("/send-otp", async (req, res) => {
   console.log(`🔑 [DEV MODE] Generated OTP for ${email}: ${otp}`);
 
   try {
-    // 1. If BREVO_API_KEY is available, prioritize Brevo HTTP API (recommended, bypasses Render SMTP port blocks)
-    if (process.env.BREVO_API_KEY) {
-      console.log("📨 Attempting to send OTP via Brevo HTTP API...");
-      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "content-type": "application/json",
-          "accept": "application/json"
-        },
-        body: JSON.stringify({
-          sender: {
-            name: "Code Nexus",
-            email: process.env.SMTP_USER || "codenexus032@gmail.com"
-          },
-          to: [{ email: email }],
-          subject: "Your OTP Code - Code Nexus",
-          htmlContent: `<p>Your OTP for Code Nexus is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Brevo API returned status ${response.status}`);
-      }
-
-      console.log(`✅ OTP sent successfully to ${email} via Brevo`);
-      return res.json({ success: true, message: "OTP sent successfully" });
+    if (!process.env.BREVO_API_KEY) {
+      throw new Error("BREVO_API_KEY is not configured on the server environment. Please configure it in your Render Dashboard.");
     }
 
-    // 2. Fallback to Nodemailer SMTP
-    console.log("📨 Attempting to send OTP via Nodemailer SMTP...");
-    
-    // Clean spaces from SMTP_PASS
-    const rawPass = process.env.SMTP_PASS || "nklf cocg qjeo lher";
-    const cleanPass = rawPass.replace(/\s+/g, "");
-    
-    const smtpUser = process.env.SMTP_USER || "codenexus032@gmail.com";
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: smtpUser,
-        pass: cleanPass,
+    console.log("📨 Sending OTP via Brevo HTTP API...");
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "content-type": "application/json",
+        "accept": "application/json"
       },
+      body: JSON.stringify({
+        sender: {
+          name: "Code Nexus",
+          email: process.env.SMTP_USER || "codenexus032@gmail.com"
+        },
+        to: [{ email: email }],
+        subject: "Your OTP Code - Code Nexus",
+        htmlContent: `<p>Your OTP for Code Nexus is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
+      })
     });
 
-    await transporter.sendMail({
-      from: `"Code Nexus" <${smtpUser}>`,
-      to: email,
-      subject: "Your OTP Code - Code Nexus",
-      text: `Your OTP for Code Nexus is: ${otp}`,
-    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Brevo API returned status ${response.status}`);
+    }
 
-    console.log(`✅ OTP sent successfully to ${email} via SMTP`);
+    console.log(`✅ OTP sent successfully to ${email} via Brevo`);
     res.json({ success: true, message: "OTP sent successfully" });
   } catch (err) {
     console.error("❌ Email Sending Error:", err);
     res.status(500).json({ 
       success: false, 
-      message: `Failed to deliver OTP: ${err.message || err}. (Developer notice: Render blocks outbound SMTP. Please configure BREVO_API_KEY in your Render Dashboard to send via HTTP).`
+      message: `Failed to deliver OTP: ${err.message || err}`
     });
   }
 });
