@@ -38,7 +38,7 @@ const Navbar = () => {
             className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
             style={{ fontFamily: "Garalama, sans-serif" }}
           >
-            KODNEXUZ
+            KodNexuz
           </span>
         </div>
 
