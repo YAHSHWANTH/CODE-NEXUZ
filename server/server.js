@@ -281,7 +281,7 @@ app.get("/api/admin/generate-qr/:id", async (req, res) => {
   try {
     const { id } = req.params;
     // 🔗 Replace with your actual deployed frontend verify page
-    const verifyUrl = `${process.env.FRONTEND_URL || "https://kodnexuz.vercel.app"}/verify`;
+    const verifyUrl = "https://kodnexuz.vercel.app/verify";
 
     const qrImageData = await QRCode.toDataURL(verifyUrl);
 
