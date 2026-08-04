@@ -46,7 +46,7 @@ const Navbar = () => {
           className="flex items-center space-x-3 cursor-pointer"
           onClick={handleLogoClick}
         >
-          <img src="/logoo.png" alt="KodNexuz Logo" className="h-14 w-auto object-contain py-1" />
+          <img src="/logoo.png" alt="KodNexuz Logo" width="160" height="56" className="h-14 w-auto object-contain py-1" />
           {/* <span
             className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
             style={{ fontFamily: "Garalama, sans-serif" }}

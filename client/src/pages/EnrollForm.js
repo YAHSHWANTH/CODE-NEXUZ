@@ -24,6 +24,7 @@ const EnrollForm = () => {
 
   const [showTerms, setShowTerms] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
 
@@ -103,9 +104,11 @@ const EnrollForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    if (submitting) return;
     if (!validateForm()) return;
 
+    setSubmitting(true);
     try {
       const response = await fetch((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/enroll/create", {
         method: "POST",
@@ -143,6 +146,8 @@ const EnrollForm = () => {
     } catch (error) {
       console.error("Enrollment Error:", error);
       alert("❌ Failed to submit form. Please try again later.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -502,11 +507,15 @@ const EnrollForm = () => {
           {/* Submit */}
           <div className="md:col-span-2">
             <button
-              onClick={handleSubmit}
               type="submit"
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold text-lg hover:scale-102 hover:opacity-95 transition"
+              disabled={submitting}
+              className={`w-full py-3 rounded-lg font-semibold text-lg transition ${
+                submitting
+                  ? "bg-purple-400 text-white cursor-not-allowed"
+                  : "bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:scale-[1.02] hover:opacity-95"
+              }`}
             >
-              Submit Application
+              {submitting ? "Submitting Application..." : "Submit Application"}
             </button>
           </div>
         </form>

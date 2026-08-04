@@ -181,7 +181,7 @@ const Careers = () => {
             </button>
           </div>
           <div className="flex justify-center">
-            <img src="/stlogo.png" alt="Careers" className="max-w-full h-auto max-h-[350px] md:max-h-full" />
+            <img src="/stlogo.png" alt="Careers" width="438" height="438" className="max-w-full h-auto max-h-[350px] md:max-h-full" />
           </div>
         </div>
       </section>
@@ -190,7 +190,7 @@ const Careers = () => {
       <section id="signup-form" className="bg-gray-50 min-h-screen flex items-center py-16 md:py-0">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-center w-full">
           <div className="flex justify-center order-2 md:order-1">
-            <img src="/logos.png" alt="Sign Up" className="max-w-full h-auto max-h-[300px] md:max-h-full" />
+            <img src="/logos.png" alt="Sign Up" width="540" height="360" className="max-w-full h-auto max-h-[300px] md:max-h-full" />
           </div>
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full max-w-md mx-auto order-1 md:order-2">
