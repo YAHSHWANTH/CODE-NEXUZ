@@ -1,7 +1,6 @@
 // src/components/Home.js
 import React from "react";
 import Slider from "react-slick";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaBook, FaGraduationCap, FaCertificate } from "react-icons/fa";
 
 // Import slick carousel CSS
@@ -26,15 +25,7 @@ const Home = ({ animateKey }) => {
   <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       {/* Left Side - Text */}
-      <AnimatePresence>
-        <motion.div
-          key={animateKey}
-          className="space-y-6 text-center md:text-left"
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+      <div className="space-y-6 text-center md:text-left animate-fade-in-left">
           {/* WELCOME LINE */}
           <p className="uppercase tracking-widest text-xs sm:text-sm text-gray-600">
             Welcome to KodNexuz
@@ -50,27 +41,18 @@ const Home = ({ animateKey }) => {
 
           {/* FEATURE TAGS */}
           <div className="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mt-6">
-            <motion.span
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow"
-            >
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-105">
               <FaBook className="text-indigo-600 text-sm animate-pulse" />
               Free Courses
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow"
-            >
+            </span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-105">
               <FaGraduationCap className="text-indigo-600 text-sm animate-bounce" />
               Quality Education
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.1 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow"
-            >
+            </span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-800 shadow transition-transform duration-300 hover:scale-105">
               <FaCertificate className="text-indigo-600 text-sm animate-spin" />
               Certificates & Badges
-            </motion.span>
+            </span>
           </div>
 
           {/* SHORT DESCRIPTION */}
@@ -93,17 +75,10 @@ const Home = ({ animateKey }) => {
           >
             Explore
           </button>
-        </motion.div>
-      </AnimatePresence>
+        </div>
 
       {/* Right Side - Carousel */}
-      <motion.div
-        key={`carousel-${animateKey}`}
-        className="w-full max-w-md mx-auto"
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-      >
+      <div className="w-full max-w-md mx-auto animate-fade-in-right">
         <Slider {...settings}>
           <div>
             <img
@@ -134,7 +109,7 @@ const Home = ({ animateKey }) => {
             />
           </div>
         </Slider>
-      </motion.div>
+      </div>
     </div>
   </div>
 </section>
