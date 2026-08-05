@@ -40,16 +40,7 @@ const VerifyPage = () => {
     verifyCredential(uniqueId);
   };
 
-  // Auto-verify on mount if ID is in the query params
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-    if (id) {
-      const cleanId = id.trim();
-      setUniqueId(cleanId);
-      verifyCredential(cleanId);
-    }
-  }, [verifyCredential]);
+
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {

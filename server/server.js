@@ -336,7 +336,7 @@ app.get("/api/admin/generate-qr/:id", async (req, res) => {
     }
 
     // Point to verify page with uniqueId query param
-    const verifyUrl = `https://www.kodnexuz.in/verify?id=${certificate.uniqueId}`;
+    const verifyUrl = "https://www.kodnexuz.in/verify";
 
     const qrImageData = await QRCode.toDataURL(verifyUrl);
 
