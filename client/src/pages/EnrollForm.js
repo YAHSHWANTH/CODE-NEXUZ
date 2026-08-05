@@ -442,7 +442,7 @@ const EnrollForm = () => {
               <span>
                 Instagram –{" "}
                 <a
-                  href="https://www.instagram.com/codenexus032/"
+                  href="https://www.instagram.com/kodnexuz/?hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-600 font-semibold underline"
@@ -561,7 +561,7 @@ const EnrollForm = () => {
                   </li>
                   <li>
                     <a
-                      href="https://www.instagram.com/codenexus032/"
+                      href="https://www.instagram.com/kodnexuz/?hl=en"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline"

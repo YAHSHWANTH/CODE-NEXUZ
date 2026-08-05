@@ -55,7 +55,7 @@ const Touch = () => {
                 <FaTwitter />
               </a>
               <a
-                href="https://www.instagram.com/codenexus032/"
+                href="https://www.instagram.com/kodnexuz/?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-pink-400 hover:text-pink-500 transition"
