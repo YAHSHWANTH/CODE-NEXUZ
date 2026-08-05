@@ -117,6 +117,14 @@ const Careers = () => {
 
       if (res.status === 200 && res.data?.success) {
         setSuccessMsg("Signup successful! Please login now.");
+        setFirstName("");
+        setLastName("");
+        setPhone("");
+        setEmail("");
+        setPassword("");
+        setOtp("");
+        setOtpSent(false);
+        setIsVerified(false);
       } else {
         setErrorMsg(res.data?.message || "Signup failed. Please check your details.");
       }
