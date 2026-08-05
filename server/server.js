@@ -291,6 +291,27 @@ app.put("/api/admin/enrollments/:id/status", async (req, res) => {
   }
 });
 
+// ✅ Update certificate status
+app.put("/api/admin/certificates/:id/status", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updated = await Certificate.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ success: false, message: "Certificate not found" });
+    }
+    res.status(200).json({ success: true, data: updated });
+  } catch (err) {
+    console.error("❌ Update Certificate Status Error:", err);
+    res.status(500).json({ success: false, message: "Failed to update status" });
+  }
+});
+
 // ✅ Fetch all certificates
 app.get("/api/admin/certificates", async (req, res) => {
   try {
@@ -361,6 +382,10 @@ app.get("/api/verify/:uniqueId", async (req, res) => {
     const certificate = await Certificate.findOne({ uniqueId });
     if (!certificate)
       return res.status(404).json({ success: false, message: "Certificate not found" });
+
+    if (certificate.status !== "Approved") {
+      return res.status(403).json({ success: false, message: "Certificate verification is pending approval." });
+    }
 
     res.json({
       success: true,

@@ -56,6 +56,11 @@ const certificateSchema = new mongoose.Schema(
     course: { type: String, required: true },
     duration: { type: String, default: "" },
     mentor: { type: String, default: "" },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved"],
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );

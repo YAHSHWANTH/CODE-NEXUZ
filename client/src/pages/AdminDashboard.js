@@ -18,6 +18,7 @@ const AdminDashboard = () => {
     usersCount: 0,
     enrollmentsCount: 0,
     certificatesCount: 0,
+    approvedCertificatesCount: 0,
     totalIncome: 0,
   });
 
@@ -34,12 +35,14 @@ const AdminDashboard = () => {
       const usersList = usersRes.data?.data || usersRes.data || [];
       const enrollmentsList = enrollmentsRes.data?.data || enrollmentsRes.data || [];
       const certificatesList = certificatesRes.data?.data || certificatesRes.data || [];
+      const approvedCount = certificatesList.filter(c => c.status === "Approved").length;
 
       setStats({
         usersCount: usersList.length,
         enrollmentsCount: enrollmentsList.length,
         certificatesCount: certificatesList.length,
-        totalIncome: certificatesList.length * 150,
+        approvedCertificatesCount: approvedCount,
+        totalIncome: approvedCount * 150,
       });
     } catch (err) {
       console.error("❌ Error fetching analysis stats:", err);
@@ -75,7 +78,13 @@ const AdminDashboard = () => {
       } else if (type === "enrollments") {
         setStats(prev => ({ ...prev, enrollmentsCount: list.length }));
       } else if (type === "certificates") {
-        setStats(prev => ({ ...prev, certificatesCount: list.length, totalIncome: list.length * 155 }));
+        const approvedCount = list.filter(c => c.status === "Approved").length;
+        setStats(prev => ({
+          ...prev,
+          certificatesCount: list.length,
+          approvedCertificatesCount: approvedCount,
+          totalIncome: approvedCount * 150
+        }));
       }
     } catch (err) {
       console.error(`❌ Error fetching ${type}:`, err);
@@ -141,14 +150,39 @@ const AdminDashboard = () => {
   };
 
   const handleToggleStatus = async (id, currentStatus) => {
-    const nextStatus = currentStatus === "Done" ? "Pending" : "Done";
+    let nextStatus;
+    let url;
+
+    if (activeTab === "enrollments") {
+      nextStatus = currentStatus === "Done" ? "Pending" : "Done";
+      url = `${BASE_URL}/enrollments/${id}/status`;
+    } else if (activeTab === "certificates") {
+      nextStatus = currentStatus === "Approved" ? "Pending" : "Approved";
+      url = `${BASE_URL}/certificates/${id}/status`;
+    } else {
+      return;
+    }
+
     try {
-      const res = await axios.put(`${BASE_URL}/enrollments/${id}/status`, { status: nextStatus });
+      const res = await axios.put(url, { status: nextStatus });
       if (res.data?.success) {
         // Update state locally
         setData((prevData) =>
           prevData.map((row) => (row._id === id ? { ...row, status: nextStatus } : row))
         );
+
+        // Dynamically adjust stats if we toggled certificate status
+        if (activeTab === "certificates") {
+          setStats((prev) => {
+            const change = nextStatus === "Approved" ? 1 : -1;
+            const newApprovedCount = Math.max(0, prev.approvedCertificatesCount + change);
+            return {
+              ...prev,
+              approvedCertificatesCount: newApprovedCount,
+              totalIncome: newApprovedCount * 150,
+            };
+          });
+        }
       }
     } catch (err) {
       console.error("❌ Error toggling status:", err);
@@ -195,8 +229,11 @@ const AdminDashboard = () => {
       (k) => !["_id", "__v", "updatedAt"].includes(k)
     );
 
-    // Ensure status key is present for enrollments tab even if not in DB document yet
+    // Ensure status key is present for tabs even if not in DB document yet
     if (activeTab === "enrollments" && !keys.includes("status")) {
+      keys.push("status");
+    }
+    if (activeTab === "certificates" && !keys.includes("status")) {
       keys.push("status");
     }
 
@@ -218,11 +255,11 @@ const AdminDashboard = () => {
               <tr key={i} className="border-t hover:bg-gray-50">
                 {keys.map((k) => (
                   <td key={k} className="px-4 py-2 text-sm">
-                    {k === "status" && activeTab === "enrollments" ? (
+                    {k === "status" && (activeTab === "enrollments" || activeTab === "certificates") ? (
                       <button
                         onClick={() => handleToggleStatus(row._id, row[k])}
                         className={`px-3 py-1 rounded-full font-bold text-xs shadow-sm transition duration-300 ${
-                          row[k] === "Done"
+                          row[k] === "Done" || row[k] === "Approved"
                             ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                             : "bg-amber-100 text-amber-800 hover:bg-amber-200"
                         }`}
@@ -312,7 +349,7 @@ const AdminDashboard = () => {
               <span className="text-lg font-bold opacity-80">₹</span>
             </div>
             <h4 className="text-4xl font-extrabold">₹{stats.totalIncome.toLocaleString()}</h4>
-            <p className="text-xs mt-2 opacity-70">₹150 earned per certificate issued</p>
+            <p className="text-xs mt-2 opacity-70">₹150 earned per certificate approved</p>
           </div>
         </div>
 
