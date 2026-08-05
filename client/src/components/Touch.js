@@ -39,7 +39,7 @@ const Touch = () => {
                 <FaYoutube />
               </a>
               <a
-                href="https://www.linkedin.com/in/codenexuz-tech-237261427/"
+                href="https://www.linkedin.com/company/kodnexuz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-500 transition"
@@ -105,7 +105,7 @@ const Touch = () => {
           {/* Telegram & Email */}
           <div className="flex flex-col md:flex-row items-center md:space-x-6 text-sm text-gray-300 mt-2">
             <a
-              href="https://t.me/CODENexus032"
+              href="https://t.me/kodnexuz"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 hover:text-blue-400 transition"

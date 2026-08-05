@@ -384,7 +384,7 @@ const EnrollForm = () => {
               <span>
                 LinkedIn –{" "}
                 <a
-                  href="https://www.linkedin.com/in/codenexuz-tech-237261427/"
+                  href="https://www.linkedin.com/company/kodnexuz/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-600 font-semibold underline"
@@ -413,7 +413,7 @@ const EnrollForm = () => {
               <span>
                 Telegram –{" "}
                 <a
-                  href="https://t.me/CODENexus032"
+                  href="https://t.me/kodnexuz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-600 font-semibold underline"
@@ -541,7 +541,7 @@ const EnrollForm = () => {
                 <ul className="list-disc list-inside text-blue-600">
                   <li>
                     <a
-                      href="https://www.linkedin.com/in/codenexuz-tech-237261427/"
+                      href="https://www.linkedin.com/company/kodnexuz/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline"
@@ -551,7 +551,7 @@ const EnrollForm = () => {
                   </li>
                   <li>
                     <a
-                      href="https://t.me/CODENexus032"
+                      href="https://t.me/kodnexuz"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline"
