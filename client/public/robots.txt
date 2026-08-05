@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kodnexuz.vercel.app/sitemap.xml
+Sitemap: https://www.kodnexuz.in/sitemap.xml

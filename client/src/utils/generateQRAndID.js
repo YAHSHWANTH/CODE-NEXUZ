@@ -5,7 +5,7 @@ export const generateQRAndID = async () => {
   const uniqueId = "CNX" + Math.random().toString(36).substring(2, 8).toUpperCase();
 
   // Same QR link for all users
-  const verifyLink = "https://kodnexuz.vercel.app/verify";
+  const verifyLink = "https://www.kodnexuz.in/verify";
 
   // Generate base64 QR (same for all users)
   const qrDataUrl = await QRCode.toDataURL(verifyLink);

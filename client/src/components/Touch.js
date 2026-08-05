@@ -39,7 +39,7 @@ const Touch = () => {
                 <FaYoutube />
               </a>
               <a
-                href="https://www.linkedin.com/in/kodnexuz-tech-65bb99426/"
+                href="https://www.linkedin.com/in/codenexuz-tech-237261427/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-500 transition"
