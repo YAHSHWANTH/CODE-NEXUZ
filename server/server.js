@@ -28,6 +28,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
+// --------------------- HEALTH CHECK / PING ---------------------
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 // --------------------- PATH HELPERS ---------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
