@@ -46,19 +46,19 @@ const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex space-x-8 items-center">
-          <ScrollLink to="home" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+          <ScrollLink to="home" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
             Home
           </ScrollLink>
 
-          <ScrollLink to="features" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+          <ScrollLink to="features" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
             Features
           </ScrollLink>
 
-          <ScrollLink to="how-it-works" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+          <ScrollLink to="how-it-works" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
             Courses
           </ScrollLink>
 
-          <ScrollLink to="faq" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+          <ScrollLink to="faq" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
             FAQ
           </ScrollLink>
 
@@ -83,16 +83,16 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white shadow-lg border-t">
           <div className="px-4 py-4 space-y-4 flex flex-col">
-            <ScrollLink onClick={() => setIsOpen(false)} to="home" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+            <ScrollLink onClick={() => setIsOpen(false)} to="home" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
               Home
             </ScrollLink>
-            <ScrollLink onClick={() => setIsOpen(false)} to="features" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+            <ScrollLink onClick={() => setIsOpen(false)} to="features" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
               Features
             </ScrollLink>
-            <ScrollLink onClick={() => setIsOpen(false)} to="how-it-works" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+            <ScrollLink onClick={() => setIsOpen(false)} to="how-it-works" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
               Courses
             </ScrollLink>
-            <ScrollLink onClick={() => setIsOpen(false)} to="faq" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
+            <ScrollLink onClick={() => setIsOpen(false)} to="faq" smooth={true} duration={800} offset={-70} className="cursor-pointer font-bold hover:text-indigo-600 transition">
               FAQ
             </ScrollLink>
             {/* ✅ UPDATED Shining Career Button */}
