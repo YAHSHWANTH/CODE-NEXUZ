@@ -1,6 +1,7 @@
-import React, { useEffect, lazy, Suspense } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import AuthModal from "./components/AuthModal";
 
 // 🌐 Common Components
 import Navbar from "./components/Navbar";
@@ -69,6 +70,29 @@ const ProtectedRoute = ({ children, role }) => {
 // 🧠 Main App Component
 const App = () => {
   const location = useLocation();
+  const [authType, setAuthType] = useState(null);
+
+  // Global listeners to trigger auth modal
+  useEffect(() => {
+    window.openAuthModal = (type) => setAuthType(type);
+    window.closeAuthModal = () => setAuthType(null);
+    return () => {
+      delete window.openAuthModal;
+      delete window.closeAuthModal;
+    };
+  }, []);
+
+  // Check URL params for login/signup triggers
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const auth = params.get("auth");
+    if (auth === "login" || auth === "signup") {
+      setAuthType(auth);
+      // Clear param to keep URL clean
+      const newSearch = location.search.replace(/[?&]auth=[^&]+/, "").replace(/^&/, "?");
+      window.history.replaceState({}, document.title, location.pathname + newSearch);
+    }
+  }, [location]);
 
   // Hide Navbar/Footer for auth/dashboard/enroll routes + verify
   const hideLayout =
@@ -82,6 +106,13 @@ const App = () => {
   return (
     <>
       <ScrollToTop />
+
+      {/* Global Floating Auth Modal */}
+      <AuthModal
+        isOpen={authType !== null}
+        initialMode={authType || "login"}
+        onClose={() => setAuthType(null)}
+      />
 
       {/* Navbar & running message (hidden on specific pages) */}
       {!hideLayout && <Navbar />}
@@ -150,6 +181,10 @@ const App = () => {
 
           {/* ✅ Certificate Verification Page */}
           <Route path="/verify" element={<VerifyPage />} />
+
+          {/* Legacy redirects */}
+          <Route path="/login" element={<Navigate to="/?auth=login" replace />} />
+          <Route path="/signup" element={<Navigate to="/?auth=signup" replace />} />
 
           {/* 404 */}
           <Route

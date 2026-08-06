@@ -9,21 +9,14 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCareerClick = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        scroller.scrollTo("signup-form", {
-          smooth: true,
-          duration: 800,
-          offset: -70,
-        });
-      }, 300);
-    } else {
-      scroller.scrollTo("signup-form", {
-        smooth: true,
-        duration: 800,
-        offset: -70,
-      });
+    if (window.openAuthModal) {
+      window.openAuthModal("signup");
+    }
+  };
+
+  const handleLoginClick = () => {
+    if (window.openAuthModal) {
+      window.openAuthModal("login");
     }
   };
   const handleLogoClick = () => {
@@ -80,6 +73,14 @@ const Navbar = () => {
           >
             Career
           </button>
+
+          {/* Login Button */}
+          <button
+            onClick={handleLoginClick}
+            className="cursor-pointer bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2 rounded-xl shadow-md hover:shadow-lg hover:opacity-95 transition font-bold"
+          >
+            Login
+          </button>
         </div>
 
         {/* Mobile menu button */}
@@ -111,6 +112,13 @@ const Navbar = () => {
               className="cursor-pointer text-left hover:text-indigo-600 transition"
             >
               Career
+            </button>
+
+            <button
+              onClick={() => { setIsOpen(false); handleLoginClick(); }}
+              className="cursor-pointer text-left font-bold text-purple-600 hover:text-indigo-600 transition"
+            >
+              Login
             </button>
           </div>
         </div>

@@ -87,49 +87,50 @@ app.post("/send-otp", async (req, res) => {
 
   // Log OTP immediately to console so that local developers can proceed even if SMTP fails
   console.log(`🔑 [DEV MODE] Generated OTP for ${cleanEmail}: ${otp}`);
+  // Save successful request history
+  history.lastRequestedAt = now;
+  history.hourlyRequests.push(now);
 
-  try {
-    if (!process.env.BREVO_API_KEY) {
-      throw new Error("BREVO_API_KEY is not configured on the server environment. Please configure it in your Render Dashboard.");
-    }
+  // Send response immediately for extreme speed
+  res.json({ success: true, message: "OTP sent successfully" });
 
-    console.log("📨 Sending OTP via Brevo HTTP API...");
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json",
-        "accept": "application/json"
-      },
-      body: JSON.stringify({
-        sender: {
-          name: "KodNexuz",
-          email: process.env.SMTP_USER || "codenexus032@gmail.com"
+  // Send email asynchronously in the background
+  (async () => {
+    try {
+      if (!process.env.BREVO_API_KEY) {
+        console.error("❌ BREVO_API_KEY is not configured on the server environment.");
+        return;
+      }
+
+      console.log("📨 Sending OTP via Brevo HTTP API (Asynchronously)...");
+      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json",
+          "accept": "application/json"
         },
-        to: [{ email: cleanEmail }],
-        subject: "Your OTP Code - KodNexuz",
-        htmlContent: `<p>Your OTP for KodNexuz is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
-      })
-    });
+        body: JSON.stringify({
+          sender: {
+            name: "KodNexuz",
+            email: process.env.SMTP_USER || "codenexus032@gmail.com"
+          },
+          to: [{ email: cleanEmail }],
+          subject: "Your OTP Code - KodNexuz",
+          htmlContent: `<p>Your OTP for KodNexuz is: <strong>${otp}</strong></p><p>This OTP expires in 5 minutes.</p>`
+        })
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `Brevo API returned status ${response.status}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("❌ Brevo API error details:", errorData);
+      } else {
+        console.log(`✅ OTP sent successfully to ${cleanEmail} via Brevo (Background)`);
+      }
+    } catch (backgroundErr) {
+      console.error("❌ Background Email Sending Error:", backgroundErr);
     }
-
-    // Save successful request history
-    history.lastRequestedAt = now;
-    history.hourlyRequests.push(now);
-
-    console.log(`✅ OTP sent successfully to ${cleanEmail} via Brevo`);
-    res.json({ success: true, message: "OTP sent successfully" });
-  } catch (err) {
-    console.error("❌ Email Sending Error:", err);
-    res.status(500).json({ 
-      success: false, 
-      message: `Failed to deliver OTP: ${err.message || err}`
-    });
-  }
+  })();
 });
 
 // --------------------- VERIFY OTP ---------------------
