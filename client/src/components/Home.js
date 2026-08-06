@@ -42,7 +42,7 @@ const Home = ({ animateKey }) => {
               direction="top"
               highlightStartIndex={2}
               highlightClass="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-extrabold"
-              className="justify-center md:justify-start flex-wrap"
+              className="justify-center md:justify-start flex-wrap md:flex-nowrap whitespace-nowrap"
             />
           </div>
 
