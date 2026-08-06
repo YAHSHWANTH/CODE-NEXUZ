@@ -114,10 +114,10 @@ const Touch = () => {
               <span>Join our Telegram</span>
             </a>
             <a
-              href="mailto:codenexus032@gmail.com"
+              href="mailto:kodnexustech@gmail.com"
               className="hover:text-pink-500 transition mt-2 md:mt-0"
             >
-              codenexus032@gmail.com
+              kodnexustech@gmail.com
             </a>
           </div>
         </div>

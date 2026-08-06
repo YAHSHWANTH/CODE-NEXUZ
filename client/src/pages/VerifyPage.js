@@ -248,10 +248,10 @@ const VerifyPage = () => {
         <div className="mt-6 text-center text-xs text-slate-500 max-w-sm leading-relaxed">
           For further assistance or query status, please contact us at:{" "}
           <a
-            href="mailto:codenexus032@gmail.com"
+            href="mailto:kodnexustech@gmail.com"
             className="text-indigo-600 hover:text-indigo-700 font-bold underline transition duration-200"
           >
-            codenexus032@gmail.com
+            kodnexustech@gmail.com
           </a>
         </div>
 

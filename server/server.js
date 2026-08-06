@@ -118,7 +118,7 @@ app.post("/send-otp", async (req, res) => {
         body: JSON.stringify({
           sender: {
             name: "KodNexuz",
-            email: process.env.SMTP_USER || "codenexus032@gmail.com"
+            email: process.env.SMTP_USER || "kodnexustech@gmail.com"
           },
           to: [{ email: cleanEmail }],
           subject: "Your OTP Code - KodNexuz",
