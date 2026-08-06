@@ -23,7 +23,9 @@ const BlurText = ({
   animationTo,
   easing = t => t,
   onAnimationComplete,
-  stepDuration = 0.35
+  stepDuration = 0.35,
+  highlightStartIndex = -1,
+  highlightClass = ''
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
@@ -81,9 +83,12 @@ const BlurText = ({
         };
         spanTransition.ease = easing;
 
+        const isHighlighted = highlightStartIndex !== -1 && index >= highlightStartIndex;
+        const segmentClass = isHighlighted ? highlightClass : '';
+
         return (
           <motion.span
-            className="inline-block will-change-[transform,filter,opacity]"
+            className={`inline-block will-change-[transform,filter,opacity] ${segmentClass}`}
             key={index}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}

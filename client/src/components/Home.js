@@ -34,20 +34,15 @@ const Home = ({ animateKey }) => {
           </p>
 
           {/* MAIN QUOTE */}
-          <div className="text-[22px] sm:text-[32px] md:text-[36px] lg:text-[38px] xl:text-[48px] font-extrabold leading-tight text-gray-900 flex flex-wrap justify-center md:justify-start gap-x-2 sm:gap-x-3">
+          <div className="text-[22px] sm:text-[32px] md:text-[36px] lg:text-[38px] xl:text-[48px] font-extrabold leading-tight text-gray-900">
             <BlurText
-              text="Learn. Grow."
+              text="Learn. Grow. Get Certified"
               delay={150}
               animateBy="words"
               direction="top"
-              className="text-gray-900"
-            />
-            <BlurText
-              text="Get Certified"
-              delay={150}
-              animateBy="words"
-              direction="top"
-              className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
+              highlightStartIndex={2}
+              highlightClass="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-extrabold"
+              className="justify-center md:justify-start flex-wrap"
             />
           </div>
 
