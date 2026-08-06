@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.12.2",
     "firebase": "^12.3.0",
+    "framer-motion": "^13.0.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.545.0",
     "qrcode": "^1.5.4",
