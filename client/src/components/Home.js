@@ -2,6 +2,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { FaBook, FaGraduationCap, FaCertificate } from "react-icons/fa";
+import BorderGlow from "./BorderGlow";
 
 // Import slick carousel CSS
 import "slick-carousel/slick/slick.css";
@@ -64,17 +65,30 @@ const Home = ({ animateKey }) => {
           </p>
 
           {/* EXPLORE BUTTON */}
-          <button
-            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
-            onClick={() => {
-              const element = document.getElementById("signup-form");
-              if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
+          <BorderGlow
+            edgeSensitivity={20}
+            glowColor="270 100 65"
+            backgroundColor="transparent"
+            borderRadius={8}
+            glowRadius={15}
+            glowIntensity={1.0}
+            coneSpread={30}
+            animated={false}
+            colors={['#c084fc', '#f472b6', '#3b82f6']}
+            className="inline-block"
           >
-            Explore
-          </button>
+            <button
+              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
+              onClick={() => {
+                const element = document.getElementById("signup-form");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
+              Explore
+            </button>
+          </BorderGlow>
         </div>
 
       {/* Right Side - Carousel */}

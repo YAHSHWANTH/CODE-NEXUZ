@@ -17,18 +17,31 @@ const Careers = () => {
               Whether you are a developer, designer, or strategist, every contribution 
               drives progress and shapes the future of technology.
             </p>
-            <button
-              onClick={() => {
-                if (window.openAuthModal) {
-                  window.openAuthModal("signup");
-                } else {
-                  document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
+            <BorderGlow
+              edgeSensitivity={20}
+              glowColor="270 100 65"
+              backgroundColor="transparent"
+              borderRadius={8}
+              glowRadius={15}
+              glowIntensity={1.0}
+              coneSpread={30}
+              animated={false}
+              colors={['#c084fc', '#f472b6', '#3b82f6']}
+              className="inline-block"
             >
-              Start your journey
-            </button>
+              <button
+                onClick={() => {
+                  if (window.openAuthModal) {
+                    window.openAuthModal("signup");
+                  } else {
+                    document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg"
+              >
+                Start your journey
+              </button>
+            </BorderGlow>
           </div>
           <div className="flex justify-center">
             <img src="/stlogo.png" alt="Careers" width="438" height="438" className="max-w-full h-auto max-h-[350px] md:max-h-full" />
