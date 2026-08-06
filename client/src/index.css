@@ -60,3 +60,14 @@
        url('~slick-carousel/slick/fonts/slick.ttf') format('truetype'),
        url('~slick-carousel/slick/fonts/slick.svg#slick') format('svg');
 }
+
+/* 🚀 Shifting gradient shine animation for attracting clicks */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}

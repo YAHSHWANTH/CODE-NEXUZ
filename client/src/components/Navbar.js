@@ -14,11 +14,7 @@ const Navbar = () => {
     }
   };
 
-  const handleLoginClick = () => {
-    if (window.openAuthModal) {
-      window.openAuthModal("login");
-    }
-  };
+
   const handleLogoClick = () => {
     if (location.pathname !== "/") {
       navigate("/");
@@ -66,20 +62,12 @@ const Navbar = () => {
             FAQ
           </ScrollLink>
 
-          {/* ✅ UPDATED Career Button */}
+          {/* ✅ UPDATED Shining Career Button */}
           <button
             onClick={handleCareerClick}
-            className="cursor-pointer hover:text-indigo-600 transition"
+            className="cursor-pointer bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white px-5 py-2 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-bold animate-gradient-shift"
           >
             Career
-          </button>
-
-          {/* Login Button */}
-          <button
-            onClick={handleLoginClick}
-            className="cursor-pointer bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2 rounded-xl shadow-md hover:shadow-lg hover:opacity-95 transition font-bold"
-          >
-            Login
           </button>
         </div>
 
@@ -107,18 +95,12 @@ const Navbar = () => {
             <ScrollLink onClick={() => setIsOpen(false)} to="faq" smooth={true} duration={800} offset={-70} className="cursor-pointer hover:text-indigo-600 transition">
               FAQ
             </ScrollLink>
+            {/* ✅ UPDATED Shining Career Button */}
             <button
               onClick={() => { setIsOpen(false); handleCareerClick(); }}
-              className="cursor-pointer text-left hover:text-indigo-600 transition"
+              className="cursor-pointer text-center font-bold text-white bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 px-4 py-2 rounded-xl transition duration-300 animate-gradient-shift"
             >
               Career
-            </button>
-
-            <button
-              onClick={() => { setIsOpen(false); handleLoginClick(); }}
-              className="cursor-pointer text-left font-bold text-purple-600 hover:text-indigo-600 transition"
-            >
-              Login
             </button>
           </div>
         </div>
