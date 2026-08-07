@@ -69,7 +69,7 @@ const VerifyPage = () => {
           onClick={() => window.location.href = "/"}
         >
           <img 
-            src="/logoo.png" 
+            src="/logo.png" 
             alt="KodNexuz Logo" 
             width="160" 
             height="56" 
