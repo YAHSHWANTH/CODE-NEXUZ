@@ -83,7 +83,7 @@ const VerifyPage = () => {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 w-full max-w-4xl px-4 py-12 flex flex-col items-center justify-center relative z-10">
+      <main className="flex-1 w-full max-w-4xl mx-auto px-4 py-12 flex flex-col items-center justify-center relative z-10">
         
         {/* Core Verification Card wrapped in BorderGlow */}
         <BorderGlow
