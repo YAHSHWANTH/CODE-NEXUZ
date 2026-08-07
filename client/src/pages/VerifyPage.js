@@ -63,7 +63,7 @@ const VerifyPage = () => {
       </div>
       
       {/* Top Clean Header Bar matching Navbar */}
-      <header className="w-full bg-white border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm z-10">
+      <header className="w-full bg-[#030014]/30 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center z-10">
         <div 
           className="flex items-center space-x-3 cursor-pointer"
           onClick={() => window.location.href = "/"}
@@ -77,7 +77,7 @@ const VerifyPage = () => {
             className="h-14 w-auto object-contain py-1" 
           />
         </div>
-        <div className="hidden md:flex items-center space-x-2 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+        <div className="hidden md:flex items-center space-x-2 text-xs font-semibold text-slate-400 uppercase tracking-widest">
           <span>Official Verification Hub</span>
         </div>
       </header>
