@@ -13,6 +13,9 @@ const AdminDashboard = () => {
   // QR Code display states
   const [qrData, setQrData] = useState(null); 
 
+  const [themeSetting, setThemeSetting] = useState("galaxy");
+  const [updatingTheme, setUpdatingTheme] = useState(false);
+
   // Stats state for analysis section
   const [stats, setStats] = useState({
     usersCount: 0,
@@ -99,14 +102,34 @@ const AdminDashboard = () => {
     loadStats();
   }, [loadStats]);
 
+  // Load verification page background theme on mount
+  const loadThemeSetting = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com"}/api/settings/verify-theme`
+      );
+      if (res.data?.success && res.data?.value) {
+        setThemeSetting(res.data.value);
+      }
+    } catch (err) {
+      console.error("❌ Error loading theme setting:", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadThemeSetting();
+  }, [loadThemeSetting]);
+
   // Fetch individual list data or stats based on active tab selection
   useEffect(() => {
     if (activeTab === "analyze") {
       loadStats();
+    } else if (activeTab === "settings") {
+      loadThemeSetting();
     } else {
       fetchData(activeTab);
     }
-  }, [activeTab, fetchData, loadStats]);
+  }, [activeTab, fetchData, loadStats, loadThemeSetting]);
 
   const handleDownload = (type) => {
     if (!data || !data.length) {
@@ -193,6 +216,123 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
+  };
+
+  const handleUpdateTheme = async (newTheme) => {
+    setUpdatingTheme(true);
+    try {
+      const res = await axios.put(`${BASE_URL}/settings/verify-theme`, { value: newTheme });
+      if (res.data?.success) {
+        setThemeSetting(newTheme);
+      } else {
+        alert("Failed to update theme");
+      }
+    } catch (err) {
+      console.error("❌ Error updating theme:", err);
+      alert("Failed to update theme");
+    } finally {
+      setUpdatingTheme(false);
+    }
+  };
+
+  const renderSettings = () => {
+    const themes = [
+      {
+        id: "none",
+        name: "Solid Dark Theme",
+        description: "No animations or canvas elements. A clean solid space dark background.",
+        bgClass: "bg-gradient-to-br from-slate-950 to-slate-900 border-slate-800/80",
+        previewDot: "bg-slate-600"
+      },
+      {
+        id: "galaxy",
+        name: "Deep Space Galaxy",
+        description: "Interactive mouse-repelling glowing space stars animation.",
+        bgClass: "bg-gradient-to-br from-indigo-950 to-slate-900 border-indigo-500/30",
+        previewDot: "bg-purple-500"
+      },
+      {
+        id: "liquid-ether",
+        name: "Liquid Ether",
+        description: "Fluid velocity particle waves dynamic canvas background.",
+        bgClass: "bg-gradient-to-br from-blue-950 via-purple-950 to-slate-900 border-purple-500/30",
+        previewDot: "bg-pink-500"
+      },
+      {
+        id: "radar",
+        name: "Radar Scan",
+        description: "Radial vector grids sweep and radar scan line scanner.",
+        bgClass: "bg-gradient-to-br from-slate-950 to-purple-950 border-violet-500/30",
+        previewDot: "bg-violet-600"
+      },
+      {
+        id: "dot-grid",
+        name: "Magnetic Dot Grid",
+        description: "GSAP magnetic inertia interactive dot canvas mesh grid.",
+        bgClass: "bg-gradient-to-br from-gray-900 to-indigo-950 border-blue-500/30",
+        previewDot: "bg-blue-500"
+      }
+    ];
+
+    return (
+      <div className="space-y-6 animate-slideIn">
+        <div className="border-b pb-4">
+          <h3 className="text-xl font-bold text-gray-800">Verification Page Theme Settings</h3>
+          <p className="text-sm text-gray-500 mt-1">
+            Choose the interactive background theme to show on the public Verification Page (www.kodnexuz.in/verify).
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {themes.map((t) => {
+            const isSelected = themeSetting === t.id;
+            return (
+              <div
+                key={t.id}
+                onClick={() => !updatingTheme && handleUpdateTheme(t.id)}
+                className={`cursor-pointer rounded-2xl border-2 p-6 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between ${t.bgClass} ${
+                  isSelected
+                    ? "ring-4 ring-pink-500/40 border-pink-500 scale-[1.02]"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className={`w-4 h-4 rounded-full ${t.previewDot} shadow`}></span>
+                    <h4 className="text-lg font-bold text-white">{t.name}</h4>
+                  </div>
+                  {isSelected && (
+                    <span className="bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                      Active
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                  {t.description}
+                </p>
+
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                    {t.id === "none" ? "CSS Baseline" : t.id === "galaxy" ? "OGL Canvas" : t.id === "liquid-ether" ? "Three.js WebGL" : t.id === "radar" ? "OGL Canvas" : "GSAP + Canvas"}
+                  </span>
+                  <button
+                    disabled={updatingTheme}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 ${
+                      isSelected
+                        ? "bg-pink-500 text-white cursor-default"
+                        : "bg-white/10 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {isSelected ? "Selected" : "Select Theme"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
   };
 
   const handleGenerateQR = async (id) => {
@@ -493,7 +633,7 @@ const AdminDashboard = () => {
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 items-center w-full">
           <div className="flex flex-wrap gap-2">
-            {["users", "enrollments", "certificates", "analyze"].map((tab) => (
+            {["users", "enrollments", "certificates", "analyze", "settings"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -503,12 +643,12 @@ const AdminDashboard = () => {
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >
-                {tab === "analyze" ? "Analyze 📊" : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                {tab === "analyze" ? "Analyze 📊" : tab === "settings" ? "Settings ⚙️" : tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
             ))}
           </div>
 
-          {activeTab !== "analyze" && (
+          {activeTab !== "analyze" && activeTab !== "settings" && (
             <button
               onClick={() => handleDownload(activeTab)}
               className="w-full sm:w-auto ml-0 sm:ml-auto bg-gradient-to-r from-green-400 to-blue-500 text-white px-4 py-2 rounded-lg shadow hover:scale-105 transition text-sm sm:text-base text-center"
@@ -518,7 +658,7 @@ const AdminDashboard = () => {
           )}
         </div>
 
-        {/* Table / Analysis Display */}
+        {/* Table / Analysis Display / Settings */}
         {loading ? (
           <div className="text-center text-gray-500 py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
@@ -526,6 +666,8 @@ const AdminDashboard = () => {
           </div>
         ) : activeTab === "analyze" ? (
           renderAnalysis()
+        ) : activeTab === "settings" ? (
+          renderSettings()
         ) : (
           renderTable()
         )}

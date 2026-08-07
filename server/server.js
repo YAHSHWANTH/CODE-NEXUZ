@@ -15,6 +15,7 @@ import QRCode from "qrcode";
 import User from "./models/userModel.js";
 import Certificate from "./models/certificateModel.js";
 import Enrollment from "./models/enrollModel.js"; // ✅ Added to fetch enrollments
+import Settings from "./models/settingsModel.js";
 
 // Routes
 import enrollRoutes from "./routes/enrollRoutes.js";
@@ -328,6 +329,35 @@ app.get("/api/admin/certificates", async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "Failed to fetch certificates" });
+  }
+});
+
+// ✅ Fetch global setting by key (Public)
+app.get("/api/settings/:key", async (req, res) => {
+  const { key } = req.params;
+  try {
+    const setting = await Settings.findOne({ key });
+    res.status(200).json({ success: true, value: setting ? setting.value : null });
+  } catch (err) {
+    console.error(`❌ Fetch Setting ${key} Error:`, err);
+    res.status(500).json({ success: false, message: "Failed to fetch setting" });
+  }
+});
+
+// ✅ Update global setting by key (Admin)
+app.put("/api/admin/settings/:key", async (req, res) => {
+  const { key } = req.params;
+  const { value } = req.body;
+  try {
+    const updated = await Settings.findOneAndUpdate(
+      { key },
+      { value },
+      { new: true, upsert: true }
+    );
+    res.status(200).json({ success: true, data: updated });
+  } catch (err) {
+    console.error(`❌ Update Setting ${key} Error:`, err);
+    res.status(500).json({ success: false, message: "Failed to update setting" });
   }
 });
 
