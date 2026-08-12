@@ -670,77 +670,96 @@ Guidelines for Actions:
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
-    // Smart Multi-Endpoint Resolution (Google AI Studio vs Google Cloud Vertex AI)
-    let targetUrl;
-    let fetchHeaders = { "Content-Type": "application/json" };
+    // Multi-model & multi-endpoint fallback loop (gemini-1.5-flash, gemini-1.5-flash-latest, gemini-pro, gemini-2.0-flash-exp)
+    const candidateModels = [
+      "gemini-1.5-flash",
+      "gemini-1.5-flash-latest",
+      "gemini-pro",
+      "gemini-1.5-pro",
+      "gemini-2.0-flash-exp"
+    ];
 
-    if (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29.")) {
-      // User provided a Google Cloud / Vertex AI OAuth access token
-      targetUrl = "https://us-central1-aiplatform.googleapis.com/v1/projects/generative-language/locations/us-central1/publishers/google/models/gemini-1.5-flash:generateContent";
-      fetchHeaders["Authorization"] = `Bearer ${geminiKey}`;
-    } else {
-      // User provided a Google AI Studio API Key
-      targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(geminiKey)}`;
-    }
+    let response = null;
+    let lastErrText = "";
 
-    let response = await fetch(targetUrl, {
-      method: "POST",
-      headers: fetchHeaders,
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
-              }
-            ]
-          }
-        ],
-        generationConfig: {
-          responseMimeType: "application/json"
-        }
-      })
-    });
-
-    // Fallback: If Vertex AI returned non-200 for AQ. token, retry AI Studio with x-goog-api-key header
-    if (!response.ok && (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29."))) {
-      console.log("🔄 Retrying with AI Studio x-goog-api-key fallback...");
-      const altUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-      response = await fetch(altUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": geminiKey
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            responseMimeType: "application/json"
-          }
-        })
-      });
-    }
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("❌ Gemini API Error:", errText);
+    for (const model of candidateModels) {
+      const endpoints = [];
       
-      if (errText.includes("API_KEY_SERVICE_BLOCKED") || errText.includes("UNAUTHENTICATED")) {
+      if (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29.")) {
+        // Vertex AI Bearer Auth Endpoint
+        endpoints.push({
+          url: `https://us-central1-aiplatform.googleapis.com/v1/projects/generative-language/locations/us-central1/publishers/google/models/${model}:generateContent`,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${geminiKey}`
+          }
+        });
+        // AI Studio x-goog-api-key Header Endpoint
+        endpoints.push({
+          url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": geminiKey
+          }
+        });
+      }
+      
+      // Standard AI Studio ?key= Query Parameter Endpoint
+      endpoints.push({
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(geminiKey)}`,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      for (const ep of endpoints) {
+        try {
+          console.log(`🤖 Attempting Gemini model ${model} at ${ep.url.split('?')[0]}...`);
+          const res = await fetch(ep.url, {
+            method: "POST",
+            headers: ep.headers,
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
+                    }
+                  ]
+                }
+              ],
+              generationConfig: {
+                responseMimeType: "application/json"
+              }
+            })
+          });
+
+          if (res.ok) {
+            response = res;
+            break;
+          } else {
+            lastErrText = await res.text();
+            console.log(`⚠️ Model ${model} returned HTTP ${res.status}: ${lastErrText}`);
+          }
+        } catch (e) {
+          console.error(`❌ Exception connecting to ${model}:`, e);
+        }
+      }
+
+      if (response && response.ok) break;
+    }
+
+    if (!response || !response.ok) {
+      console.error("❌ All candidate Gemini models failed. Last Error:", lastErrText);
+      
+      if (lastErrText.includes("API_KEY_SERVICE_BLOCKED") || lastErrText.includes("UNAUTHENTICATED")) {
         return res.status(401).json({
           success: false,
           message: "Google Cloud blocked this OAuth token (AQ...). Please generate a standard Google AI Studio API Key (starting with AIzaSy...) at https://aistudio.google.com/app/apikey"
         });
       }
 
-      return res.status(response.status).json({ success: false, message: "Gemini API failure: " + errText });
+      return res.status(400).json({ success: false, message: "Gemini API failure: " + (lastErrText || "All candidate models returned 404/400") });
     }
 
     const geminiRes = await response.json();
