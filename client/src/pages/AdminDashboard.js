@@ -16,6 +16,9 @@ const AdminDashboard = () => {
   const [themeSetting, setThemeSetting] = useState("galaxy");
   const [updatingTheme, setUpdatingTheme] = useState(false);
 
+  // Secure context menu state
+  const [contextMenu, setContextMenu] = useState(null);
+
   // Stats state for analysis section
   const [stats, setStats] = useState({
     usersCount: 0,
@@ -119,6 +122,13 @@ const AdminDashboard = () => {
   useEffect(() => {
     loadThemeSetting();
   }, [loadThemeSetting]);
+
+  // Close context menu on any outside click
+  useEffect(() => {
+    const closeMenu = () => setContextMenu(null);
+    window.addEventListener("click", closeMenu);
+    return () => window.removeEventListener("click", closeMenu);
+  }, []);
 
   // Fetch individual list data or stats based on active tab selection
   useEffect(() => {
@@ -361,6 +371,50 @@ const AdminDashboard = () => {
     a.click();
   };
 
+  const handleRowContextMenu = (e, row) => {
+    e.preventDefault();
+    setContextMenu({
+      x: e.clientX,
+      y: e.clientY,
+      rowId: row._id
+    });
+  };
+
+  const handleDeleteRecord = async (id) => {
+    const password = window.prompt("Enter delete authorization password:");
+    if (password === null) return; // user cancelled
+
+    if (password !== "Boyamma@109") {
+      alert("❌ Access denied: Incorrect password.");
+      return;
+    }
+
+    if (!window.confirm("Are you sure you want to permanently delete this record? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const apiBase = (process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com");
+      const deleteUrl = `${apiBase}/api/admin/${activeTab}/${id}`;
+      const res = await axios.delete(deleteUrl, {
+        headers: { "x-delete-password": password }
+      });
+
+      if (res.data?.success) {
+        alert("✅ Record deleted successfully.");
+        // Refresh active list
+        fetchData(activeTab);
+        // Refresh stats
+        loadStats();
+      } else {
+        alert("❌ Failed to delete record: " + (res.data?.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("❌ Error deleting record:", err);
+      alert("❌ Error deleting record: " + (err.response?.data?.message || err.message));
+    }
+  };
+
   const renderTable = () => {
     if (!data.length)
       return <p className="text-gray-500 text-center text-lg">No records found.</p>;
@@ -396,7 +450,11 @@ const AdminDashboard = () => {
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr key={i} className="border-t hover:bg-gray-50">
+              <tr
+                key={i}
+                className="border-t hover:bg-gray-50 cursor-pointer select-none"
+                onContextMenu={(e) => handleRowContextMenu(e, row)}
+              >
                 {keys.map((k) => (
                   <td key={k} className="px-4 py-2 text-sm">
                     {k === "status" && (activeTab === "enrollments" || activeTab === "certificates") ? (
@@ -716,6 +774,20 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
+
+      {contextMenu && (
+        <div
+          className="fixed bg-white border border-gray-200 rounded-lg shadow-xl py-1 z-50 animate-fadeIn min-w-[150px]"
+          style={{ top: contextMenu.y, left: contextMenu.x }}
+        >
+          <button
+            onClick={() => handleDeleteRecord(contextMenu.rowId)}
+            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-semibold transition"
+          >
+            Delete this record
+          </button>
+        </div>
+      )}
 
       {/* Modal for Certificate Form */}
       {showModal && <DocumentFormModal onClose={() => setShowModal(false)} />}

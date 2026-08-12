@@ -519,6 +519,54 @@ app.get("/api/verify/:uniqueId", async (req, res) => {
   }
 });
 
+// --------------------- SECURE RECORD DELETION ---------------------
+const verifyDeletePassword = (req, res, next) => {
+  const password = req.headers["x-delete-password"];
+  if (password !== "Boyamma@109") {
+    return res.status(403).json({ success: false, message: "Unauthorized: Invalid delete password." });
+  }
+  next();
+};
+
+// ✅ Delete a user
+app.delete("/api/admin/users/:id", verifyDeletePassword, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await User.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ success: false, message: "User not found" });
+    res.status(200).json({ success: true, message: "User deleted successfully" });
+  } catch (err) {
+    console.error("❌ Delete User Error:", err);
+    res.status(500).json({ success: false, message: "Server error deleting user" });
+  }
+});
+
+// ✅ Delete an enrollment
+app.delete("/api/admin/enrollments/:id", verifyDeletePassword, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Enrollment.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ success: false, message: "Enrollment not found" });
+    res.status(200).json({ success: true, message: "Enrollment deleted successfully" });
+  } catch (err) {
+    console.error("❌ Delete Enrollment Error:", err);
+    res.status(500).json({ success: false, message: "Server error deleting enrollment" });
+  }
+});
+
+// ✅ Delete a certificate
+app.delete("/api/admin/certificates/:id", verifyDeletePassword, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Certificate.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ success: false, message: "Certificate not found" });
+    res.status(200).json({ success: true, message: "Certificate deleted successfully" });
+  } catch (err) {
+    console.error("❌ Delete Certificate Error:", err);
+    res.status(500).json({ success: false, message: "Server error deleting certificate" });
+  }
+});
+
 // debug endpoint
 app.get("/api/debug-env", (req, res) => {
   res.json({
