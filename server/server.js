@@ -38,10 +38,79 @@ app.get("/ping", (req, res) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// --------------------- ENROLLMENT MIGRATION ---------------------
+const runEnrollmentMigration = async () => {
+  try {
+    const unmigratedCount = await Enrollment.countDocuments({
+      $or: [
+        { uniqueId: { $exists: false } },
+        { uniqueId: null },
+        { uniqueId: "" }
+      ]
+    });
+
+    if (unmigratedCount === 0) {
+      console.log("ℹ️ No unmigrated enrollments found.");
+      return;
+    }
+
+    console.log(`🚀 Starting migration for ${unmigratedCount} enrollments...`);
+    const enrollments = await Enrollment.find({
+      $or: [
+        { uniqueId: { $exists: false } },
+        { uniqueId: null },
+        { uniqueId: "" }
+      ]
+    });
+
+    for (const enroll of enrollments) {
+      const normalizedEmail = enroll.email.trim().toLowerCase();
+      // Find matching certificate by email (case-insensitive)
+      const matchedCert = await Certificate.findOne({
+        email: { $regex: new RegExp(`^${normalizedEmail}$`, "i") }
+      });
+
+      if (matchedCert && matchedCert.uniqueId) {
+        enroll.uniqueId = matchedCert.uniqueId;
+        await enroll.save();
+        console.log(`✅ Matched & updated enrollment for ${enroll.email} with uniqueId ${matchedCert.uniqueId}`);
+      } else {
+        // Generate a new unique ID that does not collide in either collection
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let isUnique = false;
+        let tempId = "";
+        while (!isUnique) {
+          let suffix = "";
+          for (let i = 0; i < 4; i++) {
+            suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          tempId = `CNX${suffix}`;
+          const [eExists, cExists] = await Promise.all([
+            Enrollment.findOne({ uniqueId: tempId }),
+            Certificate.findOne({ uniqueId: tempId })
+          ]);
+          if (!eExists && !cExists) {
+            isUnique = true;
+          }
+        }
+        enroll.uniqueId = tempId;
+        await enroll.save();
+        console.log(`✅ Generated new uniqueId ${tempId} for enrollment ${enroll.email}`);
+      }
+    }
+    console.log("🎉 Enrollment migration completed successfully!");
+  } catch (err) {
+    console.error("❌ Enrollment migration failed:", err);
+  }
+};
+
 // --------------------- MONGODB CONNECTION ---------------------
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/test")
-  .then(() => console.log("✅ MongoDB Connected Successfully"))
+  .then(async () => {
+    console.log("✅ MongoDB Connected Successfully");
+    await runEnrollmentMigration();
+  })
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // --------------------- OTP STORE & HISTORY ---------------------
@@ -274,6 +343,22 @@ app.get("/api/admin/enrollments", async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "Failed to fetch enrollments" });
+  }
+});
+
+// ✅ Check if enrollment exists by email (Admin helper)
+app.get("/api/admin/enrollments/check-email", async (req, res) => {
+  const { email } = req.query;
+  if (!email) {
+    return res.status(400).json({ success: false, message: "Email parameter is required" });
+  }
+  try {
+    const normalizedEmail = email.trim().toLowerCase();
+    const enrollment = await Enrollment.findOne({ email: { $regex: new RegExp(`^${normalizedEmail}$`, "i") } });
+    res.status(200).json({ success: true, exists: !!enrollment, enrollment });
+  } catch (err) {
+    console.error("❌ Check Enrollment Email Error:", err);
+    res.status(500).json({ success: false, message: "Server error checking email" });
   }
 });
 

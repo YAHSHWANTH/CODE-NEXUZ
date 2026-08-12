@@ -382,11 +382,15 @@ const AdminDashboard = () => {
         <table className="min-w-full border border-gray-300 rounded-xl">
           <thead className="bg-gray-100">
             <tr>
-              {keys.map((key) => (
-                <th key={key} className="px-4 py-2 text-left capitalize">
-                  {key.replace(/([A-Z])/g, " $1")}
-                </th>
-              ))}
+              {keys.map((key) => {
+                let displayName = key.replace(/([A-Z])/g, " $1");
+                if (key === "uniqueId") displayName = "Unique ID";
+                return (
+                  <th key={key} className="px-4 py-2 text-left capitalize">
+                    {displayName}
+                  </th>
+                );
+              })}
               {activeTab === "certificates" && <th className="px-4 py-2">QR</th>}
             </tr>
           </thead>

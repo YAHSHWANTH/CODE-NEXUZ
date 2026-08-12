@@ -34,7 +34,22 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
     if (!validate()) return;
     setLoading(true);
     try {
-      // Use your existing backend endpoint
+      const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
+
+      // 1. Check if enrollment exists for this email
+      const checkRes = await axios.get(`${apiBase}/api/admin/enrollments/check-email?email=${encodeURIComponent(form.email.trim())}`);
+      if (checkRes.data && !checkRes.data.exists) {
+        const proceed = window.confirm(
+          `⚠️ Warning: No matching enrollment found for the email: "${form.email.trim()}".\n\n` +
+          `Do you want to generate a new Unique ID and create this certificate anyway?`
+        );
+        if (!proceed) {
+          setLoading(false);
+          return;
+        }
+      }
+
+      // 2. Submit the certificate payload
       const payload = {
         fullName: form.fullName,
         email: form.email,
@@ -46,8 +61,7 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
         mentor: form.mentor,
       };
 
-      const res = await axios.post((process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com") + "/api/certificates/create", payload);
-
+      const res = await axios.post(`${apiBase}/api/certificates/create`, payload);
 
       if (res.data && res.data.success) {
         alert("✅ Data saved and CNX ID generated: " + (res.data.certId || ""));
