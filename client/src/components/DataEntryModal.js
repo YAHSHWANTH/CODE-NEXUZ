@@ -37,8 +37,19 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
       const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
 
       // 1. Check if enrollment exists for this email
-      const checkRes = await axios.get(`${apiBase}/api/admin/enrollments/check-email?email=${encodeURIComponent(form.email.trim())}`);
-      if (checkRes.data && !checkRes.data.exists) {
+      let exists = false;
+      let checkFailed = false;
+      try {
+        const checkRes = await axios.get(`${apiBase}/api/admin/enrollments/check-email?email=${encodeURIComponent(form.email.trim())}`);
+        if (checkRes.data && checkRes.data.exists) {
+          exists = true;
+        }
+      } catch (checkErr) {
+        console.warn("⚠️ Enrollment email check endpoint failed or not deployed yet:", checkErr);
+        checkFailed = true;
+      }
+
+      if (!exists && !checkFailed) {
         const proceed = window.confirm(
           `⚠️ Warning: No matching enrollment found for the email: "${form.email.trim()}".\n\n` +
           `Do you want to generate a new Unique ID and create this certificate anyway?`
