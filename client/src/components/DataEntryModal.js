@@ -15,6 +15,7 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
   });
   const [loading, setLoading] = useState(false);
   const [enrollments, setEnrollments] = useState([]);
+  const [showWarningModal, setShowWarningModal] = useState(false);
 
   // Fetch the current enrollments list when modal loads to verify emails offline/in-memory
   useEffect(() => {
@@ -45,31 +46,10 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+  const saveCertificateData = async () => {
     setLoading(true);
     try {
       const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
-
-      // 1. Check if enrollment exists for this email (in-memory lookup against fetched enrollments list)
-      const inputEmail = form.email.trim().toLowerCase();
-      const enrollmentExists = enrollments.some(
-        (enroll) => enroll.email && enroll.email.trim().toLowerCase() === inputEmail
-      );
-
-      if (!enrollmentExists) {
-        const proceed = window.confirm(
-          `⚠️ Warning: No matching enrollment found for the email: "${form.email.trim()}".\n\n` +
-          `Do you want to generate a new Unique ID and create this certificate anyway?`
-        );
-        if (!proceed) {
-          setLoading(false);
-          return;
-        }
-      }
-
-      // 2. Submit the certificate payload
       const payload = {
         fullName: form.fullName,
         email: form.email,
@@ -88,7 +68,6 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
         onSuccess && onSuccess(res.data);
         onClose();
       } else {
-        // If your server returns non-standard shape, show message
         alert("❌ Failed to save. " + (res.data?.message || ""));
       }
     } catch (err) {
@@ -96,6 +75,23 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
       alert("❌ Error saving data. See console for details.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    // Check if enrollment exists for this email (in-memory lookup against fetched enrollments list)
+    const inputEmail = form.email.trim().toLowerCase();
+    const enrollmentExists = enrollments.some(
+      (enroll) => enroll.email && enroll.email.trim().toLowerCase() === inputEmail
+    );
+
+    if (!enrollmentExists) {
+      setShowWarningModal(true);
+    } else {
+      await saveCertificateData();
     }
   };
 
@@ -146,6 +142,47 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
           </button>
         </form>
       </div>
+
+      {showWarningModal && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-[60] animate-fadeIn">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-center transform transition duration-300">
+            {/* Warning Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center border-4 border-amber-200 text-amber-600 animate-pulse">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+            </div>
+            
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Unmatched User</h3>
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              You are generating an unmatched user. No matching enrollment found for the email: <strong className="text-purple-600">{form.email.trim()}</strong>.<br/><br/>
+              Do you want to generate a new Unique ID and create this certificate anyway?
+            </p>
+
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => setShowWarningModal(false)}
+                className="flex-1 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  setShowWarningModal(false);
+                  await saveCertificateData();
+                }}
+                className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-xl font-semibold hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all shadow-md"
+              >
+                Proceed
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
