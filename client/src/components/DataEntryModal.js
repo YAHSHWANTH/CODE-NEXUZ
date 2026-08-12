@@ -1,5 +1,5 @@
 // src/components/DataEntryModal.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const DataEntryModal = ({ onClose, onSuccess }) => {
@@ -14,6 +14,22 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
     mentor: "",
   });
   const [loading, setLoading] = useState(false);
+  const [enrollments, setEnrollments] = useState([]);
+
+  // Fetch the current enrollments list when modal loads to verify emails offline/in-memory
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
+        const res = await axios.get(`${apiBase}/api/admin/enrollments`);
+        const list = res.data?.data || res.data || [];
+        setEnrollments(list);
+      } catch (err) {
+        console.error("❌ Error fetching enrollments inside DataEntryModal:", err);
+      }
+    };
+    fetchEnrollments();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,20 +52,13 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
     try {
       const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
 
-      // 1. Check if enrollment exists for this email
-      let exists = false;
-      let checkFailed = false;
-      try {
-        const checkRes = await axios.get(`${apiBase}/api/admin/enrollments/check-email?email=${encodeURIComponent(form.email.trim())}`);
-        if (checkRes.data && checkRes.data.exists) {
-          exists = true;
-        }
-      } catch (checkErr) {
-        console.warn("⚠️ Enrollment email check endpoint failed or not deployed yet:", checkErr);
-        checkFailed = true;
-      }
+      // 1. Check if enrollment exists for this email (in-memory lookup against fetched enrollments list)
+      const inputEmail = form.email.trim().toLowerCase();
+      const enrollmentExists = enrollments.some(
+        (enroll) => enroll.email && enroll.email.trim().toLowerCase() === inputEmail
+      );
 
-      if (!exists && !checkFailed) {
+      if (!enrollmentExists) {
         const proceed = window.confirm(
           `⚠️ Warning: No matching enrollment found for the email: "${form.email.trim()}".\n\n` +
           `Do you want to generate a new Unique ID and create this certificate anyway?`
