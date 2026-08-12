@@ -413,18 +413,6 @@ const AdminDashboard = () => {
     e?.preventDefault();
     if (!agentPrompt.trim()) return;
 
-    if (geminiKey && (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29."))) {
-      setShowKeyInput(true);
-      const userMsg = agentPrompt.trim();
-      setAgentPrompt("");
-      setChatHistory((prev) => [
-        ...prev,
-        { role: "user", text: userMsg },
-        { role: "agent", text: `⚠️ Invalid Key Format: Your key starts with "${geminiKey.substring(0, 6)}..." which is a Google Cloud CLI token, not a Gemini API key. Google Gemini requires a key starting with "AIzaSy...". Please generate a free key at https://aistudio.google.com/app/apikey and paste it in the settings panel above.` }
-      ]);
-      return;
-    }
-
     const userMsg = agentPrompt.trim();
     setAgentPrompt("");
     setChatHistory((prev) => [...prev, { role: "user", text: userMsg }]);

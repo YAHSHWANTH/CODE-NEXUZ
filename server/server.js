@@ -670,7 +670,7 @@ Guidelines for Actions:
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
-    // Multi-key, Multi-version, & Multi-model Fallback Engine
+    // Multi-key, Multi-version, & Multi-model Fallback Engine (supporting AQ. and AIzaSy key formats)
     const keysToTry = [];
     if (geminiKey && geminiKey.trim()) keysToTry.push(geminiKey.trim());
     if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) {
@@ -691,17 +691,37 @@ Guidelines for Actions:
 
     for (const keyCandidate of keysToTry) {
       for (const model of candidateModels) {
-        const apiUrls = [
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(keyCandidate)}`,
-          `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${encodeURIComponent(keyCandidate)}`
+        const attempts = [
+          // Official 2026 Header Auth for AQ. and AIzaSy keys (x-goog-api-key header)
+          {
+            url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": keyCandidate
+            }
+          },
+          {
+            url: `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent`,
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": keyCandidate
+            }
+          },
+          // Legacy query parameter fallback
+          {
+            url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(keyCandidate)}`,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
         ];
 
-        for (const url of apiUrls) {
+        for (const attempt of attempts) {
           try {
-            console.log(`🤖 Attempting Gemini model ${model}...`);
-            const res = await fetch(url, {
+            console.log(`🤖 Attempting Gemini model ${model} at ${attempt.url.split('?')[0]}...`);
+            const res = await fetch(attempt.url, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: attempt.headers,
               body: JSON.stringify({
                 contents: [
                   {
@@ -726,7 +746,7 @@ Guidelines for Actions:
               console.log(`⚠️ Model ${model} returned HTTP ${res.status}: ${lastErrText}`);
             }
           } catch (e) {
-            console.error(`❌ Exception connecting to ${url}:`, e);
+            console.error(`❌ Exception connecting to ${model}:`, e);
           }
         }
         if (response && response.ok) break;
@@ -736,14 +756,6 @@ Guidelines for Actions:
 
     if (!response || !response.ok) {
       console.error("❌ All candidate Gemini models & keys failed. Last Error:", lastErrText);
-      
-      if (geminiKey && (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29."))) {
-        return res.status(401).json({
-          success: false,
-          message: "Key format invalid: Your key starts with AQ... (Google Cloud CLI token). Please copy an API Key starting with AIzaSy... from Google AI Studio (https://aistudio.google.com/app/apikey)"
-        });
-      }
-
       return res.status(400).json({ success: false, message: "Gemini API failure: " + (lastErrText || "Model authentication failed") });
     }
 
