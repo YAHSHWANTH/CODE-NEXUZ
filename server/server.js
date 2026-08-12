@@ -670,12 +670,22 @@ Guidelines for Actions:
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
-    // Call Gemini API using native fetch
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(geminiKey)}`, {
+    // Smart Multi-Endpoint Resolution (Google AI Studio vs Google Cloud Vertex AI)
+    let targetUrl;
+    let fetchHeaders = { "Content-Type": "application/json" };
+
+    if (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29.")) {
+      // User provided a Google Cloud / Vertex AI OAuth access token
+      targetUrl = "https://us-central1-aiplatform.googleapis.com/v1/projects/generative-language/locations/us-central1/publishers/google/models/gemini-1.5-flash:generateContent";
+      fetchHeaders["Authorization"] = `Bearer ${geminiKey}`;
+    } else {
+      // User provided a Google AI Studio API Key
+      targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(geminiKey)}`;
+    }
+
+    let response = await fetch(targetUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: fetchHeaders,
       body: JSON.stringify({
         contents: [
           {
@@ -692,9 +702,44 @@ Guidelines for Actions:
       })
     });
 
+    // Fallback: If Vertex AI returned non-200 for AQ. token, retry AI Studio with x-goog-api-key header
+    if (!response.ok && (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29."))) {
+      console.log("🔄 Retrying with AI Studio x-goog-api-key fallback...");
+      const altUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+      response = await fetch(altUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": geminiKey
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
+                }
+              ]
+            }
+          ],
+          generationConfig: {
+            responseMimeType: "application/json"
+          }
+        })
+      });
+    }
+
     if (!response.ok) {
       const errText = await response.text();
       console.error("❌ Gemini API Error:", errText);
+      
+      if (errText.includes("API_KEY_SERVICE_BLOCKED") || errText.includes("UNAUTHENTICATED")) {
+        return res.status(401).json({
+          success: false,
+          message: "Google Cloud blocked this OAuth token (AQ...). Please generate a standard Google AI Studio API Key (starting with AIzaSy...) at https://aistudio.google.com/app/apikey"
+        });
+      }
+
       return res.status(response.status).json({ success: false, message: "Gemini API failure: " + errText });
     }
 
