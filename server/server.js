@@ -759,7 +759,8 @@ Guidelines for Actions:
     if (!response || !response.ok) {
       console.log("⚡ External Gemini API unavailable or key authentication error. Executing Intelligent Co-Pilot Analysis Engine fallback...");
       
-      const promptLower = prompt.toLowerCase();
+      const promptTrim = prompt.trim();
+      const promptLower = promptTrim.toLowerCase();
       
       // Compute non-enrolled registered users
       const enrolledEmails = new Set(enrollments.map(e => (e.email || "").toLowerCase().trim()));
@@ -768,7 +769,14 @@ Guidelines for Actions:
       let reply = "";
       let actions = [];
 
-      if (promptLower.includes("enroll") || promptLower.includes("register") || promptLower.includes("warning") || promptLower.includes("mail") || promptLower.includes("email") || promptLower.includes("identify") || promptLower.includes("haven't")) {
+      // 1. Check for casual greetings (hi, hello, hey, etc.)
+      const isGreeting = /^(hi|hello|hey|greetings|good morning|good afternoon|good evening|yo|sup)(\s|!|\.|$)/i.test(promptLower) || promptLower === "hi" || promptLower === "hello" || promptLower === "hey";
+
+      if (isGreeting) {
+        reply = `Hello Admin! 👋 I am your KodNexuz AI Assistant. How can I help you today?\n\nYou can ask me specific questions like:\n* *"Identify registered users who haven't enrolled"* (to draft reminder emails)\n* *"Summarize platform activity"* (for live metrics)\n* *"How many certificates have been issued?"*`;
+      } 
+      // 2. Unenrolled / Non-enrolled users & email drafting
+      else if (promptLower.includes("enroll") || promptLower.includes("register") || promptLower.includes("warning") || promptLower.includes("mail") || promptLower.includes("email") || promptLower.includes("identify") || promptLower.includes("haven't")) {
         if (nonEnrolledUsers.length === 0) {
           reply = `### 🎯 Registration & Enrollment Analysis\n\nGreat news! **All ${users.length} registered users** have successfully enrolled in at least one course on KodNexuz! There are currently no pending non-enrolled students.`;
         } else {
@@ -791,14 +799,25 @@ Guidelines for Actions:
               `<strong>The KodNexuz Team</strong>`
           }));
         }
-      } else {
-        // Summary & Activity
+      } 
+      // 3. Platform stats & summaries
+      else if (promptLower.includes("summary") || promptLower.includes("stats") || promptLower.includes("activity") || promptLower.includes("dashboard") || promptLower.includes("overview") || promptLower.includes("total")) {
         reply = `### 📊 KodNexuz Platform Activity Summary\n\nHere is the live operational summary of our platform:\n\n` +
           `* 👤 **Total Registered Users:** \`${users.length}\`\n` +
           `* 📚 **Active Course Enrollments:** \`${enrollments.length}\`\n` +
           `* 📜 **Issued Certificates:** \`${certificates.length}\`\n` +
           `* ⏳ **Pending Enrolments:** \`${nonEnrolledUsers.length}\`\n\n` +
           `All systems are operating normally. Ask me to find non-enrolled students or draft reminder emails anytime!`;
+      } 
+      // 4. Default intelligent response for specific prompts
+      else {
+        reply = `I analyzed your request: *"${promptTrim}"*\n\n` +
+          `**Current Database Metrics:**\n` +
+          `* Registered Users: \`${users.length}\`\n` +
+          `* Course Enrollments: \`${enrollments.length}\`\n` +
+          `* Certificates Issued: \`${certificates.length}\`\n` +
+          `* Non-enrolled Registrations: \`${nonEnrolledUsers.length}\`\n\n` +
+          `How would you like me to process this data? You can ask me to draft emails to non-enrolled users, summarize activity, or find specific user records!`;
       }
 
       return res.json({
