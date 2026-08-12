@@ -1,17 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import BorderGlow from "../components/BorderGlow";
-import Galaxy from "../components/Galaxy";
-import LiquidEther from "../components/LiquidEther";
 import Radar from "../components/Radar";
-import DotGrid from "../components/DotGrid";
 
 const VerifyPage = () => {
   const [uniqueId, setUniqueId] = useState("");
   const [certificate, setCertificate] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState("galaxy");
+  const [theme, setTheme] = useState("none");
 
   // Load verification page background theme on mount
   useEffect(() => {
@@ -71,26 +68,6 @@ const VerifyPage = () => {
 
   const renderBackground = () => {
     switch (theme) {
-      case "liquid-ether":
-        return (
-          <LiquidEther
-            colors={['#5227FF', '#FF9FFC', '#B497CF']}
-            mouseForce={20}
-            cursorSize={100}
-            isViscous={false}
-            viscous={30}
-            iterationsViscous={32}
-            iterationsPoisson={32}
-            resolution={0.5}
-            isBounce={false}
-            autoDemo={true}
-            autoSpeed={0.5}
-            autoIntensity={2.2}
-            takeoverDuration={0.25}
-            autoResumeDelay={3000}
-            autoRampDuration={0.6}
-          />
-        );
       case "radar":
         return (
           <Radar
@@ -111,34 +88,9 @@ const VerifyPage = () => {
             mouseInfluence={0.1}
           />
         );
-      case "dot-grid":
-        return (
-          <DotGrid
-            dotSize={10}
-            gap={15}
-            baseColor="#5227FF"
-            activeColor="#FF9FFC"
-            proximity={120}
-            shockRadius={250}
-            shockStrength={5}
-            resistance={750}
-            returnDuration={1.5}
-          />
-        );
       case "none":
-        return null;
-      case "galaxy":
       default:
-        return (
-          <Galaxy 
-            mouseRepulsion={true}
-            mouseInteraction={true}
-            density={1.5}
-            glowIntensity={0.6}
-            saturation={0.9}
-            hueShift={280} // Beautiful purple/pink galaxy tone
-          />
-        );
+        return null;
     }
   };
 

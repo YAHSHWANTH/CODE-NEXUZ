@@ -257,32 +257,11 @@ const AdminDashboard = () => {
         previewDot: "bg-slate-600"
       },
       {
-        id: "galaxy",
-        name: "Deep Space Galaxy",
-        description: "Interactive mouse-repelling glowing space stars animation.",
-        bgClass: "bg-gradient-to-br from-indigo-950 to-slate-900 border-indigo-500/30",
-        previewDot: "bg-purple-500"
-      },
-      {
-        id: "liquid-ether",
-        name: "Liquid Ether",
-        description: "Fluid velocity particle waves dynamic canvas background.",
-        bgClass: "bg-gradient-to-br from-blue-950 via-purple-950 to-slate-900 border-purple-500/30",
-        previewDot: "bg-pink-500"
-      },
-      {
         id: "radar",
         name: "Radar Scan",
         description: "Radial vector grids sweep and radar scan line scanner.",
         bgClass: "bg-gradient-to-br from-slate-950 to-purple-950 border-violet-500/30",
         previewDot: "bg-violet-600"
-      },
-      {
-        id: "dot-grid",
-        name: "Magnetic Dot Grid",
-        description: "GSAP magnetic inertia interactive dot canvas mesh grid.",
-        bgClass: "bg-gradient-to-br from-gray-900 to-indigo-950 border-blue-500/30",
-        previewDot: "bg-blue-500"
       }
     ];
 
