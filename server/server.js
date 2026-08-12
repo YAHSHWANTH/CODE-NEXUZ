@@ -666,9 +666,8 @@ Available Data Context:
 
 Guidelines for Actions:
 - If the user asks to "send mail to unregistered/non-enrolled students", identify users in the Registered list whose email is NOT in the Enrolled list.
-- For each identifying non-enrolled user, create a "send_email" action with a personalized, friendly draft email encouraging them to complete their enrollment.
-- The draft email body MUST include our company website link and enrollment instructions:
-  "Visit our website: <a href='https://kodnexuz.in' target='_blank'>https://kodnexuz.in</a><br/>Simply click Login, sign into your account, and click Enroll on your favorite course track!"
+- For each identifying non-enrolled user, create a "send_email" action with a personalized draft email following this EXACT format:
+  "Dear [Name],<br/><br/>We hope you are doing well.<br/><br/>We noticed that you recently registered on the KodNexuz platform but have not yet completed your course enrollment. We encourage you to take the next step and explore our industry-focused technology courses designed to help you develop relevant skills and advance your career.<br/><br/>You can log in to your account and complete your enrollment through our official website: <a href='https://www.kodnexuz.in/' target='_blank'>https://www.kodnexuz.in/</a><br/><br/>We look forward to having you continue your learning journey with KodNexuz.<br/><br/>Best regards,<br/>KodNexuz Team"
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
@@ -788,15 +787,13 @@ Guidelines for Actions:
             type: "send_email",
             to: u.email,
             subject: "🚀 Complete Your Registration & Start Learning on KodNexuz!",
-            body: `Hello ${u.fullName || u.firstName || 'Learner'},<br/><br/>` +
-              `We noticed you recently registered on the <strong>KodNexuz</strong> platform but haven't enrolled in a course yet!<br/><br/>` +
-              `Enrolling is super simple:<br/>` +
-              `1. Visit our website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/>` +
-              `2. Click on <strong>Login</strong> to sign into your account.<br/>` +
-              `3. Browse our industry-standard technology tracks and click <strong>Enroll</strong>!<br/><br/>` +
-              `Start your learning journey today!<br/><br/>` +
+            body: `Dear ${u.fullName || u.firstName || 'Learner'},<br/><br/>` +
+              `We hope you are doing well.<br/><br/>` +
+              `We noticed that you recently registered on the <strong>KodNexuz</strong> platform but have not yet completed your course enrollment. We encourage you to take the next step and explore our industry-focused technology courses designed to help you develop relevant skills and advance your career.<br/><br/>` +
+              `You can log in to your account and complete your enrollment through our official website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/><br/>` +
+              `We look forward to having you continue your learning journey with KodNexuz.<br/><br/>` +
               `Best regards,<br/>` +
-              `<strong>The KodNexuz Team</strong>`
+              `<strong>KodNexuz Team</strong>`
           }));
         }
       } 
@@ -842,13 +839,18 @@ Guidelines for Actions:
       return res.status(500).json({ success: false, message: "Failed to parse Agent JSON response" });
     }
 
-    // Ensure EVERY drafted email contains the official company website link https://www.kodnexuz.in/
+    // Ensure EVERY drafted email follows the exact specified template format
     if (agentResult.actions && Array.isArray(agentResult.actions)) {
       agentResult.actions = agentResult.actions.map(act => {
-        if (act.type === "send_email" && act.body) {
-          if (!act.body.includes("kodnexuz.in")) {
-            act.body += `<br/><br/>Enrolling is super simple:<br/>1. Visit our website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/>2. Click on <strong>Login</strong> to sign into your account.<br/>3. Browse our industry-standard technology tracks and click <strong>Enroll</strong>!`;
-          }
+        if (act.type === "send_email") {
+          const recipientName = act.to ? act.to.split("@")[0] : "Learner";
+          act.body = `Dear ${recipientName},<br/><br/>` +
+            `We hope you are doing well.<br/><br/>` +
+            `We noticed that you recently registered on the <strong>KodNexuz</strong> platform but have not yet completed your course enrollment. We encourage you to take the next step and explore our industry-focused technology courses designed to help you develop relevant skills and advance your career.<br/><br/>` +
+            `You can log in to your account and complete your enrollment through our official website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/><br/>` +
+            `We look forward to having you continue your learning journey with KodNexuz.<br/><br/>` +
+            `Best regards,<br/>` +
+            `<strong>KodNexuz Team</strong>`;
         }
         return act;
       });
