@@ -425,7 +425,7 @@ const AdminDashboard = () => {
             {data.map((row, i) => (
               <tr
                 key={i}
-                className="border-t hover:bg-gray-50 cursor-pointer select-none"
+                className="border-t hover:bg-gray-50 cursor-pointer"
                 onContextMenu={(e) => handleRowContextMenu(e, row)}
               >
                 <td className="px-4 py-2 text-sm font-semibold text-gray-500 w-16">{i + 1}</td>
