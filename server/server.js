@@ -791,7 +791,7 @@ Guidelines for Actions:
             body: `Hello ${u.fullName || u.firstName || 'Learner'},<br/><br/>` +
               `We noticed you recently registered on the <strong>KodNexuz</strong> platform but haven't enrolled in a course yet!<br/><br/>` +
               `Enrolling is super simple:<br/>` +
-              `1. Visit our website: <a href="https://kodnexuz.in" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://kodnexuz.in</a><br/>` +
+              `1. Visit our website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/>` +
               `2. Click on <strong>Login</strong> to sign into your account.<br/>` +
               `3. Browse our industry-standard technology tracks and click <strong>Enroll</strong>!<br/><br/>` +
               `Start your learning journey today!<br/><br/>` +
@@ -840,6 +840,18 @@ Guidelines for Actions:
     } catch (parseErr) {
       console.error("❌ JSON Parse error from Gemini:", rawText);
       return res.status(500).json({ success: false, message: "Failed to parse Agent JSON response" });
+    }
+
+    // Ensure EVERY drafted email contains the official company website link https://www.kodnexuz.in/
+    if (agentResult.actions && Array.isArray(agentResult.actions)) {
+      agentResult.actions = agentResult.actions.map(act => {
+        if (act.type === "send_email" && act.body) {
+          if (!act.body.includes("kodnexuz.in")) {
+            act.body += `<br/><br/>Enrolling is super simple:<br/>1. Visit our website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/>2. Click on <strong>Login</strong> to sign into your account.<br/>3. Browse our industry-standard technology tracks and click <strong>Enroll</strong>!`;
+          }
+        }
+        return act;
+      });
     }
 
     res.json({
