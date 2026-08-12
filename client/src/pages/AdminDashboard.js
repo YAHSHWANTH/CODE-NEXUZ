@@ -689,7 +689,7 @@ const AdminDashboard = () => {
                 </svg>
               </div>
 
-              <h4 className="text-xl font-bold text-gray-800">KodNexuz Co-Pilot</h4>
+              <h4 className="text-xl font-bold text-gray-800">KodNexuz AI</h4>
               <p className="text-gray-400 text-xs mt-1">Humanoid Intelligence Engine</p>
 
               {/* Gemini Key Config Overlay */}
@@ -806,72 +806,115 @@ const AdminDashboard = () => {
 
                     {/* Proposed Actions card inside chat history */}
                     {msg.role === "agent" && msg.actions && msg.actions.length > 0 && (
-                      <div className="mt-3 w-full bg-slate-900 border border-purple-950/45 rounded-2xl p-4 animate-fadeIn max-w-[95%] text-left">
-                        <div className="flex justify-between items-center border-b border-purple-950/40 pb-2 mb-3">
-                          <span className="text-xs text-purple-400 font-bold">🤖 PROPOSED ACTIONS ({msg.actions.length})</span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              // Toggle all select
-                              const hasUnchecked = msg.actions.some((_, i) => !selectedActions[i]);
-                              const newSelections = {};
-                              msg.actions.forEach((_, i) => {
-                                newSelections[i] = hasUnchecked;
-                              });
-                              setSelectedActions(newSelections);
-                            }}
-                            className="text-[10px] text-gray-400 hover:text-purple-400"
-                          >
-                            Toggle All
-                          </button>
+                      <div className="mt-3 w-full bg-slate-900 border border-purple-900/40 rounded-2xl p-4 animate-fadeIn max-w-[95%] text-left shadow-lg">
+                        <div className="flex justify-between items-center border-b border-purple-950/60 pb-2.5 mb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-purple-400 font-bold tracking-wide">✉️ DRAFTED EMAILS ({msg.actions.length})</span>
+                            <span className="text-[10px] text-purple-300 bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-800/40 font-mono">
+                              {msg.actions.filter((_, i) => selectedActions[i]).length} Selected
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newSelections = {};
+                                msg.actions.forEach((_, i) => { newSelections[i] = true; });
+                                setSelectedActions(newSelections);
+                              }}
+                              className="text-[10px] font-semibold text-purple-400 hover:text-purple-300 hover:underline"
+                            >
+                              Select All
+                            </button>
+                            <span className="text-gray-600 text-[10px]">|</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newSelections = {};
+                                msg.actions.forEach((_, i) => { newSelections[i] = false; });
+                                setSelectedActions(newSelections);
+                              }}
+                              className="text-[10px] font-semibold text-gray-400 hover:text-red-400 hover:underline"
+                            >
+                              Deselect All
+                            </button>
+                          </div>
                         </div>
 
                         {/* Actions item checklist */}
-                        <div className="space-y-3 max-h-40 overflow-y-auto pr-1">
-                          {msg.actions.map((act, actIdx) => (
-                            <div key={actIdx} className="flex items-start gap-3 p-2 bg-[#0d0a14] border border-purple-950/20 rounded-xl text-xs">
-                              <input
-                                type="checkbox"
-                                checked={!!selectedActions[actIdx]}
-                                onChange={() => {
+                        <div className="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+                          {msg.actions.map((act, actIdx) => {
+                            const isSelected = !!selectedActions[actIdx];
+                            return (
+                              <div 
+                                key={actIdx} 
+                                onClick={() => {
                                   setSelectedActions(prev => ({
                                     ...prev,
                                     [actIdx]: !prev[actIdx]
                                   }));
                                 }}
-                                className="mt-1 accent-purple-500 rounded"
-                              />
-                              <div className="flex-1">
-                                <div className="font-bold text-slate-200">{act.to}</div>
-                                <div className="text-[10px] text-purple-300 mt-0.5">Subject: {act.subject}</div>
-                                <details className="mt-1 cursor-pointer text-gray-400">
-                                  <summary className="text-[9px] font-bold text-gray-500 hover:text-slate-300">View Draft HTML Body</summary>
-                                  <div 
-                                    className="p-2.5 bg-slate-950 border border-purple-950/40 rounded-lg mt-1 text-[10px] font-sans leading-normal overflow-x-auto text-slate-300"
-                                    dangerouslySetInnerHTML={{ __html: act.body }}
-                                  />
-                                </details>
+                                className={`flex items-start gap-3 p-3 rounded-xl border text-xs transition cursor-pointer select-none ${
+                                  isSelected 
+                                    ? "bg-purple-950/40 border-purple-600/50 text-slate-100" 
+                                    : "bg-slate-950/60 border-slate-800 text-slate-400 opacity-60 hover:opacity-100"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={isSelected}
+                                  onChange={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedActions(prev => ({
+                                      ...prev,
+                                      [actIdx]: !prev[actIdx]
+                                    }));
+                                  }}
+                                  className="mt-1 w-4 h-4 accent-purple-500 rounded cursor-pointer"
+                                />
+                                <div className="flex-1">
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-slate-100 text-xs">{act.to}</span>
+                                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${isSelected ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/40' : 'bg-gray-800 text-gray-400'}`}>
+                                      {isSelected ? '✓ WILL SEND' : '✗ SKIPPED'}
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-purple-300 font-mono mt-0.5">Subject: {act.subject}</div>
+                                  <details 
+                                    className="mt-1.5 text-gray-400"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <summary className="text-[9px] font-bold text-purple-400 hover:text-purple-300 cursor-pointer">Preview Email Body & Link</summary>
+                                    <div 
+                                      className="p-3 bg-slate-950 border border-purple-950/60 rounded-xl mt-1.5 text-[11px] font-sans leading-normal text-slate-200"
+                                      dangerouslySetInnerHTML={{ __html: act.body }}
+                                    />
+                                  </details>
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
 
-                        {/* Execute Action submit */}
-                        <div className="mt-4 flex justify-end">
+                        {/* Execute Action submit button */}
+                        <div className="mt-4 flex justify-between items-center border-t border-purple-950/60 pt-3">
+                          <span className="text-[11px] text-gray-400 font-mono">
+                            Ready to send <strong className="text-purple-300">{msg.actions.filter((_, i) => selectedActions[i]).length}</strong> of {msg.actions.length} email(s)
+                          </span>
                           <button
                             type="button"
                             onClick={() => {
                               const approved = msg.actions.filter((_, i) => selectedActions[i]);
                               if (approved.length === 0) {
-                                alert("⚠️ Please select at least one action to execute!");
+                                alert("⚠️ Please select at least one email recipient to send!");
                                 return;
                               }
                               handleExecuteActions(approved);
                             }}
                             disabled={executingActions}
-                            className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 active:scale-95 text-white text-xs font-bold rounded-xl shadow-md transition disabled:opacity-50"
+                            className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 active:scale-95 text-white text-xs font-bold rounded-xl shadow-md transition disabled:opacity-50"
                           >
-                            {executingActions ? "EXECUTING..." : `EXECUTE APPROVED ACTIONS (${msg.actions.filter((_, i) => selectedActions[i]).length})`}
+                            {executingActions ? "EXECUTING..." : `🚀 EXECUTE ${msg.actions.filter((_, i) => selectedActions[i]).length} APPROVED EMAIL(S)`}
                           </button>
                         </div>
                       </div>

@@ -667,6 +667,8 @@ Available Data Context:
 Guidelines for Actions:
 - If the user asks to "send mail to unregistered/non-enrolled students", identify users in the Registered list whose email is NOT in the Enrolled list.
 - For each identifying non-enrolled user, create a "send_email" action with a personalized, friendly draft email encouraging them to complete their enrollment.
+- The draft email body MUST include our company website link and enrollment instructions:
+  "Visit our website: <a href='https://kodnexuz.in' target='_blank'>https://kodnexuz.in</a><br/>Simply click Login, sign into your account, and click Enroll on your favorite course track!"
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
@@ -778,7 +780,15 @@ Guidelines for Actions:
             type: "send_email",
             to: u.email,
             subject: "🚀 Complete Your Registration & Start Learning on KodNexuz!",
-            body: `Hello ${u.fullName || u.firstName || 'Learner'},<br/><br/>We noticed you recently registered on the <strong>KodNexuz</strong> platform but haven't enrolled in a course yet!<br/><br/>Explore our industry-standard technology tracks and start your journey today.<br/><br/>Best regards,<br/>The KodNexuz Team`
+            body: `Hello ${u.fullName || u.firstName || 'Learner'},<br/><br/>` +
+              `We noticed you recently registered on the <strong>KodNexuz</strong> platform but haven't enrolled in a course yet!<br/><br/>` +
+              `Enrolling is super simple:<br/>` +
+              `1. Visit our website: <a href="https://kodnexuz.in" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://kodnexuz.in</a><br/>` +
+              `2. Click on <strong>Login</strong> to sign into your account.<br/>` +
+              `3. Browse our industry-standard technology tracks and click <strong>Enroll</strong>!<br/><br/>` +
+              `Start your learning journey today!<br/><br/>` +
+              `Best regards,<br/>` +
+              `<strong>The KodNexuz Team</strong>`
           }));
         }
       } else {
