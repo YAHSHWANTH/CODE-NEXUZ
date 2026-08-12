@@ -22,6 +22,21 @@ const AdminDashboard = () => {
   const [deleteModal, setDeleteModal] = useState(null);
   const [deletePassword, setDeletePassword] = useState("");
 
+
+  // AI Agent States
+  const [agentPrompt, setAgentPrompt] = useState("");
+  const [chatHistory, setChatHistory] = useState([
+    {
+      role: "agent",
+      text: "Hello Admin! 🤖 I am your AI Co-Pilot. I have analyzed our platform's registrations, course enrollments, and issued certificates. I can help you summarize statistics, find users who registered but haven't enrolled yet, and draft warning emails to them! What would you like to do?"
+    }
+  ]);
+  const [geminiKey, setGeminiKey] = useState(localStorage.getItem("kodnexus_gemini_key") || "");
+  const [showKeyInput, setShowKeyInput] = useState(false);
+  const [chatLoading, setChatLoading] = useState(false);
+  const [executingActions, setExecutingActions] = useState(false);
+  const [selectedActions, setSelectedActions] = useState({});
+
   // Stats state for analysis section
   const [stats, setStats] = useState({
     usersCount: 0,
@@ -388,6 +403,95 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleSaveGeminiKey = (key) => {
+    localStorage.setItem("kodnexus_gemini_key", key);
+    setGeminiKey(key);
+    setShowKeyInput(false);
+  };
+
+  const handleSendAgentMessage = async (e) => {
+    e?.preventDefault();
+    if (!agentPrompt.trim()) return;
+    if (!geminiKey) {
+      alert("⚠️ Please configure your Gemini API Key in the settings gear first!");
+      setShowKeyInput(true);
+      return;
+    }
+
+    const userMsg = agentPrompt.trim();
+    setAgentPrompt("");
+    setChatHistory((prev) => [...prev, { role: "user", text: userMsg }]);
+    setChatLoading(true);
+
+    try {
+      const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
+      const res = await axios.post(
+        `${apiBase}/api/admin/agent/chat`,
+        { prompt: userMsg },
+        { headers: { "x-gemini-key": geminiKey } }
+      );
+
+      if (res.data?.success && res.data?.data) {
+        const { reply, actions } = res.data.data;
+        
+        // Save message to history
+        setChatHistory((prev) => [
+          ...prev,
+          { role: "agent", text: reply, actions: actions || [] }
+        ]);
+
+        // Pre-select all proposed actions
+        if (actions && actions.length > 0) {
+          const selections = {};
+          actions.forEach((_, idx) => {
+            selections[idx] = true;
+          });
+          setSelectedActions(selections);
+        }
+      } else {
+        setChatHistory((prev) => [
+          ...prev,
+          { role: "agent", text: "❌ Error: Failed to retrieve analysis from agent." }
+        ]);
+      }
+    } catch (err) {
+      console.error("❌ Agent Chat Error:", err);
+      const errMsg = err.response?.data?.message || err.message;
+      setChatHistory((prev) => [
+        ...prev,
+        { role: "agent", text: `❌ Error: ${errMsg}` }
+      ]);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
+  const handleExecuteActions = async (actionsToExecute) => {
+    if (!actionsToExecute || actionsToExecute.length === 0) return;
+    setExecutingActions(true);
+    try {
+      const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
+      const res = await axios.post(`${apiBase}/api/admin/agent/execute`, { actions: actionsToExecute });
+      if (res.data?.success) {
+        alert("✅ AI Agent actions executed successfully!");
+        
+        // Clear actions on current chat item to prevent double-execution
+        setChatHistory((prev) =>
+          prev.map((msg) =>
+            msg.actions === actionsToExecute ? { ...msg, actions: [], executed: true } : msg
+          )
+        );
+      } else {
+        alert("❌ Action execution failed: " + (res.data?.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("❌ Action Execution Error:", err);
+      alert("❌ Action execution error: " + (err.response?.data?.message || err.message));
+    } finally {
+      setExecutingActions(false);
+    }
+  };
+
   const renderTable = () => {
     if (!data.length)
       return <p className="text-gray-500 text-center text-lg">No records found.</p>;
@@ -467,21 +571,10 @@ const AdminDashboard = () => {
   };
 
   const renderAnalysis = () => {
-    const total = stats.usersCount + stats.enrollmentsCount + stats.certificatesCount;
-    const radius = 50;
-    const circumference = 2 * Math.PI * radius; // ~314.159
-
-    const slices = [
-      { value: stats.usersCount, color: "#3B82F6", label: "Registered Users" },
-      { value: stats.enrollmentsCount, color: "#EC4899", label: "Enrollments" },
-      { value: stats.certificatesCount, color: "#10B981", label: "Certificates Generated" },
-    ];
-
-    let accumulatedCircumference = 0;
 
     return (
       <div className="space-y-8 animate-slideIn">
-        {/* Metric Cards Grid */}
+        {/* Metric Cards Grid - Keep this to show overview counters */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1: Users */}
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
@@ -519,123 +612,286 @@ const AdminDashboard = () => {
             <p className="text-xs mt-2 opacity-70">Total entries finalized and generated</p>
           </div>
 
-          {/* Card 4: Income */}
+          {/* Card 4: AI Status */}
           <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-sm font-semibold tracking-wider uppercase opacity-80">Estimated Revenue</span>
-              <span className="text-lg font-bold opacity-80">₹</span>
+              <span className="text-sm font-semibold tracking-wider uppercase opacity-80">Co-Pilot Status</span>
+              <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></div>
             </div>
-            <h4 className="text-4xl font-extrabold">₹{stats.totalIncome.toLocaleString()}</h4>
-            <p className="text-xs mt-2 opacity-70">₹150 earned per certificate approved</p>
+            <h4 className="text-2.5xl font-extrabold truncate">ONLINE</h4>
+            <p className="text-xs mt-3 opacity-70">Ready to execute actions</p>
           </div>
         </div>
 
-        {/* Data Visualization Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Donut Chart Visualizer */}
-          <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm flex flex-col items-center">
-            <h3 className="text-xl font-bold text-gray-800 mb-6 w-full text-left border-b pb-3">Distribution Breakdown</h3>
-            
-            {total === 0 ? (
-              <div className="flex flex-col items-center justify-center h-64 text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 mb-2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-                </svg>
-                <span>No statistical data to display.</span>
-              </div>
-            ) : (
-              <div className="flex flex-col md:flex-row items-center justify-around w-full gap-8">
-                {/* SVG Donut Chart */}
-                <div className="relative w-36 h-36 flex-shrink-0">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
-                    <circle cx="80" cy="80" r={radius} fill="transparent" stroke="#F3F4F6" strokeWidth="18" />
-                    
-                    {slices.map((slice, index) => {
-                      if (slice.value === 0) return null;
-                      const percentage = slice.value / total;
-                      const strokeLength = percentage * circumference;
-                      const offset = circumference - accumulatedCircumference;
-                      accumulatedCircumference += strokeLength;
-
-                      return (
-                        <circle
-                          key={index}
-                          cx="80"
-                          cy="80"
-                          r={radius}
-                          fill="transparent"
-                          stroke={slice.color}
-                          strokeWidth="18"
-                          strokeDasharray={`${strokeLength} ${circumference}`}
-                          strokeDashoffset={offset}
-                          className="transition-all duration-300 ease-out hover:stroke-[22px] cursor-pointer"
-                        />
-                      );
-                    })}
+        {/* AI Agent Console Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Left Column: Robot avatar and Settings card */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white border border-gray-150 rounded-3xl p-6 shadow-sm text-center relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <button
+                  onClick={() => setShowKeyInput(!showKeyInput)}
+                  className="p-2 text-gray-400 hover:text-purple-600 rounded-lg hover:bg-gray-50 transition"
+                  title="Configure Gemini API Key"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.827m11.379-8.16l1.15-.827M8.14 21.27l.707-1.03m6.307-9.18l.707-1.03m-5.13 14.095l.513-1.41M16.5 3v1.5m-9 0V3M6.215 6.215l1.15.827m7.27-5.187l1.15.827M3 12a9 9 0 009 9m-9-9a9 9 0 019-9m0 18a9 9 0 009-9m-9 9V12" />
                   </svg>
-                  
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Total Items</span>
-                    <span className="text-3xl font-extrabold text-gray-800">{total}</span>
-                  </div>
-                </div>
+                </button>
+              </div>
 
-                {/* Legend list */}
-                <div className="flex flex-col space-y-4 flex-1">
-                  {slices.map((slice, index) => {
-                    const percentage = total > 0 ? ((slice.value / total) * 100).toFixed(1) : 0;
-                    return (
-                      <div key={index} className="flex items-center justify-between p-3 rounded-2xl hover:bg-gray-50 transition-colors">
-                        <div className="flex items-center gap-3">
-                          <span className="w-4 h-4 rounded-full" style={{ backgroundColor: slice.color }}></span>
-                          <span className="text-gray-600 font-semibold text-sm">{slice.label}</span>
+              {/* Humanoid Robot illustration */}
+              <div className="py-4">
+                <svg viewBox="0 0 200 220" className="w-40 h-40 mx-auto drop-shadow-xl animate-float">
+                  <style>{`
+                    @keyframes float {
+                      0% { transform: translateY(0px); }
+                      50% { transform: translateY(-10px); }
+                      100% { transform: translateY(0px); }
+                    }
+                    .animate-float {
+                      animation: float 4s ease-in-out infinite;
+                    }
+                  `}</style>
+                  {/* Antennas */}
+                  <rect x="97" y="10" width="6" height="25" rx="3" fill="#8B5CF6" />
+                  <circle cx="100" cy="10" r="8" fill="#EC4899" className="animate-pulse" />
+                  {/* Arms */}
+                  <rect x="36" y="80" width="14" height="55" rx="7" fill="#A7F3D0" transform="rotate(15 43 80)" />
+                  <rect x="150" y="80" width="14" height="55" rx="7" fill="#A7F3D0" transform="rotate(-15 157 80)" />
+                  {/* Hands */}
+                  <circle cx="28" cy="135" r="9" fill="#34D399" />
+                  <circle cx="172" cy="135" r="9" fill="#34D399" />
+                  {/* Legs */}
+                  <rect x="75" y="150" width="16" height="45" rx="8" fill="#D1D5DB" />
+                  <rect x="109" y="150" width="16" height="45" rx="8" fill="#D1D5DB" />
+                  {/* Feet */}
+                  <ellipse cx="83" cy="195" rx="14" ry="7" fill="#374151" />
+                  <ellipse cx="117" cy="195" rx="14" ry="7" fill="#374151" />
+                  {/* Body Torso */}
+                  <rect x="55" y="70" width="90" height="85" rx="20" fill="#E5E7EB" stroke="#8B5CF6" strokeWidth="4" />
+                  {/* Chest Plate Screen */}
+                  <rect x="68" y="82" width="64" height="36" rx="8" fill="#1F2937" />
+                  {/* Heart Pulse line inside screen */}
+                  <path d="M 75 100 L 88 100 L 93 88 L 98 112 L 103 100 L 125 100" fill="none" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* Neck */}
+                  <rect x="88" y="60" width="24" height="12" fill="#9CA3AF" />
+                  {/* Head */}
+                  <rect x="65" y="22" width="70" height="48" rx="16" fill="#F3F4F6" stroke="#8B5CF6" strokeWidth="4" />
+                  {/* Visor display screen */}
+                  <rect x="73" y="30" width="54" height="28" rx="8" fill="#111827" />
+                  {/* Glowing Blue Eyes */}
+                  <circle cx="88" cy="44" r="5" fill="#60A5FA" className="animate-pulse" />
+                  <circle cx="112" cy="44" r="5" fill="#60A5FA" className="animate-pulse" />
+                </svg>
+              </div>
+
+              <h4 className="text-xl font-bold text-gray-800">KodNexuz Co-Pilot</h4>
+              <p className="text-gray-400 text-xs mt-1">Humanoid Intelligence Engine</p>
+
+              {/* Gemini Key Config Overlay */}
+              {showKeyInput && (
+                <div className="mt-4 p-4 border border-purple-100 bg-purple-50/50 rounded-2xl text-left animate-slideIn">
+                  <label className="block text-xs font-semibold text-purple-700 uppercase tracking-wider mb-2">
+                    Enter Gemini API Key
+                  </label>
+                  <input
+                    type="password"
+                    defaultValue={geminiKey}
+                    onChange={(e) => handleSaveGeminiKey(e.target.value)}
+                    placeholder="AIzaSy..."
+                    className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none text-xs transition"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-2">
+                    Stored in your browser's local cache. Never sent to third parties.
+                  </p>
+                </div>
+              )}
+
+              {/* Setup warning if key is missing */}
+              {!geminiKey && !showKeyInput && (
+                <div className="mt-4 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+                  <p className="text-amber-800 text-[11px] font-semibold leading-relaxed">
+                    ⚠️ API Key missing. Click the settings gear to add your Google Gemini Key.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Actions Panel */}
+            <div className="bg-white border border-gray-150 rounded-3xl p-6 shadow-sm">
+              <h5 className="font-bold text-gray-700 text-sm uppercase tracking-wider mb-3">Quick Suggestions</h5>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    setAgentPrompt("Summarize all dashboard stats and platform activity.");
+                  }}
+                  className="w-full text-left p-3 text-xs bg-gray-50 hover:bg-purple-50 border hover:border-purple-200 text-gray-600 rounded-xl transition font-semibold"
+                >
+                  📊 Summarize all dashboard stats
+                </button>
+                <button
+                  onClick={() => {
+                    setAgentPrompt("Identify registered users who haven't enrolled in a course yet.");
+                  }}
+                  className="w-full text-left p-3 text-xs bg-gray-50 hover:bg-purple-50 border hover:border-purple-200 text-gray-600 rounded-xl transition font-semibold"
+                >
+                  🔍 Find users registered but not enrolled
+                </button>
+                <button
+                  onClick={() => {
+                    setAgentPrompt("Draft and send follow-up reminder emails to all non-enrolled students.");
+                  }}
+                  className="w-full text-left p-3 text-xs bg-gray-50 hover:bg-purple-50 border hover:border-purple-200 text-gray-600 rounded-xl transition font-semibold"
+                >
+                  📨 Draft reminder email to non-enrolled users
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Chat Terminal and Actions execute console */}
+          <div className="lg:col-span-2 space-y-6 flex flex-col h-[550px]">
+            
+            {/* Terminal Message Log */}
+            <div className="flex-1 bg-[#09070f] text-slate-100 border border-purple-950/20 rounded-3xl p-6 shadow-lg flex flex-col overflow-hidden">
+              <div className="flex justify-between items-center border-b border-purple-950/40 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                  <span className="w-3 h-3 bg-amber-500 rounded-full"></span>
+                  <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
+                  <span className="text-gray-400 text-xs font-mono ml-2">co-pilot-shell v1.0.0</span>
+                </div>
+                {chatLoading && <div className="text-[11px] text-purple-400 font-mono animate-pulse">SYSTEM PROCESSING...</div>}
+              </div>
+
+              {/* Message scroll list */}
+              <div className="flex-1 overflow-y-auto space-y-4 pr-2 font-mono text-sm leading-relaxed scrollbar-thin">
+                {chatHistory.map((msg, index) => (
+                  <div key={index} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
+                    <div className={`p-3.5 max-w-[85%] rounded-2xl ${
+                      msg.role === "user" 
+                        ? "bg-purple-600 text-white rounded-br-none" 
+                        : "bg-slate-900 border border-purple-950/30 rounded-bl-none text-slate-200"
+                    }`}>
+                      {msg.role === "agent" ? (
+                        <div className="prose prose-invert max-w-none text-xs">
+                          {msg.text.split("\n").map((line, idx) => (
+                            <p key={idx} className="mb-1">{line}</p>
+                          ))}
                         </div>
-                        <div className="text-right">
-                          <span className="block font-bold text-gray-800 text-sm">{slice.value}</span>
-                          <span className="block text-gray-400 text-xs">{percentage}%</span>
+                      ) : (
+                        msg.text
+                      )}
+                    </div>
+
+                    {/* Proposed Actions card inside chat history */}
+                    {msg.role === "agent" && msg.actions && msg.actions.length > 0 && (
+                      <div className="mt-3 w-full bg-slate-900 border border-purple-950/45 rounded-2xl p-4 animate-fadeIn max-w-[95%] text-left">
+                        <div className="flex justify-between items-center border-b border-purple-950/40 pb-2 mb-3">
+                          <span className="text-xs text-purple-400 font-bold">🤖 PROPOSED ACTIONS ({msg.actions.length})</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              // Toggle all select
+                              const hasUnchecked = msg.actions.some((_, i) => !selectedActions[i]);
+                              const newSelections = {};
+                              msg.actions.forEach((_, i) => {
+                                newSelections[i] = hasUnchecked;
+                              });
+                              setSelectedActions(newSelections);
+                            }}
+                            className="text-[10px] text-gray-400 hover:text-purple-400"
+                          >
+                            Toggle All
+                          </button>
+                        </div>
+
+                        {/* Actions item checklist */}
+                        <div className="space-y-3 max-h-40 overflow-y-auto pr-1">
+                          {msg.actions.map((act, actIdx) => (
+                            <div key={actIdx} className="flex items-start gap-3 p-2 bg-[#0d0a14] border border-purple-950/20 rounded-xl text-xs">
+                              <input
+                                type="checkbox"
+                                checked={!!selectedActions[actIdx]}
+                                onChange={() => {
+                                  setSelectedActions(prev => ({
+                                    ...prev,
+                                    [actIdx]: !prev[actIdx]
+                                  }));
+                                }}
+                                className="mt-1 accent-purple-500 rounded"
+                              />
+                              <div className="flex-1">
+                                <div className="font-bold text-slate-200">{act.to}</div>
+                                <div className="text-[10px] text-purple-300 mt-0.5">Subject: {act.subject}</div>
+                                <details className="mt-1 cursor-pointer text-gray-400">
+                                  <summary className="text-[9px] font-bold text-gray-500 hover:text-slate-300">View Draft HTML Body</summary>
+                                  <div 
+                                    className="p-2.5 bg-slate-950 border border-purple-950/40 rounded-lg mt-1 text-[10px] font-sans leading-normal overflow-x-auto text-slate-300"
+                                    dangerouslySetInnerHTML={{ __html: act.body }}
+                                  />
+                                </details>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Execute Action submit */}
+                        <div className="mt-4 flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const approved = msg.actions.filter((_, i) => selectedActions[i]);
+                              if (approved.length === 0) {
+                                alert("⚠️ Please select at least one action to execute!");
+                                return;
+                              }
+                              handleExecuteActions(approved);
+                            }}
+                            disabled={executingActions}
+                            className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 active:scale-95 text-white text-xs font-bold rounded-xl shadow-md transition disabled:opacity-50"
+                          >
+                            {executingActions ? "EXECUTING..." : `EXECUTE APPROVED ACTIONS (${msg.actions.filter((_, i) => selectedActions[i]).length})`}
+                          </button>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
+                    )}
 
-          {/* Revenue Calculator Summary Card */}
-          <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-            <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-3">Earnings & Financial Tracker</h3>
-              <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                KodNexuz provides a default processing payout of **₹150** per certificate successfully generated and registered.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-2xl">
-                  <span className="text-gray-500 text-sm font-semibold">Total Certificates Generated</span>
-                  <span className="font-extrabold text-gray-800">{stats.certificatesCount}</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-2xl">
-                  <span className="text-gray-500 text-sm font-semibold">Entry Rate (per Certificate)</span>
-                  <span className="font-extrabold text-emerald-600">₹150.00</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-purple-50 border border-purple-100 rounded-2xl">
-                  <span className="text-purple-700 text-sm font-bold">Total Accumulated Revenue</span>
-                  <span className="font-extrabold text-purple-700 text-lg">₹{stats.totalIncome.toLocaleString()}</span>
-                </div>
+                    {/* Executed success banner */}
+                    {msg.role === "agent" && msg.executed && (
+                      <div className="mt-2 w-full bg-emerald-950/20 border border-emerald-800/40 rounded-xl p-2.5 text-center text-xs text-emerald-400 font-semibold animate-pulse">
+                        ✅ Actions Executed Successfully
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
 
-            <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-              <p className="text-amber-800 text-xs leading-relaxed">
-                <strong>Real-time Sync:</strong> Financial data is updated dynamically. Any newly added entries or certificates instantly reflect in the calculations.
-              </p>
+              {/* Chat Input form bar */}
+              <form onSubmit={handleSendAgentMessage} className="mt-4 flex gap-2">
+                <input
+                  type="text"
+                  value={agentPrompt}
+                  onChange={(e) => setAgentPrompt(e.target.value)}
+                  placeholder={chatLoading ? "System is executing analysis..." : "Type instructions... (e.g. Email registered non-enrolled students)"}
+                  disabled={chatLoading}
+                  className="flex-1 p-3.5 bg-[#0e0c15] border border-purple-950/40 focus:ring-2 focus:ring-purple-600 rounded-2xl text-slate-100 placeholder-gray-600 outline-none transition text-xs font-mono"
+                />
+                <button
+                  type="submit"
+                  disabled={chatLoading}
+                  className="px-5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl active:scale-95 transition disabled:opacity-50 flex items-center justify-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                  </svg>
+                </button>
+              </form>
             </div>
           </div>
+
         </div>
       </div>
     );

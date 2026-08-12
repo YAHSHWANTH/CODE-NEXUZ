@@ -567,6 +567,192 @@ app.delete("/api/admin/certificates/:id", verifyDeletePassword, async (req, res)
   }
 });
 
+// --------------------- AI ADMIN AGENT ---------------------
+
+// Helper function to send email via Brevo
+const sendBrevoEmail = async (toEmail, subject, htmlContent) => {
+  try {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      body: JSON.stringify({
+        sender: {
+          name: "KodNexuz",
+          email: process.env.SMTP_USER || "kodnexustech@gmail.com"
+        },
+        to: [{ email: toEmail.trim() }],
+        subject: subject,
+        htmlContent: htmlContent
+      })
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("❌ Brevo sending failure details:", errorData);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("❌ sendBrevoEmail error:", err);
+    return false;
+  }
+};
+
+// POST agent chat route
+app.post("/api/admin/agent/chat", async (req, res) => {
+  try {
+    const geminiKey = req.headers["x-gemini-key"] || process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return res.status(400).json({ success: false, message: "Google Gemini API Key is required" });
+    }
+
+    const { prompt } = req.body;
+    if (!prompt) {
+      return res.status(400).json({ success: false, message: "Prompt is required" });
+    }
+
+    // Load data from DB
+    const users = await User.find({});
+    const enrollments = await Enrollment.find({});
+    const certificates = await Certificate.find({});
+
+    // Minimize data payload to fit in tokens and preserve privacy
+    const registeredContext = users.map(u => ({
+      name: u.fullName || u.firstName || "User",
+      email: u.email,
+      createdAt: u.createdAt
+    }));
+
+    const enrolledContext = enrollments.map(e => ({
+      name: e.name,
+      email: e.email,
+      course: e.domain,
+      status: e.status,
+      uniqueId: e.uniqueId,
+      createdAt: e.createdAt
+    }));
+
+    const certificatesContext = certificates.map(c => ({
+      name: c.fullName,
+      email: c.email,
+      course: c.course,
+      uniqueId: c.uniqueId
+    }));
+
+    // System instruction prompt
+    const systemInstruction = `
+You are the AI Admin Co-Pilot for the KodNexuz dashboard.
+Analyze the user's prompt based on the provided database context.
+Respond ONLY in JSON format following this schema:
+{
+  "reply": "Your markdown-formatted natural language reply summarizing your analysis or what actions you drafted.",
+  "actions": [
+    {
+      "type": "send_email",
+      "to": "recipient email address",
+      "subject": "email subject",
+      "body": "email HTML body content (use simple styling and line breaks <br/>)"
+    }
+  ]
+}
+
+Available Data Context:
+- Registered Users: ${JSON.stringify(registeredContext)}
+- Enrolled Students: ${JSON.stringify(enrolledContext)}
+- Issued Certificates: ${JSON.stringify(certificatesContext)}
+
+Guidelines for Actions:
+- If the user asks to "send mail to unregistered/non-enrolled students", identify users in the Registered list whose email is NOT in the Enrolled list.
+- For each identifying non-enrolled user, create a "send_email" action with a personalized, friendly draft email encouraging them to complete their enrollment.
+- If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
+`;
+
+    // Call Gemini API using native fetch
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          responseMimeType: "application/json"
+        }
+      })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("❌ Gemini API Error:", errText);
+      return res.status(response.status).json({ success: false, message: "Gemini API failure: " + errText });
+    }
+
+    const geminiRes = await response.json();
+    const rawText = geminiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!rawText) {
+      return res.status(500).json({ success: false, message: "No content returned from Gemini" });
+    }
+
+    // Parse the response from Gemini
+    let agentResult;
+    try {
+      agentResult = JSON.parse(rawText);
+    } catch (parseErr) {
+      console.error("❌ JSON Parse error from Gemini:", rawText);
+      return res.status(500).json({ success: false, message: "Failed to parse Agent JSON response" });
+    }
+
+    res.json({
+      success: true,
+      data: agentResult
+    });
+
+  } catch (err) {
+    console.error("❌ AI Agent Chat Error:", err);
+    res.status(500).json({ success: false, message: "Server error in AI Agent chat" });
+  }
+});
+
+// POST agent execute route
+app.post("/api/admin/agent/execute", async (req, res) => {
+  try {
+    const { actions } = req.body;
+    if (!actions || !Array.isArray(actions)) {
+      return res.status(400).json({ success: false, message: "Actions array is required" });
+    }
+
+    const results = [];
+    for (const action of actions) {
+      if (action.type === "send_email") {
+        const sent = await sendBrevoEmail(action.to, action.subject, action.body);
+        results.push({ to: action.to, type: "send_email", success: sent });
+      } else {
+        results.push({ type: action.type, success: false, message: "Unknown action type" });
+      }
+    }
+
+    res.json({
+      success: true,
+      results
+    });
+  } catch (err) {
+    console.error("❌ AI Agent Execution Error:", err);
+    res.status(500).json({ success: false, message: "Server error in executing agent actions" });
+  }
+});
+
 // debug endpoint
 app.get("/api/debug-env", (req, res) => {
   res.json({
