@@ -831,11 +831,13 @@ Available Data Context:
       return res.status(500).json({ success: false, message: "Failed to parse Agent JSON response" });
     }
 
-    // Ensure EVERY drafted email follows the exact specified template format
+    // Ensure EVERY drafted email follows the exact specified template format with real user names
     if (agentResult.actions && Array.isArray(agentResult.actions)) {
       agentResult.actions = agentResult.actions.map(act => {
         if (act.type === "send_email") {
-          const recipientName = act.to ? act.to.split("@")[0] : "Learner";
+          const targetUser = users.find(u => u.email && u.email.toLowerCase().trim() === (act.to || "").toLowerCase().trim());
+          const recipientName = targetUser ? (targetUser.fullName || targetUser.firstName || "Learner") : (act.to ? act.to.split("@")[0] : "Learner");
+          
           act.body = `Dear ${recipientName},<br/><br/>` +
             `We hope you are doing well.<br/><br/>` +
             `We noticed that you recently registered on the <strong>KodNexuz</strong> platform but have not yet completed your course enrollment. We encourage you to take the next step and explore our industry-focused technology courses designed to help you develop relevant skills and advance your career.<br/><br/>` +
