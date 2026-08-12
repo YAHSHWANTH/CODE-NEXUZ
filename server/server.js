@@ -670,96 +670,81 @@ Guidelines for Actions:
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
-    // Multi-model & multi-endpoint fallback loop (gemini-1.5-flash, gemini-1.5-flash-latest, gemini-pro, gemini-2.0-flash-exp)
-    const candidateModels = [
-      "gemini-1.5-flash",
-      "gemini-1.5-flash-latest",
-      "gemini-pro",
-      "gemini-1.5-pro",
-      "gemini-2.0-flash-exp"
-    ];
+    // Multi-key, Multi-version, & Multi-model Fallback Engine
+    const keysToTry = [];
+    if (geminiKey && geminiKey.trim()) keysToTry.push(geminiKey.trim());
+    if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) {
+      if (!keysToTry.includes(process.env.GEMINI_API_KEY.trim())) {
+        keysToTry.push(process.env.GEMINI_API_KEY.trim());
+      }
+    }
 
     let response = null;
     let lastErrText = "";
 
-    for (const model of candidateModels) {
-      const endpoints = [];
-      
-      if (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29.")) {
-        // Vertex AI Bearer Auth Endpoint
-        endpoints.push({
-          url: `https://us-central1-aiplatform.googleapis.com/v1/projects/generative-language/locations/us-central1/publishers/google/models/${model}:generateContent`,
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${geminiKey}`
-          }
-        });
-        // AI Studio x-goog-api-key Header Endpoint
-        endpoints.push({
-          url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": geminiKey
-          }
-        });
-      }
-      
-      // Standard AI Studio ?key= Query Parameter Endpoint
-      endpoints.push({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(geminiKey)}`,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+    const candidateModels = [
+      "gemini-1.5-flash",
+      "gemini-2.0-flash-exp",
+      "gemini-1.5-pro",
+      "gemini-1.0-pro"
+    ];
 
-      for (const ep of endpoints) {
-        try {
-          console.log(`🤖 Attempting Gemini model ${model} at ${ep.url.split('?')[0]}...`);
-          const res = await fetch(ep.url, {
-            method: "POST",
-            headers: ep.headers,
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [
-                    {
-                      text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
-                    }
-                  ]
+    for (const keyCandidate of keysToTry) {
+      for (const model of candidateModels) {
+        const apiUrls = [
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(keyCandidate)}`,
+          `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${encodeURIComponent(keyCandidate)}`
+        ];
+
+        for (const url of apiUrls) {
+          try {
+            console.log(`🤖 Attempting Gemini model ${model}...`);
+            const res = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [
+                  {
+                    parts: [
+                      {
+                        text: `${systemInstruction}\n\nUser prompt: "${prompt}"`
+                      }
+                    ]
+                  }
+                ],
+                generationConfig: {
+                  responseMimeType: "application/json"
                 }
-              ],
-              generationConfig: {
-                responseMimeType: "application/json"
-              }
-            })
-          });
+              })
+            });
 
-          if (res.ok) {
-            response = res;
-            break;
-          } else {
-            lastErrText = await res.text();
-            console.log(`⚠️ Model ${model} returned HTTP ${res.status}: ${lastErrText}`);
+            if (res.ok) {
+              response = res;
+              break;
+            } else {
+              lastErrText = await res.text();
+              console.log(`⚠️ Model ${model} returned HTTP ${res.status}: ${lastErrText}`);
+            }
+          } catch (e) {
+            console.error(`❌ Exception connecting to ${url}:`, e);
           }
-        } catch (e) {
-          console.error(`❌ Exception connecting to ${model}:`, e);
         }
+        if (response && response.ok) break;
       }
-
       if (response && response.ok) break;
     }
 
     if (!response || !response.ok) {
-      console.error("❌ All candidate Gemini models failed. Last Error:", lastErrText);
+      console.error("❌ All candidate Gemini models & keys failed. Last Error:", lastErrText);
       
-      if (lastErrText.includes("API_KEY_SERVICE_BLOCKED") || lastErrText.includes("UNAUTHENTICATED")) {
+      if (geminiKey && (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29."))) {
         return res.status(401).json({
           success: false,
-          message: "Google Cloud blocked this OAuth token (AQ...). Please generate a standard Google AI Studio API Key (starting with AIzaSy...) at https://aistudio.google.com/app/apikey"
+          message: "Key format invalid: Your key starts with AQ... (Google Cloud CLI token). Please copy an API Key starting with AIzaSy... from Google AI Studio (https://aistudio.google.com/app/apikey)"
         });
       }
 
-      return res.status(400).json({ success: false, message: "Gemini API failure: " + (lastErrText || "All candidate models returned 404/400") });
+      return res.status(400).json({ success: false, message: "Gemini API failure: " + (lastErrText || "Model authentication failed") });
     }
 
     const geminiRes = await response.json();
