@@ -454,11 +454,16 @@ const AdminDashboard = () => {
       const errMsg = err.response?.data?.message || err.message;
       if (errMsg.includes("Gemini API Key is required")) {
         setShowKeyInput(true);
+        setChatHistory((prev) => [
+          ...prev,
+          { role: "agent", text: `⚠️ API Key Required: Please enter your Google Gemini API Key in the settings panel on the left or get a free key from https://aistudio.google.com/app/apikey` }
+        ]);
+      } else {
+        setChatHistory((prev) => [
+          ...prev,
+          { role: "agent", text: `❌ ${errMsg}` }
+        ]);
       }
-      setChatHistory((prev) => [
-        ...prev,
-        { role: "agent", text: `⚠️ API Key Required: Please enter your Google Gemini API Key in the settings panel on the left or get a free key from https://aistudio.google.com/app/apikey` }
-      ]);
     } finally {
       setChatLoading(false);
     }
