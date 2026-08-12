@@ -765,105 +765,89 @@ const AdminDashboard = () => {
 
       {deleteModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-[60] animate-fadeIn">
-          {/* Custom scoped CSS for animated traveling border */}
+          {/* Scoped CSS for smooth color border glow animation */}
           <style>{`
-            @keyframes rotateDeleteGlow {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
+            @keyframes deleteGlow {
+              0% { 
+                border-color: rgba(239, 68, 68, 0.4); 
+                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 12px rgba(239, 68, 68, 0.2); 
+              }
+              50% { 
+                border-color: rgba(249, 115, 22, 0.8); 
+                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 24px rgba(249, 115, 22, 0.4); 
+              }
+              100% { 
+                border-color: rgba(239, 68, 68, 0.4); 
+                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 12px rgba(239, 68, 68, 0.2); 
+              }
             }
-            .delete-border-wrapper {
-              position: relative;
-              padding: 4px; /* Border thickness */
+            .glow-delete-modal {
+              background: white;
               border-radius: 1.25rem;
-              overflow: hidden;
-              background: #f3f4f6;
+              border: 3px solid rgba(239, 68, 68, 0.5);
+              animation: deleteGlow 3s ease-in-out infinite;
               max-width: 28rem;
               width: 100%;
-              box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            }
-            .delete-border-wrapper::before {
-              content: '';
-              position: absolute;
-              top: -50%;
-              left: -50%;
-              width: 200%;
-              height: 200%;
-              background: conic-gradient(
-                from 0deg,
-                transparent 20%,
-                #ef4444 40%, /* Red */
-                #f97316 60%, /* Orange */
-                transparent 80%
-              );
-              animation: rotateDeleteGlow 2.5s linear infinite;
-              z-index: 0;
-            }
-            .delete-border-content {
-              position: relative;
-              background: white;
-              border-radius: 1rem;
               padding: 24px;
-              z-index: 10;
+              box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
             }
           `}</style>
 
-          <div className="delete-border-wrapper transform transition duration-300">
-            <div className="delete-border-content text-center">
-              {/* Trash Icon */}
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center border-4 border-red-200 text-red-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                  </svg>
-                </div>
+          <div className="glow-delete-modal text-center transform transition duration-300">
+            {/* Trash Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center border-4 border-red-200 text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
               </div>
-              
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">Delete Record</h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                Are you sure you want to permanently delete the record for:<br/>
-                <strong className="text-red-600">{deleteModal.name}</strong>?<br/>
-                This action cannot be undone.
-              </p>
+            </div>
+            
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Delete Record</h3>
+            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+              Are you sure you want to permanently delete the record for:<br/>
+              <strong className="text-red-600">{deleteModal.name}</strong>?<br/>
+              This action cannot be undone.
+            </p>
 
-              {/* Password input */}
-              <div className="mb-6 text-left">
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                  Enter Delete Password
-                </label>
-                <input
-                  type="password"
-                  value={deletePassword}
-                  onChange={(e) => setDeletePassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-red-400 outline-none transition"
-                />
-              </div>
+            {/* Password input */}
+            <div className="mb-6 text-left">
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                Enter Delete Password
+              </label>
+              <input
+                type="password"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+                placeholder="Enter password"
+                className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-red-400 outline-none transition"
+              />
+            </div>
 
-              <div className="flex gap-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDeleteModal(null);
-                    setDeletePassword("");
-                  }}
-                  className="flex-1 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (deletePassword !== "Boyamma@109") {
-                      alert("❌ Access denied: Incorrect password.");
-                      return;
-                    }
-                    await handleDeleteRecord(deleteModal.id, deleteModal.name, deletePassword);
-                  }}
-                  className="flex-1 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 hover:scale-[1.02] active:scale-95 transition-all shadow-md"
-                >
-                  Delete
-                </button>
-              </div>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setDeleteModal(null);
+                  setDeletePassword("");
+                }}
+                className="flex-1 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (deletePassword !== "Boyamma@109") {
+                    alert("❌ Access denied: Incorrect password.");
+                    return;
+                  }
+                  await handleDeleteRecord(deleteModal.id, deleteModal.name, deletePassword);
+                }}
+                className="flex-1 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 hover:scale-[1.02] active:scale-95 transition-all shadow-md"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
