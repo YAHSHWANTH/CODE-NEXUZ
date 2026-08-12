@@ -670,12 +670,18 @@ Guidelines for Actions:
 - If the prompt is analytical or queries data, summarize the findings in "reply" and set "actions" to an empty array [].
 `;
 
-    // Call Gemini API using native fetch
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+    // Call Gemini API using native fetch with multi-header auth support
+    const fetchHeaders = {
+      "Content-Type": "application/json",
+      "x-goog-api-key": geminiKey
+    };
+    if (geminiKey.startsWith("AQ.") || geminiKey.startsWith("ya29.")) {
+      fetchHeaders["Authorization"] = `Bearer ${geminiKey}`;
+    }
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(geminiKey)}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: fetchHeaders,
       body: JSON.stringify({
         contents: [
           {

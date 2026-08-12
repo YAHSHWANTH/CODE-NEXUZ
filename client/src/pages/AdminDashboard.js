@@ -717,7 +717,7 @@ const AdminDashboard = () => {
                     </button>
                   </div>
                   <p className="text-[10px] text-gray-500 mt-2 leading-relaxed">
-                    Must start with <code className="text-purple-600 font-bold">AIzaSy...</code> from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="underline font-bold text-purple-600 hover:text-purple-800">Google AI Studio</a>.
+                    Enter your Google Gemini API key or access token from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="underline font-bold text-purple-600 hover:text-purple-800">Google AI Studio</a>.
                   </p>
                 </div>
               )}
