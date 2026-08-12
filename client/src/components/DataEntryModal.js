@@ -1,6 +1,7 @@
 // src/components/DataEntryModal.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import BorderGlow from "./BorderGlow";
 
 const DataEntryModal = ({ onClose, onSuccess }) => {
   const [form, setForm] = useState({
@@ -145,70 +146,50 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
 
       {showWarningModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-[60] animate-fadeIn">
-          {/* Scoped CSS for smooth color border glow animation */}
-          <style>{`
-            @keyframes warningGlow {
-              0% { 
-                border-color: rgba(139, 92, 246, 0.4); 
-                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 12px rgba(139, 92, 246, 0.2); 
-              }
-              50% { 
-                border-color: rgba(236, 72, 153, 0.8); 
-                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 24px rgba(236, 72, 153, 0.4); 
-              }
-              100% { 
-                border-color: rgba(139, 92, 246, 0.4); 
-                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 12px rgba(139, 92, 246, 0.2); 
-              }
-            }
-            .glow-warning-modal {
-              background: white;
-              border-radius: 1.25rem;
-              border: 3px solid rgba(139, 92, 246, 0.5);
-              animation: warningGlow 3s ease-in-out infinite;
-              max-width: 28rem;
-              width: 100%;
-              padding: 24px;
-              box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            }
-          `}</style>
+          <BorderGlow
+            edgeSensitivity={30}
+            glowColor="270 100 65"
+            backgroundColor="rgba(255, 255, 255, 0.98)"
+            borderRadius={20}
+            className="max-w-md w-full"
+          >
+            <div className="text-center p-6">
+              {/* Warning Icon */}
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center border-4 border-amber-200 text-amber-600 animate-pulse">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                  </svg>
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Unmatched User</h3>
+              <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                You are generating an unmatched user. No matching enrollment found for the email: <strong className="text-purple-600">{form.email.trim()}</strong>.<br/><br/>
+                Do you want to generate a new Unique ID and create this certificate anyway?
+              </p>
 
-          <div className="glow-warning-modal text-center transform transition duration-300">
-            {/* Warning Icon */}
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center border-4 border-amber-200 text-amber-600 animate-pulse">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowWarningModal(false)}
+                  className="flex-1 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setShowWarningModal(false);
+                    await saveCertificateData();
+                  }}
+                  className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-xl font-semibold hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all shadow-md"
+                >
+                  Proceed
+                </button>
               </div>
             </div>
-            
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">Unmatched User</h3>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
-              You are generating an unmatched user. No matching enrollment found for the email: <strong className="text-purple-600">{form.email.trim()}</strong>.<br/><br/>
-              Do you want to generate a new Unique ID and create this certificate anyway?
-            </p>
-
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={() => setShowWarningModal(false)}
-                className="flex-1 py-3 border border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={async () => {
-                  setShowWarningModal(false);
-                  await saveCertificateData();
-                }}
-                className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-xl font-semibold hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all shadow-md"
-              >
-                Proceed
-              </button>
-            </div>
-          </div>
+          </BorderGlow>
         </div>
       )}
     </div>
