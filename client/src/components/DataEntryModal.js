@@ -146,12 +146,23 @@ const DataEntryModal = ({ onClose, onSuccess }) => {
 
       {showWarningModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-[60] animate-fadeIn">
+          {/* Custom style overrides to make BorderGlow highly visible on white/light background */}
+          <style>{`
+            .warning-modal-glow .edge-light {
+              mix-blend-mode: normal !important;
+              opacity: 0.95 !important;
+            }
+            .warning-modal-glow {
+              border: 3px solid rgba(139, 92, 246, 0.8) !important;
+              box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.15), 0 10px 10px -5px rgba(139, 92, 246, 0.08) !important;
+            }
+          `}</style>
           <BorderGlow
             edgeSensitivity={30}
             glowColor="270 100 65"
             backgroundColor="rgba(255, 255, 255, 0.98)"
             borderRadius={20}
-            className="max-w-md w-full"
+            className="max-w-md w-full warning-modal-glow"
           >
             <div className="text-center p-6">
               {/* Warning Icon */}
