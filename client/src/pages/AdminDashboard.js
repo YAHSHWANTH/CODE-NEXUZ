@@ -416,6 +416,19 @@ const AdminDashboard = () => {
     setShowKeyInput(false);
   };
 
+  const getFormattedEmailBody = (act) => {
+    const rawTo = act.to || "Learner";
+    const emailPrefix = rawTo.split("@")[0] || "Learner";
+    const formattedName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+    return `Dear ${formattedName},<br/><br/>` +
+      `We hope you are doing well.<br/><br/>` +
+      `We noticed that you recently registered on the <strong>KodNexuz</strong> platform but have not yet completed your course enrollment. We encourage you to take the next step and explore our industry-focused technology courses designed to help you develop relevant skills and advance your career.<br/><br/>` +
+      `You can log in to your account and complete your enrollment through our official website: <a href="https://www.kodnexuz.in/" target="_blank" style="color: #6366f1; font-weight: bold; text-decoration: underline;">https://www.kodnexuz.in/</a><br/><br/>` +
+      `We look forward to having you continue your learning journey with KodNexuz.<br/><br/>` +
+      `Best regards,<br/>` +
+      `<strong>KodNexuz Team</strong>`;
+  };
+
   const handleSendAgentMessage = async (e) => {
     e?.preventDefault();
     if (!agentPrompt.trim()) return;
@@ -423,6 +436,18 @@ const AdminDashboard = () => {
     const userMsg = agentPrompt.trim();
     setAgentPrompt("");
     setChatHistory((prev) => [...prev, { role: "user", text: userMsg }]);
+
+    const promptLower = userMsg.toLowerCase();
+    const isGreeting = /^(hi|hello|hey|greetings|good morning|good afternoon|good evening|yo|sup)(\s|!|\.|$)/i.test(promptLower) || promptLower === "hi" || promptLower === "hello" || promptLower === "hey";
+
+    if (isGreeting) {
+      setChatHistory((prev) => [
+        ...prev,
+        { role: "agent", text: "Hello Admin! 👋 I am your KodNexuz AI Assistant. How can I help you today?\n\nYou can ask me specific questions like:\n* *\"Identify registered users who haven't enrolled\"* (to draft reminder emails)\n* *\"Summarize platform activity\"* (for live metrics)\n* *\"How many certificates have been issued?\"*" }
+      ]);
+      return;
+    }
+
     setChatLoading(true);
 
     try {
@@ -479,8 +504,19 @@ const AdminDashboard = () => {
   const handleExecuteActions = async (actionsToExecute) => {
     if (!actionsToExecute || actionsToExecute.length === 0) return;
     setExecutingActions(true);
+
+    const formattedActions = actionsToExecute.map(act => {
+      if (act.type === "send_email") {
+        return {
+          ...act,
+          body: getFormattedEmailBody(act)
+        };
+      }
+      return act;
+    });
+
     try {
-      const res = await axios.post(`${BASE_URL}/agent/execute`, { actions: actionsToExecute });
+      const res = await axios.post(`${BASE_URL}/agent/execute`, { actions: formattedActions });
       if (res.data?.success) {
         alert("✅ AI Agent actions executed successfully!");
         
@@ -894,7 +930,7 @@ const AdminDashboard = () => {
                                     <summary className="text-[9px] font-bold text-purple-400 hover:text-purple-300 cursor-pointer">Preview Email Body & Link</summary>
                                     <div 
                                       className="p-3 bg-slate-950 border border-purple-950/60 rounded-xl mt-1.5 text-[11px] font-sans leading-normal text-slate-200"
-                                      dangerouslySetInnerHTML={{ __html: act.body }}
+                                      dangerouslySetInnerHTML={{ __html: getFormattedEmailBody(act) }}
                                     />
                                   </details>
                                 </div>
