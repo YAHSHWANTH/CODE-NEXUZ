@@ -376,11 +376,12 @@ const AdminDashboard = () => {
     setContextMenu({
       x: e.clientX,
       y: e.clientY,
-      rowId: row._id
+      rowId: row._id,
+      name: row.name || row.fullName || row.firstName || row.email || "Unknown"
     });
   };
 
-  const handleDeleteRecord = async (id) => {
+  const handleDeleteRecord = async (id, name) => {
     const password = window.prompt("Enter delete authorization password:");
     if (password === null) return; // user cancelled
 
@@ -389,7 +390,7 @@ const AdminDashboard = () => {
       return;
     }
 
-    if (!window.confirm("Are you sure you want to permanently delete this record? This action cannot be undone.")) {
+    if (!window.confirm(`Are you sure you want to permanently delete the record for "${name}"?\n\nThis action cannot be undone.`)) {
       return;
     }
 
@@ -781,7 +782,7 @@ const AdminDashboard = () => {
           style={{ top: contextMenu.y, left: contextMenu.x }}
         >
           <button
-            onClick={() => handleDeleteRecord(contextMenu.rowId)}
+            onClick={() => handleDeleteRecord(contextMenu.rowId, contextMenu.name)}
             className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-semibold transition"
           >
             Delete this record
