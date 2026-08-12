@@ -412,11 +412,6 @@ const AdminDashboard = () => {
   const handleSendAgentMessage = async (e) => {
     e?.preventDefault();
     if (!agentPrompt.trim()) return;
-    if (!geminiKey) {
-      alert("⚠️ Please configure your Gemini API Key in the settings gear first!");
-      setShowKeyInput(true);
-      return;
-    }
 
     const userMsg = agentPrompt.trim();
     setAgentPrompt("");
@@ -425,10 +420,11 @@ const AdminDashboard = () => {
 
     try {
       const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
+      const headers = geminiKey ? { "x-gemini-key": geminiKey } : {};
       const res = await axios.post(
         `${apiBase}/api/admin/agent/chat`,
         { prompt: userMsg },
-        { headers: { "x-gemini-key": geminiKey } }
+        { headers }
       );
 
       if (res.data?.success && res.data?.data) {
@@ -457,9 +453,12 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error("❌ Agent Chat Error:", err);
       const errMsg = err.response?.data?.message || err.message;
+      if (errMsg.includes("Gemini API Key is required")) {
+        setShowKeyInput(true);
+      }
       setChatHistory((prev) => [
         ...prev,
-        { role: "agent", text: `❌ Error: ${errMsg}` }
+        { role: "agent", text: `⚠️ API Key Required: Please enter your Google Gemini API Key in the settings panel on the left or get a free key from https://aistudio.google.com/app/apikey` }
       ]);
     } finally {
       setChatLoading(false);
