@@ -689,19 +689,35 @@ const AdminDashboard = () => {
 
               {/* Gemini Key Config Overlay */}
               {showKeyInput && (
-                <div className="mt-4 p-4 border border-purple-100 bg-purple-50/50 rounded-2xl text-left animate-slideIn">
+                <div className="mt-4 p-4 border border-purple-100 bg-purple-50/80 rounded-2xl text-left animate-slideIn shadow-sm">
                   <label className="block text-xs font-semibold text-purple-700 uppercase tracking-wider mb-2">
                     Enter Gemini API Key
                   </label>
-                  <input
-                    type="password"
-                    defaultValue={geminiKey}
-                    onChange={(e) => handleSaveGeminiKey(e.target.value)}
-                    placeholder="AIzaSy..."
-                    className="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none text-xs transition"
-                  />
-                  <p className="text-[10px] text-gray-400 mt-2">
-                    Stored in your browser's local cache. Never sent to third parties.
+                  <div className="flex gap-2">
+                    <input
+                      type="password"
+                      value={geminiKey}
+                      onChange={(e) => setGeminiKey(e.target.value)}
+                      placeholder="AIzaSy..."
+                      className="flex-1 p-2.5 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none text-xs transition bg-white text-gray-800"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!geminiKey.trim()) {
+                          alert("⚠️ Please enter an API Key first!");
+                          return;
+                        }
+                        handleSaveGeminiKey(geminiKey.trim());
+                        alert("✅ Gemini API Key saved successfully!");
+                      }}
+                      className="px-3.5 py-2.5 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-bold rounded-xl text-xs transition shadow-md"
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-gray-500 mt-2 leading-relaxed">
+                    Must start with <code className="text-purple-600 font-bold">AIzaSy...</code> from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="underline font-bold text-purple-600 hover:text-purple-800">Google AI Studio</a>.
                   </p>
                 </div>
               )}
