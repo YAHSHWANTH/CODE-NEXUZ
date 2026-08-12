@@ -419,10 +419,9 @@ const AdminDashboard = () => {
     setChatLoading(true);
 
     try {
-      const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
       const headers = geminiKey ? { "x-gemini-key": geminiKey } : {};
       const res = await axios.post(
-        `${apiBase}/api/admin/agent/chat`,
+        `${BASE_URL}/agent/chat`,
         { prompt: userMsg },
         { headers }
       );
@@ -469,8 +468,7 @@ const AdminDashboard = () => {
     if (!actionsToExecute || actionsToExecute.length === 0) return;
     setExecutingActions(true);
     try {
-      const apiBase = process.env.REACT_APP_API_BASE_URL || "https://code-nexuz.onrender.com";
-      const res = await axios.post(`${apiBase}/api/admin/agent/execute`, { actions: actionsToExecute });
+      const res = await axios.post(`${BASE_URL}/agent/execute`, { actions: actionsToExecute });
       if (res.data?.success) {
         alert("✅ AI Agent actions executed successfully!");
         
