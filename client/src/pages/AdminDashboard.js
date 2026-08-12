@@ -429,6 +429,7 @@ const AdminDashboard = () => {
         <table className="min-w-full border border-gray-300 rounded-xl">
           <thead className="bg-gray-100">
             <tr>
+              <th className="px-4 py-2 text-left font-bold text-gray-700 w-16">S.No</th>
               {keys.map((key) => {
                 let displayName = key.replace(/([A-Z])/g, " $1");
                 if (key === "uniqueId") displayName = "Unique ID";
@@ -448,6 +449,7 @@ const AdminDashboard = () => {
                 className="border-t hover:bg-gray-50 cursor-pointer select-none"
                 onContextMenu={(e) => handleRowContextMenu(e, row)}
               >
+                <td className="px-4 py-2 text-sm font-semibold text-gray-500 w-16">{i + 1}</td>
                 {keys.map((k) => (
                   <td key={k} className="px-4 py-2 text-sm">
                     {k === "status" && (activeTab === "enrollments" || activeTab === "certificates") ? (
