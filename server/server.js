@@ -572,29 +572,36 @@ app.delete("/api/admin/certificates/:id", verifyDeletePassword, async (req, res)
 // Helper function to send email via Brevo
 const sendBrevoEmail = async (toEmail, subject, htmlContent) => {
   try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json",
-        "accept": "application/json"
-      },
-      body: JSON.stringify({
-        sender: {
-          name: "KodNexuz",
-          email: process.env.SMTP_USER || "kodnexustech@gmail.com"
+    const sendersToTry = [
+      { name: "KodNexuz", email: process.env.SMTP_USER || "kodnexustech@gmail.com" },
+      { name: "KodNexuz", email: "yaswanth1212000@gmail.com" }
+    ];
+
+    for (const senderObj of sendersToTry) {
+      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json",
+          "accept": "application/json"
         },
-        to: [{ email: toEmail.trim() }],
-        subject: subject,
-        htmlContent: htmlContent
-      })
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("❌ Brevo sending failure details:", errorData);
-      return false;
+        body: JSON.stringify({
+          sender: senderObj,
+          to: [{ email: toEmail.trim() }],
+          subject: subject,
+          htmlContent: htmlContent
+        })
+      });
+
+      if (response.ok) {
+        console.log(`✅ Brevo email successfully sent to ${toEmail} via sender ${senderObj.email}`);
+        return true;
+      } else {
+        const errorData = await response.json();
+        console.error(`⚠️ Brevo sending attempt failed for sender ${senderObj.email}:`, errorData);
+      }
     }
-    return true;
+    return false;
   } catch (err) {
     console.error("❌ sendBrevoEmail error:", err);
     return false;

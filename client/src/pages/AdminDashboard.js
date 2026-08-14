@@ -518,7 +518,15 @@ const AdminDashboard = () => {
     try {
       const res = await axios.post(`${BASE_URL}/agent/execute`, { actions: formattedActions });
       if (res.data?.success) {
-        alert("✅ AI Agent actions executed successfully!");
+        const results = res.data.results || [];
+        const successCount = results.filter(r => r.success).length;
+        const failCount = results.length - successCount;
+
+        if (failCount === 0) {
+          alert(`✅ All ${successCount} email(s) executed & sent successfully via Brevo!`);
+        } else {
+          alert(`⚠️ Action Execution Result:\n• ${successCount} email(s) sent successfully\n• ${failCount} email(s) failed.`);
+        }
         
         // Clear actions on current chat item to prevent double-execution
         setChatHistory((prev) =>
