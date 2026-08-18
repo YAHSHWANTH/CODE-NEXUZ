@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   FaRocket,
-  FaUsers,
-  FaBookOpen,
+  FaUserGraduate,
+  FaHeart,
   FaGlobe,
   FaAward,
   FaShieldAlt,
@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 
 // 🌟 Counter Animation Component
-const AnimatedCounter = ({ target, suffix = "+" }) => {
+const AnimatedCounter = ({ target, suffix = "+", isStatic = false, staticText = "" }) => {
   const [count, setCount] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const counterRef = useRef(null);
@@ -33,7 +33,7 @@ const AnimatedCounter = ({ target, suffix = "+" }) => {
   }, []);
 
   useEffect(() => {
-    if (!hasStarted) return;
+    if (!hasStarted || isStatic) return;
 
     let start = 0;
     const duration = 1500; // 1.5s smooth count-up
@@ -52,7 +52,11 @@ const AnimatedCounter = ({ target, suffix = "+" }) => {
     }, frameTime);
 
     return () => clearInterval(timer);
-  }, [hasStarted, target]);
+  }, [hasStarted, target, isStatic]);
+
+  if (isStatic) {
+    return <span>{staticText}</span>;
+  }
 
   return (
     <span ref={counterRef}>
@@ -81,7 +85,7 @@ const EnterpriseImpact = () => {
         </h2>
 
         <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto codevia-mouse-tilt" data-tilt-factor="0.5">
-          KodNexuz accelerates tech learning and software delivery with hands-on project builds, expert mentor guidance, and reliable cloud tools.
+          KodNexuz accelerates tech learning and software delivery with hands-on project builds, expert 1:1 mentor guidance, and reliable cloud tools.
         </p>
 
         {/* Stat Counters Grid with Gradual Number Increase Animation */}
@@ -92,7 +96,7 @@ const EnterpriseImpact = () => {
               <FaRocket className="text-pink-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              <AnimatedCounter target={10} suffix="+" />
+              <AnimatedCounter target={20} suffix="+" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Projects & Builds Delivered
@@ -101,25 +105,25 @@ const EnterpriseImpact = () => {
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.9">
             <div className="group-hover:scale-110 transition-transform duration-300">
-              <FaUsers className="text-purple-500 text-3xl mx-auto mb-2" />
+              <FaUserGraduate className="text-purple-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              <AnimatedCounter target={5} suffix="+" />
+              <AnimatedCounter isStatic={true} staticText="1:1" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
-              Expert Mentors & Engineers
+              Mentorship & Doubt Sessions
             </div>
           </div>
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.6">
             <div className="group-hover:scale-110 transition-transform duration-300">
-              <FaBookOpen className="text-indigo-500 text-3xl mx-auto mb-2" />
+              <FaHeart className="text-red-500 text-3xl mx-auto mb-2 animate-pulse" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               <AnimatedCounter target={100} suffix="%" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
-              Hands-On Practical Curriculum
+              Client & Student Satisfaction
             </div>
           </div>
 
@@ -147,7 +151,7 @@ const EnterpriseImpact = () => {
                 <h3 className="text-xl font-bold text-white">Proven Track Record</h3>
               </div>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                Over 10+ full-stack projects, web applications, and developer tracks completed with clean code and zero security issues.
+                Over 20+ full-stack projects, web applications, and developer tracks completed with 100% client satisfaction and zero security issues.
               </p>
             </div>
 
@@ -164,10 +168,10 @@ const EnterpriseImpact = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <FaCheckCircle className="text-purple-400 text-2xl" />
-                <h3 className="text-xl font-bold text-white">Dedicated Support SLA</h3>
+                <h3 className="text-xl font-bold text-white">1:1 Mentorship Support</h3>
               </div>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                Prompt mentor guidance and sub-15 minute technical support during active project working hours.
+                Dedicated 1-on-1 mentorship sessions and sub-15 minute technical doubt resolution during active project working hours.
               </p>
             </div>
 
