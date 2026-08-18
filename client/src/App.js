@@ -178,10 +178,10 @@ const App = () => {
                 <div className="scroll-reveal"><Home /></div>
                 <div className="scroll-reveal"><Features /></div>
                 <div className="scroll-reveal"><Courses /></div>
-                <div className="scroll-reveal"><EnterpriseImpact /></div>
                 <div className="scroll-reveal"><PortalShowcase /></div>
                 <div className="scroll-reveal"><FAQ /></div>
                 <div className="scroll-reveal"><Careers /></div>
+                <div className="scroll-reveal"><EnterpriseImpact /></div>
                 <div className="scroll-reveal"><Touch /></div>
               </>
             }
