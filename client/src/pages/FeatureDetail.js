@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   FaCode,
@@ -18,13 +18,38 @@ import {
   FaShieldVirus,
   FaUserCheck,
   FaEnvelope,
-  FaBolt,
+  FaQuestionCircle,
+  FaChevronDown,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
 import BorderGlow from "../components/BorderGlow";
 
-// 🖼️ 1. Custom Software Detail View (Split Hero + Editor Mockup + Pipeline)
+// 🌟 Reusable Accordion Item Component for Feature FAQs
+const FeatureFaqItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-4 sm:p-5 flex items-center justify-between text-left font-semibold text-gray-800 hover:text-purple-600 transition cursor-pointer"
+      >
+        <span className="flex items-center gap-2 text-sm sm:text-base">
+          <FaQuestionCircle className="text-purple-500 text-sm" />
+          {question}
+        </span>
+        <FaChevronDown className={`text-xs transition-transform duration-300 ${isOpen ? "rotate-180 text-purple-600" : "text-gray-400"}`} />
+      </button>
+      {isOpen && (
+        <div className="px-5 pb-5 text-gray-600 text-xs sm:text-sm leading-relaxed border-t border-gray-100 pt-3">
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 🖼️ 1. Custom Software Detail View (Massive Data Expansion)
 const CustomSoftwareView = ({ navigate }) => (
   <div className="space-y-16">
     {/* Split Hero with Real High-Res Developer Image */}
@@ -37,12 +62,13 @@ const CustomSoftwareView = ({ navigate }) => (
           Precision Software Engineered for Your Industry
         </h2>
         <p className="text-gray-600 leading-relaxed text-base">
-          KodNexuz builds high-concurrency web applications using modular React 19 architecture, microservice backend APIS, and automated cloud CI/CD pipelines.
+          KodNexuz builds high-concurrency web applications using modular React 19 architecture, microservice backend APIs, and automated cloud CI/CD pipelines.
         </p>
-        <div className="flex flex-wrap gap-4 pt-2">
-          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ React 19</div>
-          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ Node.js Express</div>
-          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ REST & GraphQL</div>
+        <div className="flex flex-wrap gap-3 pt-2">
+          <span className="bg-purple-50 px-3.5 py-1.5 rounded-xl text-purple-700 font-bold text-xs">✓ React 19</span>
+          <span className="bg-purple-50 px-3.5 py-1.5 rounded-xl text-purple-700 font-bold text-xs">✓ Node.js Express</span>
+          <span className="bg-purple-50 px-3.5 py-1.5 rounded-xl text-purple-700 font-bold text-xs">✓ REST & GraphQL</span>
+          <span className="bg-purple-50 px-3.5 py-1.5 rounded-xl text-purple-700 font-bold text-xs">✓ MongoDB Atlas</span>
         </div>
       </div>
 
@@ -58,38 +84,88 @@ const CustomSoftwareView = ({ navigate }) => (
       </div>
     </div>
 
-    {/* Visual Full-Stack Code Editor Mockup */}
-    <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-800 font-mono text-sm space-y-4">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          <span className="text-xs text-slate-400 font-sans ml-2">AppService.js — KodNexuz Engine</span>
-        </div>
-        <span className="text-xs text-purple-400 font-sans font-bold">SOLID Modular Code</span>
+    {/* Full-Stack Architecture Diagram */}
+    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl space-y-8">
+      <div className="text-center">
+        <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          Visual System Blueprint
+        </span>
+        <h3 className="text-2xl font-extrabold text-gray-900 mt-2">
+          3-Tier Enterprise Microservice Architecture
+        </h3>
       </div>
 
-      <pre className="text-purple-300 leading-relaxed overflow-x-auto">
-{`// KodNexuz Custom Enterprise Engine
-import { createMicroservice, DatabaseCluster } from "@kodnexuz/core";
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl border border-purple-200 space-y-3">
+          <div className="w-10 h-10 bg-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-base">
+            01
+          </div>
+          <h4 className="font-bold text-gray-900 text-lg">Presentation Layer</h4>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            Component-driven React 19 frontend with client-side routing, instant form validations, and Tailwind CSS responsive grid systems.
+          </p>
+        </div>
 
-export const buildEnterpriseApp = async (clientRequirements) => {
-  const db = await DatabaseCluster.connect({ ssl: true });
-  const app = createMicroservice({
-    architecture: "modular-monolith",
-    performanceTier: "sub-second-latency",
-    security: "OWASP-compliant-jwt"
-  });
+        <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border border-purple-200 space-y-3">
+          <div className="w-10 h-10 bg-pink-600 text-white rounded-xl flex items-center justify-center font-bold text-base">
+            02
+          </div>
+          <h4 className="font-bold text-gray-900 text-lg">Application Gateway</h4>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            High-throughput Node.js microservices handling authentication middleware, rate limiting, and Brevo SMTP API integrations.
+          </p>
+        </div>
 
-  return app.listen(4000, () => console.log("🚀 Custom Solution Ready"));
-};`}
-      </pre>
+        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-2xl border border-indigo-200 space-y-3">
+          <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold text-base">
+            03
+          </div>
+          <h4 className="font-bold text-gray-900 text-lg">Persistence Cluster</h4>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            Distributed MongoDB Atlas database collections with indexed queries, schema validation, and daily automated cloud snapshots.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Agile 5-Step Lifecycle */}
+    <div className="bg-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl space-y-8">
+      <h3 className="text-2xl font-extrabold text-center">
+        5-Step Agile Software Lifecycle
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+        {[
+          { step: "01", title: "Discovery", desc: "Requirements & Specification" },
+          { step: "02", title: "UI/UX Design", desc: "Figma Mockups & Wireframes" },
+          { step: "03", title: "Development", desc: "Full-Stack Modular Builds" },
+          { step: "04", title: "Security Check", desc: "OWASP Vulnerability Audit" },
+          { step: "05", title: "Deployment", desc: "Cloud Edge Production Launch" },
+        ].map((item, idx) => (
+          <div key={idx} className="bg-slate-900 p-5 rounded-2xl border border-slate-800 text-center space-y-2">
+            <span className="text-pink-400 font-extrabold text-2xl">{item.step}</span>
+            <h4 className="font-bold text-white text-sm">{item.title}</h4>
+            <p className="text-xs text-gray-400">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Custom Software FAQs */}
+    <div className="space-y-4">
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h3>
+      <FeatureFaqItem
+        question="How does KodNexuz ensure custom applications can scale with high traffic?"
+        answer="Our custom applications utilize serverless cloud edge routing and MongoDB indexed query optimization, enabling automated auto-scaling during traffic spikes without any degradation in page speed."
+      />
+      <FeatureFaqItem
+        question="Can custom modules integrate with our existing corporate APIs?"
+        answer="Yes! Our Node.js microservice architecture supports standard REST, GraphQL, and OAuth 2.0 protocols to seamlessly communicate with third-party software systems."
+      />
     </div>
   </div>
 );
 
-// 🖼️ 2. Cloud Solutions Detail View (Full-Bleed Datacenter + SLA Grid)
+// 🖼️ 2. Cloud Solutions Detail View (Massive Expansion)
 const CloudSolutionsView = ({ navigate }) => (
   <div className="space-y-16">
     {/* Full-Bleed Datacenter Hero Banner */}
@@ -134,13 +210,21 @@ const CloudSolutionsView = ({ navigate }) => (
         <p className="text-xs text-indigo-200">Automatic renewal and enforcement of HTTPS security headers.</p>
       </div>
     </div>
+
+    {/* Cloud FAQs */}
+    <div className="space-y-4">
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h3>
+      <FeatureFaqItem
+        question="How does KodNexuz maintain 99.99% uptime during high traffic?"
+        answer="By distributing traffic across multi-region serverless cloud nodes on Render and Vercel, requests are automatically load-balanced away from congested servers."
+      />
+    </div>
   </div>
 );
 
-// 🖼️ 3. Team Collaboration Detail View (Real Team Photo + Circular Agile Workflow)
+// 🖼️ 3. Team Collaboration Detail View
 const TeamCollaborationView = ({ navigate }) => (
   <div className="space-y-16">
-    {/* Real Team Photo Showcase */}
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-pink-100 shadow-xl">
       <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-pink-200 order-2 lg:order-1">
         <img
@@ -165,31 +249,10 @@ const TeamCollaborationView = ({ navigate }) => (
         </p>
       </div>
     </div>
-
-    {/* Mentorship Workspaces */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div className="bg-pink-50/70 p-6 rounded-2xl border border-pink-200 text-center space-y-3">
-        <FaUsers className="text-3xl text-pink-600 mx-auto" />
-        <h3 className="font-bold text-gray-900 text-lg">Daily Agile Standups</h3>
-        <p className="text-xs text-gray-600">Simulating corporate sprint planning and ticket updates.</p>
-      </div>
-
-      <div className="bg-purple-50/70 p-6 rounded-2xl border border-purple-200 text-center space-y-3">
-        <FaCode className="text-3xl text-purple-600 mx-auto" />
-        <h3 className="font-bold text-gray-900 text-lg">1-on-1 Code Reviews</h3>
-        <p className="text-xs text-gray-600">Direct feedback on GitHub pull requests and architecture.</p>
-      </div>
-
-      <div className="bg-indigo-50/70 p-6 rounded-2xl border border-indigo-200 text-center space-y-3">
-        <FaBolt className="text-3xl text-indigo-600 mx-auto" />
-        <h3 className="font-bold text-gray-900 text-lg">Live Doubts Resolution</h3>
-        <p className="text-xs text-gray-600">Dedicated Telegram & Discord channels with sub-15min responses.</p>
-      </div>
-    </div>
   </div>
 );
 
-// 🖼️ 4. AI Integration Detail View (Robotic AI Photo + Terminal Generator)
+// 🖼️ 4. AI Integration Detail View
 const AiIntegrationView = ({ navigate }) => (
   <div className="space-y-16">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-800">
@@ -211,15 +274,12 @@ const AiIntegrationView = ({ navigate }) => (
           alt="AI Artificial Intelligence"
           className="w-full h-80 object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent flex items-end p-6">
-          <span className="text-purple-300 font-mono text-xs">AI Engine 2.0 | Multi-Model Architecture</span>
-        </div>
       </div>
     </div>
   </div>
 );
 
-// 🖼️ 5. Secure Systems Detail View (Cyber Security Lock Image + Shield Specs)
+// 🖼️ 5. Secure Systems Detail View
 const SecureSystemsView = ({ navigate }) => (
   <div className="space-y-16">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-emerald-100 shadow-xl">
@@ -229,9 +289,6 @@ const SecureSystemsView = ({ navigate }) => (
           alt="Cyber Security System"
           className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent flex items-end p-6">
-          <span className="text-white font-semibold text-sm">Enterprise Multi-Layer Encryption Guard</span>
-        </div>
       </div>
 
       <div className="space-y-6">
@@ -249,7 +306,7 @@ const SecureSystemsView = ({ navigate }) => (
   </div>
 );
 
-// 🖼️ 6. Data Analytics Detail View (Data Charts Image + Interactive Metrics Dashboard)
+// 🖼️ 6. Data Analytics Detail View
 const DataAnalyticsView = ({ navigate }) => (
   <div className="space-y-16">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-indigo-100 shadow-xl">
@@ -276,7 +333,7 @@ const DataAnalyticsView = ({ navigate }) => (
   </div>
 );
 
-// 🖼️ 7. Database Management Detail View (Database Server Rack Image + Topology)
+// 🖼️ 7. Database Management Detail View
 const DatabaseManagementView = ({ navigate }) => (
   <div className="space-y-16">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-slate-900 text-white p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-800">
@@ -303,7 +360,7 @@ const DatabaseManagementView = ({ navigate }) => (
   </div>
 );
 
-// 🖼️ 8. Privacy First & 2-Factor OTP Detail View (Keycard Security Photo + 6-Step Visual Workflow)
+// 🖼️ 8. Privacy First & 2-Factor OTP Detail View
 const PrivacyFirstView = ({ navigate }) => (
   <div className="space-y-16">
     {/* Split Hero with Real High-Res Privacy Lock Image */}
@@ -566,7 +623,7 @@ const FeatureDetail = () => {
           ))}
         </div>
 
-        {/* 🎨 DIVERSE UNIQUE FEATURE VIEW WITH HIGH-RES REALISTIC IMAGES */}
+        {/* 🎨 DIVERSE UNIQUE FEATURE VIEW WITH RICH DATA & HIGH-RES REALISTIC IMAGES */}
         {CustomViewComponent && <CustomViewComponent navigate={navigate} />}
 
         {/* Call to Action Footer Card */}
