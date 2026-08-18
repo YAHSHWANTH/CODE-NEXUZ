@@ -54,7 +54,7 @@ const Courses = () => {
             {courses.map((course) => (
               <div
                 key={course.id}
-                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center border border-gray-100 hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out"
+                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center border border-gray-100 codevia-card-hover hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out cursor-pointer"
               >
                 <div className="mb-4 animate-bounce hover:animate-none transition-all duration-500">
                   {course.logo}

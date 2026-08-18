@@ -85,3 +85,20 @@
   transform: translateY(0);
 }
 
+/* 🚀 Codevia-style dynamic mouse translate & tilt animation */
+.codevia-mouse-tilt {
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+.codevia-card-hover {
+  transition: transform 0.25s ease-out, box-shadow 0.3s ease-out;
+  will-change: transform;
+}
+
+.codevia-card-hover:hover {
+  transform: translate(2.5px, -3.5px) scale(1.015);
+  box-shadow: 0 16px 32px -10px rgba(168, 85, 247, 0.15);
+}
+
+

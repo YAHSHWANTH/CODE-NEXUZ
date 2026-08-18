@@ -1,6 +1,7 @@
 // src/components/Home.js
 import React from "react";
 import Slider from "react-slick";
+import { FaBook, FaGraduationCap, FaCertificate } from "react-icons/fa";
 import BlurText from "./BlurText";
 
 // Import slick carousel CSS

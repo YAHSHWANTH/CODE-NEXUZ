@@ -1,4 +1,5 @@
 import React from "react";
+import BorderGlow from "./BorderGlow";
 
 const Careers = () => {
   return (
