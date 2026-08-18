@@ -45,7 +45,7 @@ const Courses = () => {
               Courses
             </span>
           </h2>
-          <p className="text-gray-600 mb-12 text-lg codevia-mouse-tilt" data-tilt-factor="1.5">
+          <p className="text-gray-600 mb-12 text-lg">
             Get started with KodNexuz Internships & Courses!
           </p>
 

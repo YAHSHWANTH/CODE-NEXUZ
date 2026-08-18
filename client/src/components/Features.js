@@ -33,7 +33,7 @@ const Features = () => {
           Features of <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">KodNexuz?</span>
         </h2>
         
-        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto codevia-mouse-tilt" data-tilt-factor="1.5">
+        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
           At KodNexuz, we provide end-to-end solutions that combine innovation, efficiency, and security.
           Our team ensures seamless collaboration, cutting-edge technology, and personalized strategies for every client.
           Partner with us to accelerate growth and transform your business digitally.
