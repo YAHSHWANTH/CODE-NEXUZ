@@ -59,9 +59,9 @@ const PortalShowcase = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-900 via-slate-900 to-purple-950 text-white relative overflow-hidden" id="portal-showcase">
+    <section className="py-16 md:py-24 bg-[#0b0f19] text-white relative overflow-hidden" id="portal-showcase">
       {/* Background radial gradient glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/30 via-slate-950/80 to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/25 via-[#0b0f19] to-[#0b0f19]"></div>
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
         {/* Header */}
@@ -71,28 +71,28 @@ const PortalShowcase = () => {
           </span>
           <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
             KodNexuz Platform{" "}
-            <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
               Showcase
             </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-purple-200 font-light">
-            Student Internships · Admin Intelligence · AI Verification — all in one unified platform.
+            Business Intelligence · Analytics · AI — all in one verified source
           </p>
         </div>
 
-        {/* Interactive Showcase Grid matching Screenshot 1 & 3 */}
+        {/* Interactive Showcase Grid matching Screenshots */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Side (Interactive Portal Window Mockup with REALISTIC UI SCREENSHOT) - 7 cols */}
-          <div className="lg:col-span-7 bg-slate-900/95 rounded-3xl border border-purple-900/40 shadow-2xl overflow-hidden backdrop-blur-md">
+          <div className="lg:col-span-7 bg-[#111625] rounded-3xl border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-md">
             {/* Browser Header Bar */}
-            <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+            <div className="bg-[#080b12] px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
-              <div className="bg-slate-900 text-slate-300 text-xs font-mono px-4 py-1.5 rounded-full border border-slate-800 flex items-center gap-2">
+              <div className="bg-[#111625] text-slate-300 text-xs font-mono px-4 py-1.5 rounded-full border border-slate-800 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                 <span>app.kodnexuz.in / portal / {tabsData[activeTab].id}</span>
               </div>
@@ -100,7 +100,7 @@ const PortalShowcase = () => {
             </div>
 
             {/* Dynamic View Content + Realistic Portal UI Screenshot Image */}
-            <div className="p-6 sm:p-8 min-h-[420px] flex flex-col justify-between space-y-6">
+            <div className="p-6 sm:p-8 min-h-[400px] flex flex-col justify-between space-y-6">
               
               {/* Realistic Portal UI Screenshot Mockup Banner */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 group">
@@ -109,7 +109,7 @@ const PortalShowcase = () => {
                   alt={tabsData[activeTab].title}
                   className="w-full h-52 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent flex items-end p-4 sm:p-5">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/40 to-transparent flex items-end p-4 sm:p-5">
                   <div className="flex items-center justify-between w-full">
                     <div>
                       <span className="bg-pink-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
@@ -130,15 +130,15 @@ const PortalShowcase = () => {
               {activeTab === 0 && (
                 <div className="space-y-4 animate-fadeIn">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                    <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
                       <div className="text-xs text-slate-400">Course Progress</div>
                       <div className="text-xl font-bold text-white mt-1">85% Completed</div>
-                      <div className="w-full bg-slate-700 h-2 rounded-full mt-2 overflow-hidden">
+                      <div className="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
                         <div className="bg-gradient-to-r from-pink-500 to-purple-500 h-full w-[85%]"></div>
                       </div>
                     </div>
 
-                    <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                    <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
                       <div className="text-xs text-slate-400">Live Projects</div>
                       <div className="text-xl font-bold text-white mt-1">4 Completed</div>
                       <div className="text-xs text-green-400 mt-1 flex items-center gap-1">
@@ -147,7 +147,7 @@ const PortalShowcase = () => {
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700 flex items-center justify-between">
+                  <div className="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <FaDownload className="text-pink-400 text-lg" />
                       <div>
@@ -165,21 +165,21 @@ const PortalShowcase = () => {
               {activeTab === 1 && (
                 <div className="space-y-4 animate-fadeIn">
                   <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                       <div className="text-[11px] text-slate-400">Registered</div>
                       <div className="text-lg font-bold text-white mt-0.5">12,480</div>
                     </div>
-                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                       <div className="text-[11px] text-slate-400">Active</div>
                       <div className="text-lg font-bold text-green-400 mt-0.5">9,120</div>
                     </div>
-                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                       <div className="text-[11px] text-slate-400">Pending Actions</div>
                       <div className="text-lg font-bold text-yellow-400 mt-0.5">184</div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between">
+                  <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
                     <div>
                       <div className="text-xs font-bold text-white">Batch Email Action (Brevo API)</div>
                       <div className="text-[11px] text-slate-400">Selected 24 pending users for enrollment reminders.</div>
@@ -193,7 +193,7 @@ const PortalShowcase = () => {
 
               {activeTab === 2 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex items-center gap-4">
+                  <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex items-center gap-4">
                     <div className="w-16 h-16 bg-white p-1.5 rounded-lg flex items-center justify-center shrink-0">
                       <FaQrcode className="text-slate-900 w-full h-full" />
                     </div>
@@ -210,7 +210,7 @@ const PortalShowcase = () => {
 
               {activeTab === 3 && (
                 <div className="space-y-4 animate-fadeIn">
-                  <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 space-y-1.5">
+                  <div className="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
                     <div className="text-xs text-indigo-300 font-bold">User Prompt:</div>
                     <div className="text-xs text-slate-200 font-mono bg-slate-950 p-2 rounded-lg border border-slate-800">
                       "Draft reminder email to pending students who registered yesterday"
@@ -230,7 +230,7 @@ const PortalShowcase = () => {
             </div>
           </div>
 
-          {/* Right Side (Selectable Tabs Navigation matching Screenshot 1) - 5 cols */}
+          {/* Right Side (Selectable Tabs Navigation matching Screenshot 1 & 2) - 5 cols */}
           <div className="lg:col-span-5 space-y-4">
             {tabsData.map((tab, idx) => {
               const isActive = activeTab === idx;
@@ -240,8 +240,8 @@ const PortalShowcase = () => {
                   onClick={() => setActiveTab(idx)}
                   className={`p-5 rounded-2xl transition-all duration-300 cursor-pointer border ${
                     isActive
-                      ? "bg-slate-900 border-purple-500 shadow-xl ring-1 ring-purple-500/50"
-                      : "bg-slate-900/60 border-slate-800/80 hover:bg-slate-900 hover:border-slate-700"
+                      ? "bg-[#111625] border-purple-500 shadow-xl ring-1 ring-purple-500/50"
+                      : "bg-[#111625]/60 border-slate-800/80 hover:bg-[#111625] hover:border-slate-700"
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -269,7 +269,7 @@ const PortalShowcase = () => {
                   </div>
 
                   {isActive && (
-                    <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+                    <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -285,25 +285,6 @@ const PortalShowcase = () => {
                 </div>
               );
             })}
-
-            {/* Bottom Call to Action Buttons matching Screenshot 1 */}
-            <div className="pt-4 flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleOpenAuth}
-                className="flex-1 py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 shadow-lg transition text-center cursor-pointer"
-              >
-                Explore KodNexuz Portal
-              </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById("touch");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="py-3.5 px-6 rounded-xl font-bold text-slate-200 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition text-center cursor-pointer"
-              >
-                Request Demo
-              </button>
-            </div>
           </div>
         </div>
       </div>
