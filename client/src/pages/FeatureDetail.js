@@ -25,6 +25,9 @@ import {
   FaSlidersH,
   FaTerminal,
   FaCheckCircle,
+  FaLightbulb,
+  FaCamera,
+  FaLaptop,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
@@ -55,7 +58,7 @@ const FeatureFaqItem = ({ question, answer }) => {
 };
 
 // ----------------------------------------------------------------------
-// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT (6-8 SCROLL PAGES DEEP)
+// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT WITH SENIOR DEV PROSE
 // ----------------------------------------------------------------------
 const featureData = {
   "custom-software": {
@@ -73,11 +76,15 @@ const featureData = {
       "Our software solutions leverage React 19 component architecture on the frontend to deliver instant, client-side rendering with zero UI lag. On the backend, asynchronous Node.js microservices process thousands of concurrent API requests while maintaining strict token authentication and database connection pooling.",
       "Every line of code undergoes rigorous automated CI/CD unit testing, vulnerability scanning, and cross-browser performance benchmarking before deployment. This guarantees a resilient digital foundation built to support enterprise growth.",
     ],
+    architectureExplanation:
+      "As senior developers, we decouple frontend presentation from backend microservices and persistence clusters. This 3-tier blueprint ensures that UI components render independently of background data processing, completely eliminating freeze frames or lag during high-concurrency user events.",
     layers: [
       { step: "01", title: "Presentation Layer", desc: "Component-driven React 19 frontend with client-side state management, instant form validation, micro-animations, and responsive Tailwind grid layouts.", icon: <FaLaptopCode /> },
       { step: "02", title: "API Gateway Layer", desc: "Asynchronous Node.js Express microservices handling JWT authentication middleware, CORS firewalls, rate limiting, and Brevo SMTP API triggers.", icon: <FaCogs /> },
       { step: "03", title: "Persistence Cluster", desc: "Distributed MongoDB Atlas NoSQL database with indexed queries, schema validation, encrypted connections, and automated daily snapshots.", icon: <FaServer /> },
     ],
+    galleryExplanation:
+      "The production gallery below highlights our live software development workflows. Our engineers conduct daily peer code reviews on Git repositories, ensuring strict type safety, clean code patterns, and sub-second page performance across all browsers.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80", caption: "Full-Stack Code Engineering & React 19 Architecture" },
       { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80", caption: "Agile Sprint Code Reviews & Technical Quality Audits" },
@@ -94,6 +101,8 @@ const featureData = {
       { title: "Interactive E-Learning Portals", desc: "Student learning dashboards, live video course streaming, automated quizzes, and QR-verified certificates." },
       { title: "SaaS Analytics Dashboards", desc: "Real-time subscriber tracking dashboards, automated email campaign triggers, and financial reporting." },
     ],
+    codeSnippetExplanation:
+      "This production Node.js Express code snippet demonstrates how our backend handles JWT authentication verification and queries MongoDB Atlas collections using optimized database indexes, returning structured JSON payloads in under 15 milliseconds.",
     codeSnippet: `// 🚀 KodNexuz Modular Custom Software Architecture
 import { express, jwt, mongoAtlas } from "@kodnexuz/core";
 
@@ -144,11 +153,15 @@ export const buildCustomModule = async (req, res) => {
       "By eliminating traditional single-server bottlenecks, our cloud architecture dynamically load-balances incoming web traffic across redundant serverless nodes. This ensures that even during massive traffic spikes, page render speed remains well under 50 milliseconds.",
       "Every cloud deployment includes automated TLS 1.3 256-bit SSL encryption, DDoS mitigation firewalls, and daily cloud snapshot backups to guarantee continuous 99.99% operational uptime.",
     ],
+    architectureExplanation:
+      "Our cloud architecture distributes incoming web requests through 280+ CDN edge caching points globally. Requests are automatically served from the geographically nearest server node, eliminating network latency for users around the globe.",
     layers: [
       { step: "01", title: "Global CDN Routing", desc: "Automated DNS routing directing user requests to the geographically closest CDN edge node.", icon: <FaNetworkWired /> },
       { step: "02", title: "Serverless Compute", desc: "Auto-scaling Node.js function execution with zero cold-start latency or server overhead.", icon: <FaSync /> },
       { step: "03", title: "Encrypted Transport", desc: "Automated TLS 1.3 SSL certificate generation, renewal, and HTTPS security header enforcement.", icon: <FaLock /> },
     ],
+    galleryExplanation:
+      "The datacenter infrastructure shown below illustrates our enterprise cloud servers equipped with fiber optic data exchange channels, redundancy load balancers, and multi-region failover protection.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80", caption: "Global High-Speed Cloud Datacenter Fiber Optics" },
       { url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80", caption: "High-Performance Cloud Server Hardware Racks" },
@@ -165,6 +178,8 @@ export const buildCustomModule = async (req, res) => {
       { title: "Zero-Downtime E-Commerce", desc: "Online marketplaces with automated serverless scaling during flash sales." },
       { title: "Disaster Recovery Clouds", desc: "Multi-region cloud backups with automated failover switching." },
     ],
+    codeSnippetExplanation:
+      "This edge routing configuration specifies auto-scaling parameters for serverless node pools on Vercel and Render, ensuring instances automatically scale out when CPU utilization exceeds 75%.",
     codeSnippet: `// ☁️ KodNexuz Cloud Serverless Edge Configuration
 export default {
   edgeNetwork: "VERCEL_RENDER_GLOBAL",
@@ -211,11 +226,15 @@ export default {
       "Interns participate in daily Agile standups, submit pull requests on production Git repositories, and receive detailed 1-on-1 code reviews from senior engineers. This ensures you master industry coding standards, version control workflows, and project management practices.",
       "With dedicated sub-15 minute Q&A support channels, peer group coding sprints, and structured career guidance, KodNexuz prepares you to step confidently into professional software developer roles.",
     ],
+    architectureExplanation:
+      "Our mentorship framework pairs interns with senior developers on active Git feature branches. Code submissions must pass automated linting and unit tests before a senior engineer conducts line-by-line code reviews.",
     layers: [
       { step: "01", title: "Daily Agile Standups", desc: "Structured morning syncs to review daily sprint tasks, blockers, and project goals.", icon: <FaUsers /> },
       { step: "02", title: "Git Code Reviews", desc: "Senior mentor pull request reviews providing line-by-line feedback on code quality.", icon: <FaCode /> },
       { step: "03", title: "Live Doubt Resolution", desc: "Dedicated sub-15 minute support channels to resolve technical roadblocks instantly.", icon: <FaCheckDouble /> },
     ],
+    galleryExplanation:
+      "The photography gallery below showcases real interactive coding sessions in our mentorship hub. Interns work in team sprints, gaining practical experience in software delivery and code optimization.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80", caption: "Software Engineering Team Collaboration & Mentorship" },
       { url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80", caption: "1-on-1 Senior Mentor Pull Request Code Reviews" },
@@ -232,6 +251,8 @@ export default {
       { title: "Corporate Onboarding", desc: "Accelerated developer onboarding with structured mentor guidance." },
       { title: "Peer Coding Sprints", desc: "Collaborative hackathons and sprint projects built in developer teams." },
     ],
+    codeSnippetExplanation:
+      "This automated GitHub webhook snippet demonstrates how pull requests are automatically assigned to senior mentorship leads when test coverage targets are satisfied.",
     codeSnippet: `// 👥 KodNexuz Mentorship Pull Request Audit Hook
 export const auditPullRequest = async (prData) => {
   const { author, codeChanges, testsPassed } = prData;
@@ -275,11 +296,15 @@ export const auditPullRequest = async (prData) => {
       "Our AI engine processes natural language prompts from administrators to automatically analyze student registration velocity, draft personalized enrollment reminder emails, and generate transactional campaigns sent via Brevo SMTP servers.",
       "To ensure 100% uptime, KodNexuz AI features an automated multi-model fallback stack: if Gemini 2.0 is unreachable, requests seamlessly route to Gemini 1.5 Flash, followed by our local database fallback engine.",
     ],
+    architectureExplanation:
+      "The neural integration pipeline translates human administrative prompts into structured SQL/NoSQL database queries, generating contextual email templates and analytics reports in under 1.2 seconds.",
     layers: [
       { step: "01", title: "Natural Language Processor", desc: "Translates administrative instructions into structured database query parameters.", icon: <FaRobot /> },
       { step: "02", title: "Google Gemini Neural Engine", desc: "High-speed multi-model language processing for automated draft generation.", icon: <FaCogs /> },
       { step: "03", title: "Brevo SMTP Dispatcher", desc: "Automated 1-click email campaign execution with tracking logs.", icon: <FaEnvelope /> },
     ],
+    galleryExplanation:
+      "Visual representations of our artificial intelligence infrastructure processing natural language prompts and generating automated email campaigns.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80", caption: "Google Gemini Artificial Intelligence Neural Engine" },
       { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80", caption: "Automated Natural Language Email Generation" },
@@ -296,6 +321,8 @@ export const auditPullRequest = async (prData) => {
       { title: "Registration Velocity Analysis", desc: "Automated summary reports on weekly course enrollment trends." },
       { title: "Intelligent Admin Assistant", desc: "Conversational admin helper for instant platform analytics lookups." },
     ],
+    codeSnippetExplanation:
+      "This production AI router script invokes Google Gemini 2.0 Flash to process user prompts. If an API exception occurs, the try-catch block routes requests to local DB fallback routines.",
     codeSnippet: `// 🤖 KodNexuz Google Gemini 2.0 Multi-Model AI Router
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -344,11 +371,15 @@ export const generateEmailDraft = async (promptText) => {
       "User credentials are encrypted using bcrypt with 10 rounds of salt, rendering passwords immune to brute-force or rainbow table attacks. Active sessions are managed via timed JSON Web Tokens (JWT) stored securely with HTTP-only attributes.",
       "In addition, our platform features CORS domain firewalls, automated input sanitization against SQL/NoSQL injection attacks, and strict Role-Based Access Control (RBAC) to guarantee total enterprise data safety.",
     ],
+    architectureExplanation:
+      "Our Zero-Trust security model operates on a principle of continuous verification. Every incoming request must provide a valid HTTPS TLS 1.3 connection and an unexpired JWT bearer token before touching protected database endpoints.",
     layers: [
       { step: "01", title: "Transport Layer Security", desc: "HTTPS TLS 1.3 256-bit encryption protecting all data in transit.", icon: <FaLock /> },
       { step: "02", title: "Cryptographic Password Salt", desc: "Bcrypt 10-round hashing algorithm safeguarding user credentials.", icon: <FaKey /> },
       { step: "03", title: "Role-Based Access Control", desc: "RBAC middleware enforcing strict permissions for admin vs student roles.", icon: <FaShieldVirus /> },
     ],
+    galleryExplanation:
+      "Cybersecurity visual monitors depicting active CORS firewall filters, threat detection algorithms, and encrypted data vaults.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80", caption: "Cyber Security Lock & Digital Shield Protection" },
       { url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80", caption: "CORS Firewall & Network Security Monitoring" },
@@ -365,6 +396,8 @@ export const generateEmailDraft = async (promptText) => {
       { title: "Financial Transaction Protection", desc: "Encrypted payment verification with zero payload tampering." },
       { title: "Confidential Data Storage", desc: "Encrypted database collections with strict access controls." },
     ],
+    codeSnippetExplanation:
+      "This security routine hashes user passwords using bcrypt with 10 salt rounds and signs cryptographic JWT session tokens expiring in 7 days.",
     codeSnippet: `// 🛡️ KodNexuz Bcrypt Salt Password Encryption & JWT Token Security
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -410,11 +443,15 @@ export const hashPasswordAndSignToken = async (plainPassword, userId) => {
       "Automated analytics aggregate student interaction logs, quiz scores, and project submission statuses, presenting actionable data through clean visual charts, gauges, and metric counters.",
       "With instant data filtering, exportable report logs, and automated registration alerts, platform decision-makers can identify learning bottlenecks and optimize course delivery in real time.",
     ],
+    architectureExplanation:
+      "Our analytics stream processes active registration events in real time, computing active user counts (300+) and pending verification requests (45) with sub-50ms dashboard latency.",
     layers: [
       { step: "01", title: "Live Event Stream", desc: "Real-time aggregation of student logins, quiz completions, and project submissions.", icon: <FaChartLine /> },
       { step: "02", title: "Visual Dashboard Engine", desc: "Interactive charts, progress meters, and registration counters.", icon: <FaSlidersH /> },
       { step: "03", title: "Automated Export Logs", desc: "Exportable analytics reports for administrative reviews.", icon: <FaCheckDouble /> },
     ],
+    galleryExplanation:
+      "Executive visual dashboards displaying registration velocity graphs, course completion percentages, and user engagement metrics.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80", caption: "Real-Time Data Analytics & Performance Metrics Screen" },
       { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80", caption: "Executive Dashboard Reports & Trend Tracking" },
@@ -431,6 +468,8 @@ export const hashPasswordAndSignToken = async (plainPassword, userId) => {
       { title: "Batch Enrollment Analytics", desc: "Analyzing student registration velocity across Web Dev, App Dev, Python, and AI tracks." },
       { title: "Certificate Verification Logs", desc: "Auditing QR-code credential verification requests." },
     ],
+    codeSnippetExplanation:
+      "This aggregation function calculates active vs pending registration totals dynamically from MongoDB Atlas collections, returning real-time metrics for admin dashboards.",
     codeSnippet: `// 📈 KodNexuz Analytics Real-Time Aggregation Pipeline
 export const getActiveRegistrationMetrics = async () => {
   const activeCount = await User.countDocuments({ status: "ACTIVE" });
@@ -477,11 +516,15 @@ export const getActiveRegistrationMetrics = async () => {
       "The database architecture uses indexed collections, strict Mongoose schema validation, and automated connection pooling to maintain consistent performance even under heavy traffic loads.",
       "Data is automatically replicated across Primary Master and Secondary Read Replica nodes in multi-region cloud datacenters, supported by automated daily cloud snapshot backups to prevent data loss.",
     ],
+    architectureExplanation:
+      "Our database connection pool supports up to 50 concurrent active database channels per microservice, guaranteeing sub-15ms query execution under heavy production load.",
     layers: [
       { step: "01", title: "Primary Master Node", desc: "Handles high-throughput write operations for user registrations and project updates.", icon: <FaDatabase /> },
       { step: "02", title: "Secondary Read Replicas", desc: "Distributed read replica nodes optimizing query execution speeds.", icon: <FaServer /> },
       { step: "03", title: "Cloud Snapshot Vault", desc: "Automated daily snapshot backups stored in encrypted multi-region storage.", icon: <FaLock /> },
     ],
+    galleryExplanation:
+      "Database rack infrastructure and distributed storage clusters maintaining continuous multi-region replica synchronization.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80", caption: "High-Performance Database Server Rack Hardware" },
       { url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80", caption: "Distributed Cloud Data Storage Infrastructure" },
@@ -498,6 +541,8 @@ export const getActiveRegistrationMetrics = async () => {
       { title: "Certificate Credential Vault", desc: "Tamper-proof storage of issued certificates and verification hashes." },
       { title: "Admin Audit Logging", desc: "Immutable recording of administrative system actions." },
     ],
+    codeSnippetExplanation:
+      "This Mongoose schema definition includes indexed email fields and configures connection pooling with a 50-channel maximum threshold.",
     codeSnippet: `// 🗄️ MongoDB Atlas High-Throughput Indexed Schema & Connection Pooling
 import mongoose from "mongoose";
 
@@ -548,11 +593,15 @@ export const connectDatabaseCluster = async () => {
       "Every user login or account registration requires a 6-digit one-time passcode delivered directly to your verified email address within 5 seconds. This guarantees that unauthorized access or credential stuffing attempts are blocked immediately.",
       "We operate under a strict zero third-party sharing commitment: your personal information is used exclusively for portal learning management and is never sold, shared, or exposed to external advertisers.",
     ],
+    architectureExplanation:
+      "Our 2FA verification pipeline generates cryptographically secure 6-digit passcodes in memory. Passcodes are dispatched via Brevo SMTP servers with SPF/DKIM authentication, expiring automatically after 10 minutes.",
     layers: [
       { step: "01", title: "6-Digit OTP Passcode", desc: "Cryptographic 6-digit one-time passcode generated in memory.", icon: <FaKey /> },
       { step: "02", title: "Brevo SMTP Dispatcher", desc: "Passcode encrypted and dispatched via Brevo transactional servers.", icon: <FaEnvelope /> },
       { step: "03", title: "Zero Third-Party Sharing", desc: "100% data confidentiality guarantee with encrypted session tokens.", icon: <FaUserCheck /> },
     ],
+    galleryExplanation:
+      "Privacy security lock visualizations illustrating 2-Factor OTP verification guards and encrypted end-to-end data tunnels.",
     gallery: [
       { url: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=80", caption: "Privacy Keycard Security & 2-Factor OTP Verification Guard" },
       { url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80", caption: "Encrypted End-to-End Data Tunnel Transmission" },
@@ -569,6 +618,8 @@ export const connectDatabaseCluster = async () => {
       { title: "Confidential Student Data Vault", desc: "Encrypted storage of personal student records with zero leak history." },
       { title: "Secure Certificate Issuance", desc: "Tamper-proof credential validation with unique QR code seals." },
     ],
+    codeSnippetExplanation:
+      "This 2FA routine generates a 6-digit numeric passcode and dispatches it via Brevo transactional SMTP API with a 10-minute expiration timestamp.",
     codeSnippet: `// 🔒 KodNexuz 2-Factor 6-Digit OTP Verification Routine
 import crypto from "crypto";
 import { brevoSmtp } from "@kodnexuz/email";
@@ -691,8 +742,8 @@ const FeatureDetail = () => {
           </div>
         </BorderGlow>
 
-        {/* Section 3: Visual 3-Tier Layer Blueprint */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl space-y-10">
+        {/* Section 3: Visual 3-Tier Layer Blueprint + Senior Dev Explanation */}
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl space-y-8">
           <div className="text-center max-w-3xl mx-auto">
             <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Visual System Blueprint
@@ -718,22 +769,46 @@ const FeatureDetail = () => {
               </div>
             ))}
           </div>
+
+          {/* 💡 Senior Developer Explanatory Callout */}
+          <div className="bg-purple-50 p-6 rounded-2xl border border-purple-200 flex items-start gap-4">
+            <FaLightbulb className="text-purple-600 text-2xl shrink-0 mt-1" />
+            <div className="space-y-1">
+              <h4 className="font-bold text-purple-950 text-base">Senior Engineering Blueprint Breakdown</h4>
+              <p className="text-xs sm:text-sm text-purple-900 leading-relaxed">
+                {feature.architectureExplanation}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Section 4: High-Res Technology Photography Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {feature.gallery.map((img, idx) => (
-            <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80">
-              <img
-                src={img.url}
-                alt={img.caption}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-transparent flex items-end p-6">
-                <div className="text-white font-bold text-base sm:text-lg leading-snug">{img.caption}</div>
+        {/* Section 4: High-Res Technology Photography Gallery + Senior Dev Explanation */}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {feature.gallery.map((img, idx) => (
+              <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80">
+                <img
+                  src={img.url}
+                  alt={img.caption}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-transparent flex items-end p-6">
+                  <div className="text-white font-bold text-base sm:text-lg leading-snug">{img.caption}</div>
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* 📸 Senior Developer Explanatory Callout */}
+          <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 flex items-start gap-4">
+            <FaCamera className="text-pink-400 text-xl shrink-0 mt-1" />
+            <div className="space-y-1">
+              <h4 className="font-bold text-white text-base">Production Environment & Code Inspection</h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {feature.galleryExplanation}
+              </p>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Section 5: 5-Stage Delivery & Execution Lifecycle */}
@@ -773,7 +848,7 @@ const FeatureDetail = () => {
           </div>
         </div>
 
-        {/* Section 7: Interactive Code Snippet & Terminal Output Mockup */}
+        {/* Section 7: Interactive Code Snippet & Terminal Output Mockup + Senior Dev Explanation */}
         <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl space-y-6">
           <div className="flex items-center justify-between border-b border-slate-800 pb-4">
             <div className="flex items-center gap-2 text-xs font-mono text-purple-400">
@@ -789,6 +864,15 @@ const FeatureDetail = () => {
           <pre className="font-mono text-xs sm:text-sm text-purple-200 overflow-x-auto p-4 bg-slate-900 rounded-xl border border-slate-800 leading-relaxed">
             {feature.codeSnippet}
           </pre>
+
+          {/* 💻 Senior Developer Explanatory Callout */}
+          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800 flex items-start gap-3 text-xs text-purple-300">
+            <FaLaptop className="text-purple-400 text-lg shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold text-white block mb-1">Code Execution & API Workflow Analysis</span>
+              {feature.codeSnippetExplanation}
+            </div>
+          </div>
         </div>
 
         {/* Section 8: Security & Compliance Safeguards Checklist */}
