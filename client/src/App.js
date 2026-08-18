@@ -20,6 +20,7 @@ const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 const EnrollForm = lazy(() => import("./pages/EnrollForm"));
 const AdminEnrollments = lazy(() => import("./pages/AdminEnrollments"));
 const VerifyPage = lazy(() => import("./pages/VerifyPage"));
+const FeatureDetail = lazy(() => import("./pages/FeatureDetail"));
 
 // 🧭 Scroll-to-top on route change
 const ScrollToTop = () => {
@@ -120,8 +121,8 @@ const App = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      const offsetX = (clientX / windowWidth - 0.5) * 24;
-      const offsetY = (clientY / windowHeight - 0.5) * 24;
+      const offsetX = (clientX / windowWidth - 0.5) * 36;
+      const offsetY = (clientY / windowHeight - 0.5) * 36;
 
       const tiltElements = document.querySelectorAll(".codevia-mouse-tilt");
       tiltElements.forEach((el) => {
@@ -224,6 +225,9 @@ const App = () => {
 
           {/* ✅ Certificate Verification Page */}
           <Route path="/verify" element={<VerifyPage />} />
+
+          {/* 🌟 Deep Feature Detail Breakdown Page */}
+          <Route path="/feature/:slug" element={<FeatureDetail />} />
 
           {/* Legacy redirects */}
           <Route path="/login" element={<Navigate to="/?auth=login" replace />} />
