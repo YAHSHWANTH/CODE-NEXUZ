@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   FaRocket,
   FaUsers,
-  FaBuilding,
+  FaBookOpen,
   FaGlobe,
   FaAward,
   FaShieldAlt,
@@ -74,9 +74,9 @@ const EnterpriseImpact = () => {
 
         {/* Title */}
         <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-          Empowering Developers. Trusted by{" "}
+          Empowering Developers. Built for{" "}
           <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-            Growing Tech Teams
+            Real Tech Growth
           </span>
         </h2>
 
@@ -92,7 +92,7 @@ const EnterpriseImpact = () => {
               <FaRocket className="text-pink-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              <AnimatedCounter target={150} suffix="+" />
+              <AnimatedCounter target={10} suffix="+" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Projects & Builds Delivered
@@ -104,7 +104,7 @@ const EnterpriseImpact = () => {
               <FaUsers className="text-purple-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              <AnimatedCounter target={25} suffix="+" />
+              <AnimatedCounter target={5} suffix="+" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Expert Mentors & Engineers
@@ -113,13 +113,13 @@ const EnterpriseImpact = () => {
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
             <div className="group-hover:scale-110 transition-transform duration-300">
-              <FaBuilding className="text-indigo-500 text-3xl mx-auto mb-2" />
+              <FaBookOpen className="text-indigo-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              <AnimatedCounter target={15} suffix="+" />
+              <AnimatedCounter target={100} suffix="%" />
             </div>
             <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">
-              Academic & Tech Partners
+              Hands-On Practical Curriculum
             </div>
           </div>
 
@@ -137,7 +137,7 @@ const EnterpriseImpact = () => {
 
         </div>
 
-        {/* Believable Corporate Trust Pillars */}
+        {/* Believable Startup Trust Pillars */}
         <div className="mt-12 bg-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-800 text-left">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
@@ -147,7 +147,7 @@ const EnterpriseImpact = () => {
                 <h3 className="text-xl font-bold text-white">Proven Track Record</h3>
               </div>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                Over 150+ full-stack projects, web applications, and developer tracks completed with clean code and zero security issues.
+                Over 10+ full-stack projects, web applications, and developer tracks completed with clean code and zero security issues.
               </p>
             </div>
 
@@ -167,7 +167,7 @@ const EnterpriseImpact = () => {
                 <h3 className="text-xl font-bold text-white">Dedicated Support SLA</h3>
               </div>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                Sub-15 minute response times supported by senior engineers, cloud leads, and dedicated mentorship leads during active sprint hours.
+                Prompt mentor guidance and sub-15 minute technical support during active project working hours.
               </p>
             </div>
 
