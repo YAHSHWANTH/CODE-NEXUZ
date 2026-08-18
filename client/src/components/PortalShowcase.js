@@ -18,6 +18,7 @@ const tabsData = [
     title: "Student Learning Portal",
     subtitle: "Interactive course dashboard, progress tracking, live projects & direct certificate downloads.",
     color: "from-pink-500 to-purple-600",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80",
   },
   {
     id: "admin",
@@ -25,6 +26,7 @@ const tabsData = [
     title: "Admin Intelligence & Analytics",
     subtitle: "Automated student registration tracking, enrollment velocity, and Brevo email action triggers.",
     color: "from-purple-600 to-indigo-600",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
   },
   {
     id: "verify",
@@ -32,6 +34,7 @@ const tabsData = [
     title: "Instant Certificate Verifier",
     subtitle: "Unique QR code validation and tamper-proof credential verification system.",
     color: "from-emerald-500 to-teal-600",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1000&q=80",
   },
   {
     id: "ai",
@@ -39,6 +42,7 @@ const tabsData = [
     title: "KodNexuz AI Assistant 2.0",
     subtitle: "Google Gemini multi-model intelligence for automated analysis & email drafting.",
     color: "from-indigo-600 to-cyan-600",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80",
   },
 ];
 
@@ -76,10 +80,10 @@ const PortalShowcase = () => {
           </p>
         </div>
 
-        {/* Interactive Showcase Grid matching Screenshot 1 */}
+        {/* Interactive Showcase Grid matching Screenshot 1 & 3 */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Side (Interactive Portal Window Mockup) - 7 cols */}
+          {/* Left Side (Interactive Portal Window Mockup with REALISTIC UI SCREENSHOT) - 7 cols */}
           <div className="lg:col-span-7 bg-slate-900/95 rounded-3xl border border-purple-900/40 shadow-2xl overflow-hidden backdrop-blur-md">
             {/* Browser Header Bar */}
             <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
@@ -95,22 +99,40 @@ const PortalShowcase = () => {
               <div className="w-12"></div>
             </div>
 
-            {/* Dynamic View Content Based on Selected Tab */}
-            <div className="p-6 sm:p-8 min-h-[380px] flex flex-col justify-between">
-              {activeTab === 0 && (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="flex items-center justify-between bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-4 rounded-2xl border border-pink-500/30">
+            {/* Dynamic View Content + Realistic Portal UI Screenshot Image */}
+            <div className="p-6 sm:p-8 min-h-[420px] flex flex-col justify-between space-y-6">
+              
+              {/* Realistic Portal UI Screenshot Mockup Banner */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 group">
+                <img
+                  src={tabsData[activeTab].image}
+                  alt={tabsData[activeTab].title}
+                  className="w-full h-52 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent flex items-end p-4 sm:p-5">
+                  <div className="flex items-center justify-between w-full">
                     <div>
-                      <div className="text-xs text-pink-300 font-bold uppercase">Welcome Back, Learner!</div>
-                      <div className="text-lg font-bold text-white mt-0.5">Web & Full-Stack Development Internship</div>
+                      <span className="bg-pink-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                        LIVE PORTAL VIEW
+                      </span>
+                      <div className="text-white font-bold text-base mt-1">
+                        {tabsData[activeTab].title}
+                      </div>
                     </div>
-                    <span className="bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">ACTIVE</span>
+                    <span className="text-xs text-purple-300 font-mono bg-slate-900/80 px-3 py-1 rounded-lg border border-purple-500/30">
+                      v2.0 Verified
+                    </span>
                   </div>
+                </div>
+              </div>
 
+              {/* Dynamic Overlay Metrics based on Active Tab */}
+              {activeTab === 0 && (
+                <div className="space-y-4 animate-fadeIn">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
                       <div className="text-xs text-slate-400">Course Progress</div>
-                      <div className="text-2xl font-bold text-white mt-1">85%</div>
+                      <div className="text-xl font-bold text-white mt-1">85% Completed</div>
                       <div className="w-full bg-slate-700 h-2 rounded-full mt-2 overflow-hidden">
                         <div className="bg-gradient-to-r from-pink-500 to-purple-500 h-full w-[85%]"></div>
                       </div>
@@ -118,19 +140,19 @@ const PortalShowcase = () => {
 
                     <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
                       <div className="text-xs text-slate-400">Live Projects</div>
-                      <div className="text-2xl font-bold text-white mt-1">4 Completed</div>
+                      <div className="text-xl font-bold text-white mt-1">4 Completed</div>
                       <div className="text-xs text-green-400 mt-1 flex items-center gap-1">
-                        <FaCheckCircle /> Ready for Review
+                        <FaCheckCircle /> Ready for Certificate
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <FaDownload className="text-pink-400 text-xl" />
+                      <FaDownload className="text-pink-400 text-lg" />
                       <div>
-                        <div className="text-sm font-bold text-white">Verified Internship Certificate</div>
-                        <div className="text-xs text-slate-400">Credential ID: KNX-2026-9841</div>
+                        <div className="text-xs sm:text-sm font-bold text-white">Verified Internship Certificate</div>
+                        <div className="text-[11px] text-slate-400">Credential ID: KNX-2026-9841</div>
                       </div>
                     </div>
                     <button onClick={handleOpenAuth} className="bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer">
@@ -141,36 +163,28 @@ const PortalShowcase = () => {
               )}
 
               {activeTab === 1 && (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="flex items-center justify-between bg-gradient-to-r from-purple-500/20 to-indigo-500/20 p-4 rounded-2xl border border-purple-500/30">
-                    <div>
-                      <div className="text-xs text-purple-300 font-bold uppercase">KodNexuz Admin Dashboard</div>
-                      <div className="text-lg font-bold text-white mt-0.5">Real-Time Registration Intelligence</div>
+                <div className="space-y-4 animate-fadeIn">
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                      <div className="text-[11px] text-slate-400">Registered</div>
+                      <div className="text-lg font-bold text-white mt-0.5">12,480</div>
                     </div>
-                    <span className="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">LIVE DATA</span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-center">
-                      <div className="text-xs text-slate-400">Total Registered</div>
-                      <div className="text-xl font-bold text-white mt-1">12,480</div>
+                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                      <div className="text-[11px] text-slate-400">Active</div>
+                      <div className="text-lg font-bold text-green-400 mt-0.5">9,120</div>
                     </div>
-                    <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-center">
-                      <div className="text-xs text-slate-400">Active Learners</div>
-                      <div className="text-xl font-bold text-green-400 mt-1">9,120</div>
-                    </div>
-                    <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-center">
-                      <div className="text-xs text-slate-400">Pending Actions</div>
-                      <div className="text-xl font-bold text-yellow-400 mt-1">184</div>
+                    <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                      <div className="text-[11px] text-slate-400">Pending Actions</div>
+                      <div className="text-lg font-bold text-yellow-400 mt-0.5">184</div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700 flex items-center justify-between">
+                  <div className="bg-slate-800/60 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-bold text-white">Batch Email Action (Brevo API)</div>
-                      <div className="text-xs text-slate-400">Selected 24 pending users for enrollment reminders.</div>
+                      <div className="text-xs font-bold text-white">Batch Email Action (Brevo API)</div>
+                      <div className="text-[11px] text-slate-400">Selected 24 pending users for enrollment reminders.</div>
                     </div>
-                    <button onClick={handleOpenAuth} className="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1 cursor-pointer">
+                    <button onClick={handleOpenAuth} className="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1 cursor-pointer">
                       <FaPaperPlane /> Launch Email
                     </button>
                   </div>
@@ -178,47 +192,30 @@ const PortalShowcase = () => {
               )}
 
               {activeTab === 2 && (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="flex items-center justify-between bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-4 rounded-2xl border border-emerald-500/30">
-                    <div>
-                      <div className="text-xs text-emerald-300 font-bold uppercase">Credential Verification Portal</div>
-                      <div className="text-lg font-bold text-white mt-0.5">Tamper-Proof QR Code Validation</div>
-                    </div>
-                    <span className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">VERIFIED SEAL</span>
-                  </div>
-
-                  <div className="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 flex flex-col sm:flex-row items-center gap-6">
-                    <div className="w-24 h-24 bg-white p-2 rounded-xl flex items-center justify-center">
+                <div className="space-y-4 animate-fadeIn">
+                  <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 flex items-center gap-4">
+                    <div className="w-16 h-16 bg-white p-1.5 rounded-lg flex items-center justify-center shrink-0">
                       <FaQrcode className="text-slate-900 w-full h-full" />
                     </div>
-                    <div className="space-y-1 text-center sm:text-left">
-                      <div className="text-xs text-emerald-400 font-bold flex items-center justify-center sm:justify-start gap-1">
+                    <div className="space-y-0.5">
+                      <div className="text-xs text-emerald-400 font-bold flex items-center gap-1">
                         <FaUserCheck /> Authentic Student Record Verified
                       </div>
-                      <div className="text-base font-bold text-white">Certificate Holder: Yaswanth</div>
+                      <div className="text-sm font-bold text-white">Certificate Holder: Yaswanth</div>
                       <div className="text-xs text-slate-300">Track: Full-Stack Web Development</div>
-                      <div className="text-xs text-slate-400">Issued: KodNexuz Technical Directorate</div>
                     </div>
                   </div>
                 </div>
               )}
 
               {activeTab === 3 && (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="flex items-center justify-between bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 p-4 rounded-2xl border border-indigo-500/30">
-                    <div>
-                      <div className="text-xs text-indigo-300 font-bold uppercase">KodNexuz AI Engine 2.0</div>
-                      <div className="text-lg font-bold text-white mt-0.5">Google Gemini Natural Language Assistant</div>
-                    </div>
-                    <span className="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full">GEMINI 2.0</span>
-                  </div>
-
-                  <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
+                <div className="space-y-4 animate-fadeIn">
+                  <div className="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 space-y-1.5">
                     <div className="text-xs text-indigo-300 font-bold">User Prompt:</div>
-                    <div className="text-sm text-slate-200 font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                    <div className="text-xs text-slate-200 font-mono bg-slate-950 p-2 rounded-lg border border-slate-800">
                       "Draft reminder email to pending students who registered yesterday"
                     </div>
-                    <div className="text-xs text-green-400 mt-2 flex items-center gap-1 font-bold">
+                    <div className="text-[11px] text-green-400 flex items-center gap-1 font-bold">
                       <FaCheckCircle /> Generated draft ready with direct login link!
                     </div>
                   </div>
@@ -226,7 +223,7 @@ const PortalShowcase = () => {
               )}
 
               {/* Bottom Card Controls */}
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
                 <span>Active Portal Module: {tabsData[activeTab].title}</span>
                 <span className="text-purple-400 font-bold">Interactive Preview ⚡</span>
               </div>
