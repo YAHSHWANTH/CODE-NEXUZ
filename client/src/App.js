@@ -116,29 +116,7 @@ const App = () => {
     return () => observer.disconnect();
   }, [location]);
 
-  // 🚀 Codevia-style interactive text & card translate parallax on mouse movement
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
 
-      const offsetX = (clientX / windowWidth - 0.5) * 36;
-      const offsetY = (clientY / windowHeight - 0.5) * 36;
-
-      const tiltElements = document.querySelectorAll(".codevia-mouse-tilt");
-      tiltElements.forEach((el) => {
-        const factor = parseFloat(el.getAttribute("data-tilt-factor") || "1");
-        const tx = (offsetX * factor).toFixed(2);
-        const ty = (offsetY * factor).toFixed(2);
-        el.style.transform = `translate(${tx}px, ${ty}px)`;
-        el.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   // Hide Navbar/Footer for auth/dashboard/enroll routes + verify
   const hideLayout =
