@@ -31,13 +31,12 @@ import {
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
-import BorderGlow from "../components/BorderGlow";
 
 // 🌟 Accordion Component for Feature FAQs
 const FeatureFaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm transition hover:border-purple-300">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition hover:border-purple-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full p-5 sm:p-6 flex items-center justify-between text-left font-bold text-gray-800 hover:text-purple-600 transition cursor-pointer"
@@ -58,7 +57,7 @@ const FeatureFaqItem = ({ question, answer }) => {
 };
 
 // ----------------------------------------------------------------------
-// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT WITH SENIOR DEV PROSE
+// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT (CLEAN FLUID LAYOUT)
 // ----------------------------------------------------------------------
 const featureData = {
   "custom-software": {
@@ -666,7 +665,7 @@ const FeatureDetail = () => {
   const feature = featureData[slug] || featureData["custom-software"];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
       {/* 🌟 1. Hero Header Section */}
@@ -701,15 +700,15 @@ const FeatureDetail = () => {
         </div>
       </section>
 
-      {/* 🌟 Main Multi-Page Content Section (6-8 Scroll Pages Deep) */}
-      <section className="py-16 max-w-6xl mx-auto px-6 w-full flex-grow space-y-20">
+      {/* 🌟 Main Content Section (Fluid, Seamless Layout without Huge Floating Box Gaps) */}
+      <section className="py-16 max-w-6xl mx-auto px-6 w-full flex-grow space-y-16">
         
         {/* Section 1: Executive SLA Metrics Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {feature.metrics.map((metric, idx) => (
             <div
               key={idx}
-              className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition text-center"
+              className="bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center"
             >
               <div className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent mb-1">
                 {metric.value}
@@ -722,29 +721,20 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 2: Deep Executive & Technical Narrative */}
-        <BorderGlow
-          edgeSensitivity={30}
-          glowColor="270 100 65"
-          backgroundColor="#ffffff"
-          borderRadius={24}
-          glowRadius={25}
-          glowIntensity={0.8}
-        >
-          <div className="p-8 sm:p-12 space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
-              <span className="text-purple-600">✦</span> Comprehensive Technical Capability Breakdown
-            </h2>
-            {feature.paragraphs.map((pText, idx) => (
-              <p key={idx} className="text-gray-700 text-base sm:text-lg leading-relaxed font-normal">
-                {pText}
-              </p>
-            ))}
-          </div>
-        </BorderGlow>
+        <div className="space-y-6 border-b border-gray-100 pb-12">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
+            <span className="text-purple-600">✦</span> Technical Capability Overview
+          </h2>
+          {feature.paragraphs.map((pText, idx) => (
+            <p key={idx} className="text-gray-700 text-base sm:text-lg leading-relaxed font-normal">
+              {pText}
+            </p>
+          ))}
+        </div>
 
         {/* Section 3: Visual 3-Tier Layer Blueprint + Senior Dev Explanation */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl space-y-8">
-          <div className="text-center max-w-3xl mx-auto">
+        <div className="space-y-8 border-b border-gray-100 pb-12">
+          <div>
             <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Visual System Blueprint
             </span>
@@ -756,13 +746,13 @@ const FeatureDetail = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {feature.layers.map((layer, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 p-8 rounded-2xl border border-purple-200 space-y-4 shadow-sm hover:shadow-md transition">
-                <div className="w-12 h-12 bg-purple-600 text-white rounded-2xl flex items-center justify-center font-bold text-lg shadow-md">
+              <div key={idx} className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 p-6 rounded-2xl border border-purple-200 space-y-3">
+                <div className="w-10 h-10 bg-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-base shadow-sm">
                   {layer.icon}
                 </div>
-                <h4 className="font-bold text-gray-900 text-xl">{layer.title}</h4>
+                <h4 className="font-bold text-gray-900 text-lg">{layer.title}</h4>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {layer.desc}
                 </p>
@@ -771,7 +761,7 @@ const FeatureDetail = () => {
           </div>
 
           {/* 💡 Senior Developer Explanatory Callout */}
-          <div className="bg-purple-50 p-6 rounded-2xl border border-purple-200 flex items-start gap-4">
+          <div className="bg-purple-50/70 p-6 rounded-2xl border border-purple-200 flex items-start gap-4">
             <FaLightbulb className="text-purple-600 text-2xl shrink-0 mt-1" />
             <div className="space-y-1">
               <h4 className="font-bold text-purple-950 text-base">Senior Engineering Blueprint Breakdown</h4>
@@ -783,7 +773,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 4: High-Res Technology Photography Gallery + Senior Dev Explanation */}
-        <div className="space-y-6">
+        <div className="space-y-6 border-b border-gray-100 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {feature.gallery.map((img, idx) => (
               <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80">
@@ -834,7 +824,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 6: Real-World Enterprise Use Cases */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl space-y-8">
+        <div className="space-y-8 border-b border-gray-100 pb-12">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
             Real-World Enterprise Applications
           </h3>
@@ -876,7 +866,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 8: Security & Compliance Safeguards Checklist */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-emerald-100 shadow-xl space-y-6">
+        <div className="space-y-6 border-b border-gray-100 pb-12">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
             Security & Quality Safeguards Checklist
           </h3>
@@ -891,7 +881,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 9: Feature Technical Specifications Table */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-gray-200 shadow-xl space-y-6">
+        <div className="space-y-6 border-b border-gray-100 pb-12">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
             Technical Specifications & Standards
           </h3>
