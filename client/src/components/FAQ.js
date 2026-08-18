@@ -1,133 +1,92 @@
-import React from "react";
-import {
-  FaCheck,
-  FaTimes,
-  FaDollarSign,
-  FaClock,
-  FaLaptop,
-  FaChalkboardTeacher,
-} from "react-icons/fa";
+import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+
+const faqs = [
+  {
+    question: "Do I need any prior experience to join?",
+    answer: "No prior experience is required! Our programs and internship tracks start from foundational concepts and guide you step-by-step up to advanced industry frameworks.",
+  },
+  {
+    question: "Are the projects really live company projects?",
+    answer: "Yes! All projects are built based on real-world industry requirements and live corporate technology stacks.",
+  },
+  {
+    question: "Is there a guarantee for a full-time role?",
+    answer: "We offer comprehensive career guidance, resume building, portfolio reviews, and mock interview preparation to help you land top roles across technology companies.",
+  },
+  {
+    question: "Will I get a certificate?",
+    answer: "Yes! Upon successful completion of your course or internship track, you will receive an industry-recognized certificate featuring a unique credential ID and instant QR code verification.",
+  },
+  {
+    question: "How are the classes and internship modules delivered?",
+    answer: "Learning is hands-on and flexible, combining self-paced coding modules with live Q&A sessions and dedicated mentor support.",
+  },
+  {
+    question: "Is learning on KodNexuz free or affordable?",
+    answer: "KodNexuz provides industry-standard technology tracks with highly accessible, affordable pricing and free starter learning materials.",
+  },
+];
 
 const FAQ = () => {
-  const problems = [
-    {
-      icon: <FaDollarSign className="w-6 h-6 text-red-500" />,
-      title: "Learning is expensive?",
-      description: "Traditional education costs thousands of dollars, making it hard to access.",
-    },
-    {
-      icon: <FaClock className="w-6 h-6 text-red-500" />,
-      title: "Certifications take too long?",
-      description: "Complicated processes and high requirements delay learners.",
-    },
-    {
-      icon: <FaLaptop className="w-6 h-6 text-red-500" />,
-      title: "Limited access to resources?",
-      description: "Not everyone gets exposure to world-class materials.",
-    },
-    {
-      icon: <FaChalkboardTeacher className="w-6 h-6 text-red-500" />,
-      title: "Boring teaching methods?",
-      description: "Static slides and theory-heavy content disengage learners.",
-    },
-  ];
+  const [openIndex, setOpenIndex] = useState(null);
 
-  const solutions = [
-    {
-      icon: <FaCheck className="w-6 h-6 text-green-500" />,
-      title: "Free & Affordable Learning",
-      description: "Learn premium content without paying huge fees.",
-    },
-    {
-      icon: <FaCheck className="w-6 h-6 text-blue-500" />,
-      title: "Quick Certifications",
-      description: "Earn certificates in weeks, not years.",
-    },
-    {
-      icon: <FaCheck className="w-6 h-6 text-purple-500" />,
-      title: "Unlimited Resources",
-      description: "Access videos, labs, projects, and articles anytime.",
-    },
-    {
-      icon: <FaCheck className="w-6 h-6 text-teal-500" />,
-      title: "Interactive Learning",
-      description: "Hands-on projects, quizzes, and gamified content.",
-    },
-  ];
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    // 👇 add id here for react-scroll
-    <section id="faq" className="py-16 md:py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold mb-6">
-            Why Choose <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">KodNexuz?</span>
+    <section id="faq" className="py-16 md:py-24 bg-gray-50/50">
+      <div className="max-w-4xl mx-auto px-6">
+        {/* Header matching Image 2 */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">
+            Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            We solve the biggest challenges in modern tech learning.
+          <p className="text-lg sm:text-xl text-gray-500 font-medium">
+            Got questions? We've got answers.
           </p>
         </div>
 
-        {/* Split layout */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Problems */}
-          <div className="space-y-8">
-            <div className="text-center lg:text-left mb-8">
-              <h3 className="text-2xl font-bold text-red-500 mb-4">Common Problems</h3>
-              <p className="text-gray-600">Challenges that learners often face</p>
-            </div>
-            {problems.map((problem, index) => (
+        {/* Accordion List matching Image 2 */}
+        <div className="space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
               <div
                 key={index}
-                className="p-6 border border-red-200 rounded-2xl shadow hover:shadow-lg transition"
+                className={`bg-white border transition-all duration-200 rounded-2xl overflow-hidden ${
+                  isOpen
+                    ? "border-purple-200 shadow-md ring-1 ring-purple-100"
+                    : "border-gray-200 hover:border-gray-300 shadow-sm"
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-red-100 rounded-lg">{problem.icon}</div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-lg font-semibold">{problem.title}</h4>
-                      <FaTimes className="w-5 h-5 text-red-500" />
-                    </div>
-                    <p className="text-gray-700">{problem.description}</p>
+                <button
+                  type="button"
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full py-5 px-6 sm:px-8 flex items-center justify-between text-left focus:outline-none cursor-pointer group"
+                >
+                  <span className="text-base sm:text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
+                    {faq.question}
+                  </span>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 group-hover:bg-purple-50 transition-all duration-300 ${
+                      isOpen ? "rotate-180 bg-purple-100 text-purple-600" : "text-gray-400"
+                    }`}
+                  >
+                    <FaChevronDown className="w-3.5 h-3.5" />
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </button>
 
-          {/* Solutions */}
-          <div className="space-y-8">
-            <div className="text-center lg:text-left mb-8">
-              <h3 className="text-2xl font-bold text-green-500 mb-4">Our Solutions</h3>
-              <p className="text-gray-600">How KodNexuz bridges the gap</p>
-            </div>
-            {solutions.map((solution, index) => (
-              <div
-                key={index}
-                className="p-6 border border-green-200 rounded-2xl shadow hover:shadow-lg transition"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-green-100 rounded-lg">{solution.icon}</div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-lg font-semibold">{solution.title}</h4>
-                      {solution.icon}
-                    </div>
-                    <p className="text-gray-700">{solution.description}</p>
+                {isOpen && (
+                  <div className="px-6 sm:px-8 pb-6 text-gray-600 text-sm sm:text-base leading-relaxed border-t border-gray-100 pt-4 animate-fadeIn">
+                    {faq.answer}
                   </div>
-                </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-
-        {/* CTA Button
-        <div className="text-center mt-16">
-          <button className="px-8 py-4 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
-            Transform Your Learning Journey
-          </button>
-        </div> */}
       </div>
     </section>
   );

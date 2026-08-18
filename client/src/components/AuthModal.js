@@ -207,7 +207,7 @@ const AuthModal = ({ isOpen, initialMode = "login", onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 pt-20 sm:pt-24 bg-slate-950/80 backdrop-blur-sm animate-fadeIn overflow-y-auto">
       {/* Modal Wrapper with BorderGlow */}
       <BorderGlow
         edgeSensitivity={40}
@@ -219,7 +219,7 @@ const AuthModal = ({ isOpen, initialMode = "login", onClose }) => {
         coneSpread={30}
         animated={true}
         colors={['#c084fc', '#f472b6', '#3b82f6']}
-        className="w-full max-w-md"
+        className="w-full max-w-md my-auto mt-10 sm:mt-16 mb-8"
       >
         <div className="relative p-6 sm:p-8">
           {/* Close button */}

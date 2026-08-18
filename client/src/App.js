@@ -94,6 +94,25 @@ const App = () => {
     }
   }, [location]);
 
+  // 🚀 Scroll reveal observer for Codevia-style text/section entrance animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    const elements = document.querySelectorAll(".scroll-reveal");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [location]);
+
   // Hide Navbar/Footer for auth/dashboard/enroll routes + verify
   const hideLayout =
     location.pathname.startsWith("/login") ||
@@ -129,12 +148,12 @@ const App = () => {
             path="/"
             element={
               <>
-                <Home />
-                <Features />
-                <Courses />
-                <FAQ />
-                <Careers />
-                <Touch />
+                <div className="scroll-reveal"><Home /></div>
+                <div className="scroll-reveal"><Features /></div>
+                <div className="scroll-reveal"><Courses /></div>
+                <div className="scroll-reveal"><FAQ /></div>
+                <div className="scroll-reveal"><Careers /></div>
+                <div className="scroll-reveal"><Touch /></div>
               </>
             }
           />

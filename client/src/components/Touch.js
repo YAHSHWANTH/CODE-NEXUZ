@@ -115,9 +115,10 @@ const Touch = () => {
             </a>
             <a
               href="mailto:kodnexustech@gmail.com"
-              className="hover:text-pink-500 transition mt-2 md:mt-0"
+              className="flex items-center space-x-2 text-gray-200 hover:text-pink-400 font-semibold transition mt-2 md:mt-0 underline underline-offset-4 cursor-pointer"
             >
-              kodnexustech@gmail.com
+              <span>✉️</span>
+              <span>kodnexustech@gmail.com</span>
             </a>
           </div>
         </div>

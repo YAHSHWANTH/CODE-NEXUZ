@@ -2,7 +2,6 @@
 import React from "react";
 import { FaHtml5, FaAndroid, FaJava, FaPython } from "react-icons/fa";
 import { Link as ScrollLink } from "react-scroll";
-import BorderGlow from "./BorderGlow";
 
 const courses = [
   {
@@ -71,29 +70,16 @@ const Courses = () => {
           </div>
 
           {/* View All Button */}
-          <div className="mt-12 flex justify-end px-6 lg:px-10">
+          <div className="mt-12 flex justify-center">
             <ScrollLink
               to="signup-form"
               smooth={true}
               duration={800}
               offset={-70}
             >
-              <BorderGlow
-                edgeSensitivity={20}
-                glowColor="270 100 65"
-                backgroundColor="transparent"
-                borderRadius={12}
-                glowRadius={15}
-                glowIntensity={1.0}
-                coneSpread={30}
-                animated={false}
-                colors={['#c084fc', '#f472b6', '#3b82f6']}
-                className="inline-block"
-              >
-                <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-4 rounded-xl shadow-md hover:opacity-90 hover:scale-105 transition duration-300 text-lg font-semibold">
-                  View All
-                </button>
-              </BorderGlow>
+              <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-4 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition duration-300 text-lg font-semibold cursor-pointer">
+                View All
+              </button>
             </ScrollLink>
           </div>
         </div>
