@@ -120,8 +120,8 @@ const App = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      const offsetX = (clientX / windowWidth - 0.5) * 8;
-      const offsetY = (clientY / windowHeight - 0.5) * 8;
+      const offsetX = (clientX / windowWidth - 0.5) * 24;
+      const offsetY = (clientY / windowHeight - 0.5) * 24;
 
       const tiltElements = document.querySelectorAll(".codevia-mouse-tilt");
       tiltElements.forEach((el) => {

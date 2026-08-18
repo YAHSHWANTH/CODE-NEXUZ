@@ -97,8 +97,8 @@
 }
 
 .codevia-card-hover:hover {
-  transform: translate(2.5px, -3.5px) scale(1.015);
-  box-shadow: 0 16px 32px -10px rgba(168, 85, 247, 0.15);
+  transform: translate(6px, -8px) scale(1.02);
+  box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.22);
 }
 
 

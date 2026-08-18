@@ -57,7 +57,10 @@ const Careers = () => {
             >
               <div className="p-8 text-center space-y-6">
                 <h3 className="text-2.5xl font-extrabold text-gray-900 leading-tight">
-                  Ready to Kickstart Your Career?
+                  Ready to{" "}
+                  <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    Kickstart Your Career?
+                  </span>
                 </h3>
                 <p className="text-gray-600">
                   Register for our certified internship programs or login to manage your application.
