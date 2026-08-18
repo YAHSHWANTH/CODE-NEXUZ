@@ -93,20 +93,15 @@ const Courses = () => {
                   }
                 }}
               >
-                <div>
-                  <div className="mb-4 animate-bounce group-hover:animate-none transition-all duration-500">
-                    {course.logo}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {course.desc}
-                  </p>
+                <div className="mb-4 animate-bounce hover:animate-none transition-all duration-500">
+                  {course.logo}
                 </div>
-                <div className="mt-4 pt-3 border-t border-gray-100 w-full text-center text-xs font-bold text-purple-600 group-hover:text-pink-500 transition">
-                  Enroll in Track →
-                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {course.title}
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {course.desc}
+                </p>
               </div>
             ))}
           </div>
