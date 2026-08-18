@@ -55,9 +55,9 @@ const PortalShowcase = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-slate-950 text-white relative overflow-hidden" id="portal-showcase">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-900 via-slate-900 to-purple-950 text-white relative overflow-hidden" id="portal-showcase">
       {/* Background radial gradient glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/30 via-slate-950 to-slate-950"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/30 via-slate-950/80 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
         {/* Header */}
@@ -67,7 +67,7 @@ const PortalShowcase = () => {
           </span>
           <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
             KodNexuz Platform{" "}
-            <span className="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               Showcase
             </span>
           </h2>
@@ -80,7 +80,7 @@ const PortalShowcase = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Side (Interactive Portal Window Mockup) - 7 cols */}
-          <div className="lg:col-span-7 bg-slate-900/90 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-md">
+          <div className="lg:col-span-7 bg-slate-900/95 rounded-3xl border border-purple-900/40 shadow-2xl overflow-hidden backdrop-blur-md">
             {/* Browser Header Bar */}
             <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center space-x-2">
@@ -244,7 +244,7 @@ const PortalShowcase = () => {
                   className={`p-5 rounded-2xl transition-all duration-300 cursor-pointer border ${
                     isActive
                       ? "bg-slate-900 border-purple-500 shadow-xl ring-1 ring-purple-500/50"
-                      : "bg-slate-900/50 border-slate-800/80 hover:bg-slate-900 hover:border-slate-700"
+                      : "bg-slate-900/60 border-slate-800/80 hover:bg-slate-900 hover:border-slate-700"
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -302,7 +302,7 @@ const PortalShowcase = () => {
                   const el = document.getElementById("touch");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="py-3.5 px-6 rounded-xl font-bold text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition text-center cursor-pointer"
+                className="py-3.5 px-6 rounded-xl font-bold text-slate-200 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition text-center cursor-pointer"
               >
                 Request Demo
               </button>
