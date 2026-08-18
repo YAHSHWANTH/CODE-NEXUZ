@@ -201,7 +201,7 @@ const PortalShowcase = () => {
                       <div className="text-xs text-emerald-400 font-bold flex items-center gap-1">
                         <FaUserCheck /> Authentic Student Record Verified
                       </div>
-                      <div className="text-sm font-bold text-white">Certificate Holder: Yaswanth</div>
+                      <div className="text-sm font-bold text-white">Certificate Holder: Alex Morgan</div>
                       <div className="text-xs text-slate-300">Track: Full-Stack Web Development</div>
                     </div>
                   </div>

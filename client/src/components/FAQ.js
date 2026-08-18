@@ -39,7 +39,7 @@ const FAQ = () => {
     <section id="faq" className="py-16 md:py-24 bg-gray-50/50">
       <div className="max-w-4xl mx-auto px-6">
         {/* Header matching Image 2 with project brand gradient */}
-        <div className="text-center mb-12 codevia-mouse-tilt" data-tilt-factor="1.2">
+        <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">
             Frequently Asked{" "}
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
