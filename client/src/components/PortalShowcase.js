@@ -166,23 +166,23 @@ const PortalShowcase = () => {
                 <div className="space-y-4 animate-fadeIn">
                   <div className="grid grid-cols-3 gap-3 text-center">
                     <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                      <div className="text-[11px] text-slate-400">Registered</div>
-                      <div className="text-lg font-bold text-white mt-0.5">12,480</div>
+                      <div className="text-[11px] text-slate-400">Total Registered</div>
+                      <div className="text-lg font-bold text-white mt-0.5">500+</div>
                     </div>
                     <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                      <div className="text-[11px] text-slate-400">Active</div>
-                      <div className="text-lg font-bold text-green-400 mt-0.5">9,120</div>
+                      <div className="text-[11px] text-slate-400">Active Users</div>
+                      <div className="text-lg font-bold text-green-400 mt-0.5">300+</div>
                     </div>
                     <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                       <div className="text-[11px] text-slate-400">Pending Actions</div>
-                      <div className="text-lg font-bold text-yellow-400 mt-0.5">184</div>
+                      <div className="text-lg font-bold text-yellow-400 mt-0.5">45 Users</div>
                     </div>
                   </div>
 
                   <div className="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
                     <div>
                       <div className="text-xs font-bold text-white">Batch Email Action (Brevo API)</div>
-                      <div className="text-[11px] text-slate-400">Selected 24 pending users for enrollment reminders.</div>
+                      <div className="text-[11px] text-slate-400">Selected 45 pending users for enrollment reminders.</div>
                     </div>
                     <button onClick={handleOpenAuth} className="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1 cursor-pointer">
                       <FaPaperPlane /> Launch Email
