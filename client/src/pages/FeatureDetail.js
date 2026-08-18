@@ -23,6 +23,8 @@ import {
   FaLaptopCode,
   FaCheckDouble,
   FaSlidersH,
+  FaTerminal,
+  FaCheckCircle,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
@@ -53,7 +55,7 @@ const FeatureFaqItem = ({ question, answer }) => {
 };
 
 // ----------------------------------------------------------------------
-// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT FOR ALL 8 FEATURES
+// 🏛️ UNIFIED MULTI-PAGE FEATURE DETAIL COMPONENT (6-8 SCROLL PAGES DEEP)
 // ----------------------------------------------------------------------
 const featureData = {
   "custom-software": {
@@ -91,6 +93,27 @@ const featureData = {
       { title: "Custom Enterprise ERPs", desc: "Centralized inventory tracking, payroll processing, and multi-department workflow management tools." },
       { title: "Interactive E-Learning Portals", desc: "Student learning dashboards, live video course streaming, automated quizzes, and QR-verified certificates." },
       { title: "SaaS Analytics Dashboards", desc: "Real-time subscriber tracking dashboards, automated email campaign triggers, and financial reporting." },
+    ],
+    codeSnippet: `// 🚀 KodNexuz Modular Custom Software Architecture
+import { express, jwt, mongoAtlas } from "@kodnexuz/core";
+
+export const buildCustomModule = async (req, res) => {
+  const { userPayload, authHeader } = req;
+  const verifiedSession = await jwt.verifyToken(authHeader);
+  
+  if (verifiedSession) {
+    const dataCluster = await mongoAtlas.executeIndexedQuery({
+      collection: "enterprise_modules",
+      filter: { tenantId: userPayload.tenantId },
+    });
+    return res.status(200).json({ status: "SUCCESS", data: dataCluster });
+  }
+};`,
+    safeguards: [
+      "Strict ESLint & TypeScript compilation checks before code merge",
+      "Automated OWASP Top 10 vulnerability scanning in CI/CD pipeline",
+      "Bcrypt password salt hashing with 10 encryption rounds",
+      "Timed cryptographic JWT session tokens with HTTP-only security",
     ],
     specs: [
       { key: "Frontend Framework", value: "React 19 / Tailwind CSS" },
@@ -142,6 +165,23 @@ const featureData = {
       { title: "Zero-Downtime E-Commerce", desc: "Online marketplaces with automated serverless scaling during flash sales." },
       { title: "Disaster Recovery Clouds", desc: "Multi-region cloud backups with automated failover switching." },
     ],
+    codeSnippet: `// ☁️ KodNexuz Cloud Serverless Edge Configuration
+export default {
+  edgeNetwork: "VERCEL_RENDER_GLOBAL",
+  cdnNodes: 280,
+  tlsProtocol: "TLS_1_3_256_BIT",
+  autoScaleRules: {
+    minInstances: 2,
+    maxInstances: 100,
+    targetCpuUtilization: "75%",
+  },
+};`,
+    safeguards: [
+      "Sub-50ms global latency via 280+ CDN Edge caching nodes",
+      "Automated TLS 1.3 256-bit SSL certificate generation & 90-day renewal",
+      "Zero-downtime rolling production deployments in under 60 seconds",
+      "DDoS mitigation firewalls with edge rate-limiting defense",
+    ],
     specs: [
       { key: "Global Edge Nodes", value: "280+ CDN Caching Points" },
       { key: "Uptime SLA", value: "99.99% Guaranteed Uptime" },
@@ -191,6 +231,20 @@ const featureData = {
       { title: "Virtual Tech Internships", desc: "Hands-on internship programs with real-world software project experience." },
       { title: "Corporate Onboarding", desc: "Accelerated developer onboarding with structured mentor guidance." },
       { title: "Peer Coding Sprints", desc: "Collaborative hackathons and sprint projects built in developer teams." },
+    ],
+    codeSnippet: `// 👥 KodNexuz Mentorship Pull Request Audit Hook
+export const auditPullRequest = async (prData) => {
+  const { author, codeChanges, testsPassed } = prData;
+  if (testsPassed && codeChanges.coverage > 90) {
+    await assignSeniorMentorReviewer(author.id);
+    return { status: "READY_FOR_MENTOR_REVIEW" };
+  }
+};`,
+    safeguards: [
+      "Sub-15 minute SLA response time for mentor doubt resolution",
+      "Mandatory senior engineer pull request approvals before code merge",
+      "Real production Git repository branch protection rules",
+      "Structured Agile Kanban boards tracking sprint progress",
     ],
     specs: [
       { key: "Mentor SLA Response", value: "< 15 Minutes" },
@@ -242,6 +296,25 @@ const featureData = {
       { title: "Registration Velocity Analysis", desc: "Automated summary reports on weekly course enrollment trends." },
       { title: "Intelligent Admin Assistant", desc: "Conversational admin helper for instant platform analytics lookups." },
     ],
+    codeSnippet: `// 🤖 KodNexuz Google Gemini 2.0 Multi-Model AI Router
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+export const generateEmailDraft = async (promptText) => {
+  try {
+    const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = ai.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+    const result = await model.generateContent(promptText);
+    return { status: "SUCCESS", text: result.response.text() };
+  } catch (err) {
+    return fallbackLocalAiEngine(promptText);
+  }
+};`,
+    safeguards: [
+      "Multi-model failover stack: Gemini 2.0 ➔ Gemini 1.5 Flash ➔ Local DB Fallback",
+      "Zero public training policy: student prompts remain strictly private",
+      "Interactive 1-click preview modal before executing batch emails",
+      "Sub-1.2 second response time for administrative queries",
+    ],
     specs: [
       { key: "AI Core Models", value: "Google Gemini 2.0 / 1.5 Flash" },
       { key: "Fallback Safety", value: "Multi-Model + Local DB Engine" },
@@ -291,6 +364,22 @@ const featureData = {
       { title: "Enterprise Identity Management", desc: "Secure multi-role authentication for admins, mentors, and students." },
       { title: "Financial Transaction Protection", desc: "Encrypted payment verification with zero payload tampering." },
       { title: "Confidential Data Storage", desc: "Encrypted database collections with strict access controls." },
+    ],
+    codeSnippet: `// 🛡️ KodNexuz Bcrypt Salt Password Encryption & JWT Token Security
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+export const hashPasswordAndSignToken = async (plainPassword, userId) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(plainPassword, salt);
+  const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+  return { hashedPassword, token };
+};`,
+    safeguards: [
+      "Bcrypt password salting with 10 cryptographic hashing rounds",
+      "HTTP-only timed JWT session authorization tokens",
+      "CORS domain origin firewall restricting unauthorized API access",
+      "Automatic payload input sanitization blocking SQL/NoSQL injections",
     ],
     specs: [
       { key: "Password Hashing", value: "Bcrypt (10 Salt Rounds)" },
@@ -342,6 +431,23 @@ const featureData = {
       { title: "Batch Enrollment Analytics", desc: "Analyzing student registration velocity across Web Dev, App Dev, Python, and AI tracks." },
       { title: "Certificate Verification Logs", desc: "Auditing QR-code credential verification requests." },
     ],
+    codeSnippet: `// 📈 KodNexuz Analytics Real-Time Aggregation Pipeline
+export const getActiveRegistrationMetrics = async () => {
+  const activeCount = await User.countDocuments({ status: "ACTIVE" });
+  const pendingCount = await User.countDocuments({ status: "PENDING" });
+  return {
+    totalRegistered: activeCount + pendingCount,
+    activeUsers: activeCount,
+    pendingUsers: pendingCount,
+    refreshTimestamp: new Date().toISOString(),
+  };
+};`,
+    safeguards: [
+      "Sub-50ms visual chart rendering latency",
+      "Real-time event stream synchronization for live registration counters",
+      "1-click exportable PDF/CSV administrative analytics reports",
+      "365-day historical log retention for platform audit compliance",
+    ],
     specs: [
       { key: "Data Processing Rate", value: "Real-Time Stream Sync" },
       { key: "Visual Component Engine", value: "React Chart / Gauge Metrics" },
@@ -392,6 +498,27 @@ const featureData = {
       { title: "Certificate Credential Vault", desc: "Tamper-proof storage of issued certificates and verification hashes." },
       { title: "Admin Audit Logging", desc: "Immutable recording of administrative system actions." },
     ],
+    codeSnippet: `// 🗄️ MongoDB Atlas High-Throughput Indexed Schema & Connection Pooling
+import mongoose from "mongoose";
+
+const UserSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true, index: true },
+  status: { type: String, enum: ["ACTIVE", "PENDING"], default: "PENDING" },
+  createdAt: { type: Date, default: Date.now },
+});
+
+export const connectDatabaseCluster = async () => {
+  return await mongoose.connect(process.env.MONGO_URI, {
+    maxPoolSize: 50,
+    serverSelectionTimeoutMS: 5000,
+  });
+};`,
+    safeguards: [
+      "Sub-15 millisecond indexed query execution speed",
+      "Automated Primary Master failover switching in under 5 seconds",
+      "Daily automated cloud snapshot backups stored across multi-region vaults",
+      "Encrypted TLS 1.3 database connection strings with IP whitelist rules",
+    ],
     specs: [
       { key: "Database Engine", value: "MongoDB Atlas NoSQL Distributed Cluster" },
       { key: "Query Execution Speed", value: "Sub-15 Milliseconds" },
@@ -441,6 +568,25 @@ const featureData = {
       { title: "2-Factor Student Verification", desc: "Mandatory OTP verification for every account registration and login." },
       { title: "Confidential Student Data Vault", desc: "Encrypted storage of personal student records with zero leak history." },
       { title: "Secure Certificate Issuance", desc: "Tamper-proof credential validation with unique QR code seals." },
+    ],
+    codeSnippet: `// 🔒 KodNexuz 2-Factor 6-Digit OTP Verification Routine
+import crypto from "crypto";
+import { brevoSmtp } from "@kodnexuz/email";
+
+export const generateAndDispatchOtp = async (userEmail) => {
+  const otpCode = crypto.randomInt(100000, 999999).toString();
+  await brevoSmtp.sendTransactionalEmail({
+    to: userEmail,
+    subject: "Your KodNexuz 6-Digit Verification Code",
+    htmlContent: \`<p>Your OTP code is: <strong>\${otpCode}</strong>. Valid for 10 minutes.</p>\`,
+  });
+  return { status: "OTP_DISPATCHED", expiresAt: Date.now() + 600000 };
+};`,
+    safeguards: [
+      "Sub-5 second 6-digit OTP passcode delivery via Brevo SMTP",
+      "SPF & DKIM authenticated email domain verification",
+      "Strict 100% zero third-party data sharing guarantee",
+      "10-minute automatic OTP passcode expiration timer",
     ],
     specs: [
       { key: "OTP Passcode Length", value: "6 Cryptographic Digits" },
@@ -504,10 +650,10 @@ const FeatureDetail = () => {
         </div>
       </section>
 
-      {/* 🌟 Main Multi-Page Content Section */}
+      {/* 🌟 Main Multi-Page Content Section (6-8 Scroll Pages Deep) */}
       <section className="py-16 max-w-6xl mx-auto px-6 w-full flex-grow space-y-20">
         
-        {/* Section 1: Metrics Bar */}
+        {/* Section 1: Executive SLA Metrics Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {feature.metrics.map((metric, idx) => (
             <div
@@ -535,7 +681,7 @@ const FeatureDetail = () => {
         >
           <div className="p-8 sm:p-12 space-y-6">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
-              <span className="text-purple-600">✦</span> Comprehensive Capability Breakdown
+              <span className="text-purple-600">✦</span> Comprehensive Technical Capability Breakdown
             </h2>
             {feature.paragraphs.map((pText, idx) => (
               <p key={idx} className="text-gray-700 text-base sm:text-lg leading-relaxed font-normal">
@@ -627,7 +773,40 @@ const FeatureDetail = () => {
           </div>
         </div>
 
-        {/* Section 7: Feature Technical Specifications Table */}
+        {/* Section 7: Interactive Code Snippet & Terminal Output Mockup */}
+        <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-center gap-2 text-xs font-mono text-purple-400">
+              <FaTerminal className="text-sm" />
+              <span>kodnexuz-production-engine // {slug}.config.js</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+          </div>
+          <pre className="font-mono text-xs sm:text-sm text-purple-200 overflow-x-auto p-4 bg-slate-900 rounded-xl border border-slate-800 leading-relaxed">
+            {feature.codeSnippet}
+          </pre>
+        </div>
+
+        {/* Section 8: Security & Compliance Safeguards Checklist */}
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-emerald-100 shadow-xl space-y-6">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
+            Security & Quality Safeguards Checklist
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {feature.safeguards.map((sg, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                <FaCheckCircle className="text-emerald-500 text-lg shrink-0 mt-0.5" />
+                <span className="text-xs sm:text-sm font-semibold text-gray-800">{sg}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 9: Feature Technical Specifications Table */}
         <div className="bg-white p-8 sm:p-12 rounded-3xl border border-gray-200 shadow-xl space-y-6">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
             Technical Specifications & Standards
@@ -652,7 +831,7 @@ const FeatureDetail = () => {
           </div>
         </div>
 
-        {/* Section 8: Comprehensive Feature FAQs */}
+        {/* Section 10: Comprehensive Feature FAQs */}
         <div className="space-y-6">
           <div className="text-center max-w-xl mx-auto mb-8">
             <h3 className="text-3xl font-extrabold text-gray-900">Frequently Asked Questions</h3>
@@ -663,7 +842,7 @@ const FeatureDetail = () => {
           ))}
         </div>
 
-        {/* Section 9: Call to Action Conversion Banner */}
+        {/* Section 11: Call to Action Conversion Banner */}
         <div className="bg-gradient-to-r from-purple-900 via-slate-900 to-purple-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
           <div className="relative z-10 max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl sm:text-4xl font-extrabold">
