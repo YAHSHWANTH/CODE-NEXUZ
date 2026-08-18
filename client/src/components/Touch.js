@@ -114,7 +114,9 @@ const Touch = () => {
               <span>Join our Telegram</span>
             </a>
             <a
-              href="mailto:kodnexustech@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=kodnexustech@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center space-x-2 text-gray-200 hover:text-pink-400 font-semibold transition mt-2 md:mt-0 underline underline-offset-4 cursor-pointer"
             >
               <span>✉️</span>
