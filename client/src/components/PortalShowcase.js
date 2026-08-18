@@ -64,16 +64,16 @@ const PortalShowcase = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <span className="inline-block bg-purple-100 text-purple-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-purple-200 mb-4">
-            ✦ KODNEXUZ PRODUCT SUITE
+            ✦ KODNEXUZ INNOVATION ECOSYSTEM
           </span>
           <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-            KodNexuz Platform{" "}
+            KodNexuz Interactive{" "}
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              Showcase
+              Hub
             </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-gray-600 font-medium">
-            Business Intelligence · Analytics · AI — all in one verified source
+            Certified Internships · Real-World Software Builds · Instant Verification — all in one unified platform
           </p>
         </div>
 
