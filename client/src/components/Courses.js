@@ -39,13 +39,13 @@ const Courses = () => {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
           {/* Heading */}
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4 codevia-mouse-tilt" data-tilt-factor="1.2">
             Virtual Internships &{" "}
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               Courses
             </span>
           </h2>
-          <p className="text-gray-600 mb-12 text-lg">
+          <p className="text-gray-600 mb-12 text-lg codevia-mouse-tilt" data-tilt-factor="1.5">
             Get started with KodNexuz Internships & Courses!
           </p>
 

@@ -62,7 +62,7 @@ const Home = ({ animateKey }) => {
           </div>
 
           {/* SHORT DESCRIPTION */}
-          <p className="text-base sm:text-lg text-gray-700 leading-relaxed mt-6 max-w-2xl mx-auto md:mx-0">
+          <p className="text-base sm:text-lg text-gray-700 leading-relaxed mt-6 max-w-2xl mx-auto md:mx-0 codevia-mouse-tilt" data-tilt-factor="1.4">
             KodNexuz is a forward-thinking software and IT services
             company dedicated to building scalable, secure, and innovative
             digital solutions. We help organizations modernize their systems,
