@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Features from "./components/Features";
 import Courses from "./components/Courses";
 import FAQ from "./components/FAQ";
+import PortalShowcase from "./components/PortalShowcase";
 import Careers from "./components/Careers";
 import Touch from "./components/Touch";
 // import Footer from "./components/Footer";
@@ -176,6 +177,7 @@ const App = () => {
                 <div className="scroll-reveal"><Home /></div>
                 <div className="scroll-reveal"><Features /></div>
                 <div className="scroll-reveal"><Courses /></div>
+                <div className="scroll-reveal"><PortalShowcase /></div>
                 <div className="scroll-reveal"><FAQ /></div>
                 <div className="scroll-reveal"><Careers /></div>
                 <div className="scroll-reveal"><Touch /></div>
