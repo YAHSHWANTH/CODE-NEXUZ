@@ -23,11 +23,9 @@ import {
   FaLaptopCode,
   FaCheckDouble,
   FaSlidersH,
-  FaTerminal,
   FaCheckCircle,
   FaLightbulb,
   FaCamera,
-  FaLaptop,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
@@ -842,32 +840,7 @@ const FeatureDetail = () => {
           </div>
         </div>
 
-        {/* Section 7: Interactive Code Snippet & Terminal Output Mockup + Senior Dev Explanation */}
-        <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-            <div className="flex items-center gap-2 text-xs font-mono text-purple-400">
-              <FaTerminal className="text-sm" />
-              <span>kodnexuz-production-engine // {slug}.config.js</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-          </div>
-          <pre className="font-mono text-xs sm:text-sm text-purple-200 overflow-x-auto p-4 bg-slate-900 rounded-xl border border-slate-800 leading-relaxed">
-            {feature.codeSnippet}
-          </pre>
 
-          {/* 💻 Senior Developer Explanatory Callout */}
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800 flex items-start gap-3 text-xs text-purple-300">
-            <FaLaptop className="text-purple-400 text-lg shrink-0 mt-0.5" />
-            <div>
-              <span className="font-bold text-white block mb-1">Code Execution & API Workflow Analysis</span>
-              {feature.codeSnippetExplanation}
-            </div>
-          </div>
-        </div>
 
         {/* Section 8: Security & Compliance Safeguards Checklist */}
         <div className="space-y-6 border-b border-gray-100 pb-12">
