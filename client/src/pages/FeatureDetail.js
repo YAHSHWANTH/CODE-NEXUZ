@@ -305,7 +305,7 @@ export const auditPullRequest = async (prData) => {
     galleryExplanation:
       "Visual representations of our artificial intelligence infrastructure processing natural language prompts and generating automated email campaigns.",
     gallery: [
-      { url: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80", caption: "Google Gemini Artificial Intelligence Neural Engine" },
+      { url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80", caption: "Google Gemini Artificial Intelligence Neural Engine" },
       { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80", caption: "Automated Natural Language Email Generation" },
     ],
     lifecycle: [
@@ -776,10 +776,14 @@ const FeatureDetail = () => {
         <div className="space-y-6 border-b border-gray-100 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {feature.gallery.map((img, idx) => (
-              <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80">
+              <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80 bg-slate-900">
                 <img
                   src={img.url}
                   alt={img.caption}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80";
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-transparent flex items-end p-6">
