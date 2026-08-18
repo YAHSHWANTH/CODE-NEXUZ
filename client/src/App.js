@@ -132,7 +132,7 @@ const App = () => {
         const tx = (offsetX * factor).toFixed(2);
         const ty = (offsetY * factor).toFixed(2);
         el.style.transform = `translate(${tx}px, ${ty}px)`;
-        el.style.transition = "transform 0.25s ease-out";
+        el.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
       });
     };
 

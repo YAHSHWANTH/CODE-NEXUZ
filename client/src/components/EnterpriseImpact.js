@@ -73,21 +73,21 @@ const EnterpriseImpact = () => {
         </span>
 
         {/* Title */}
-        <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+        <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight codevia-mouse-tilt" data-tilt-factor="0.8">
           Empowering Developers. Built for{" "}
           <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
             Real Tech Growth
           </span>
         </h2>
 
-        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto codevia-mouse-tilt" data-tilt-factor="0.5">
           KodNexuz accelerates tech learning and software delivery with hands-on project builds, expert mentor guidance, and reliable cloud tools.
         </p>
 
         {/* Stat Counters Grid with Gradual Number Increase Animation */}
         <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.6">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaRocket className="text-pink-500 text-3xl mx-auto mb-2" />
             </div>
@@ -99,7 +99,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.9">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaUsers className="text-purple-500 text-3xl mx-auto mb-2" />
             </div>
@@ -111,7 +111,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.6">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaBookOpen className="text-indigo-500 text-3xl mx-auto mb-2" />
             </div>
@@ -123,7 +123,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group codevia-mouse-tilt" data-tilt-factor="0.9">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaGlobe className="text-cyan-500 text-3xl mx-auto mb-2" />
             </div>
