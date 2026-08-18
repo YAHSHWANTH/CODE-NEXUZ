@@ -11,372 +11,342 @@ import {
   FaLock,
   FaArrowLeft,
   FaCheckCircle,
-  FaServer,
   FaLockOpen,
   FaKey,
-  FaTerminal,
   FaSync,
   FaNetworkWired,
-  FaMobileAlt,
   FaShieldVirus,
   FaUserCheck,
   FaEnvelope,
+  FaBolt,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Touch from "../components/Touch";
 import BorderGlow from "../components/BorderGlow";
 
-// 🌟 1. Custom Software View
+// 🖼️ 1. Custom Software Detail View (Split Hero + Editor Mockup + Pipeline)
 const CustomSoftwareView = ({ navigate }) => (
   <div className="space-y-16">
-    {/* Full-Stack Architecture Diagram */}
-    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl">
-      <div className="text-center mb-10">
-        <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          Visual System Architecture
+    {/* Split Hero with Real High-Res Developer Image */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-purple-100 shadow-xl">
+      <div className="space-y-6">
+        <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          Tailor-Made Full-Stack Applications
         </span>
-        <h2 className="text-3xl font-extrabold text-gray-900 mt-2">
-          Full-Stack Enterprise Blueprint
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+          Precision Software Engineered for Your Industry
         </h2>
-        <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-          High-performance modular React frontend connected to scalable Node.js microservices and MongoDB database.
+        <p className="text-gray-600 leading-relaxed text-base">
+          KodNexuz builds high-concurrency web applications using modular React 19 architecture, microservice backend APIS, and automated cloud CI/CD pipelines.
         </p>
+        <div className="flex flex-wrap gap-4 pt-2">
+          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ React 19</div>
+          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ Node.js Express</div>
+          <div className="bg-purple-50 px-4 py-2 rounded-xl text-purple-700 font-bold text-sm">✓ REST & GraphQL</div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-        <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl border border-purple-200 text-center relative group hover:shadow-lg transition">
-          <div className="w-12 h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center mx-auto mb-4 text-xl shadow-md">
-            <FaMobileAlt />
-          </div>
-          <h3 className="font-bold text-gray-900 text-lg">1. Responsive Frontend UI</h3>
-          <p className="text-gray-600 text-sm mt-2">React 19, Tailwind CSS, Framer animations, sub-0.4s initial paint.</p>
-        </div>
-
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border border-purple-200 text-center relative group hover:shadow-lg transition">
-          <div className="w-12 h-12 bg-pink-600 text-white rounded-xl flex items-center justify-center mx-auto mb-4 text-xl shadow-md">
-            <FaServer />
-          </div>
-          <h3 className="font-bold text-gray-900 text-lg">2. Node.js API Gateway</h3>
-          <p className="text-gray-600 text-sm mt-2">RESTful microservices, Express router, CORS protection, JWT middleware.</p>
-        </div>
-
-        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-2xl border border-indigo-200 text-center relative group hover:shadow-lg transition">
-          <div className="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center mx-auto mb-4 text-xl shadow-md">
-            <FaDatabase />
-          </div>
-          <h3 className="font-bold text-gray-900 text-lg">3. MongoDB Data Cluster</h3>
-          <p className="text-gray-600 text-sm mt-2">Indexed schema collections, automated daily snapshots, fast queries.</p>
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-purple-200">
+        <img
+          src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+          alt="Custom Software Development"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-transparent flex items-end p-6">
+          <span className="text-white font-semibold text-sm">Full-Stack Code Architecture in Action</span>
         </div>
       </div>
     </div>
 
-    {/* Agile Development Timeline */}
-    <div className="bg-slate-900 text-white p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
-      <h2 className="text-3xl font-extrabold text-center mb-10">
-        5-Step Agile Software Lifecycle
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-        {[
-          { step: "01", title: "Discovery", desc: "Requirements & System Spec" },
-          { step: "02", title: "UI/UX", desc: "Figma Mockups & Wireframes" },
-          { step: "03", title: "Code", desc: "Modular Full-Stack Builds" },
-          { step: "04", title: "Testing", desc: "Automated Unit & Stress Checks" },
-          { step: "05", title: "Deploy", desc: "Vercel & Render Cloud Edge" },
-        ].map((item, idx) => (
-          <div key={idx} className="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 text-center space-y-2">
-            <span className="text-pink-400 font-extrabold text-2xl">{item.step}</span>
-            <h4 className="font-bold text-white">{item.title}</h4>
-            <p className="text-xs text-gray-400">{item.desc}</p>
-          </div>
-        ))}
+    {/* Visual Full-Stack Code Editor Mockup */}
+    <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-800 font-mono text-sm space-y-4">
+      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center space-x-2">
+          <div className="w-3 h-3 rounded-full bg-red-500"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <span className="text-xs text-slate-400 font-sans ml-2">AppService.js — KodNexuz Engine</span>
+        </div>
+        <span className="text-xs text-purple-400 font-sans font-bold">SOLID Modular Code</span>
       </div>
+
+      <pre className="text-purple-300 leading-relaxed overflow-x-auto">
+{`// KodNexuz Custom Enterprise Engine
+import { createMicroservice, DatabaseCluster } from "@kodnexuz/core";
+
+export const buildEnterpriseApp = async (clientRequirements) => {
+  const db = await DatabaseCluster.connect({ ssl: true });
+  const app = createMicroservice({
+    architecture: "modular-monolith",
+    performanceTier: "sub-second-latency",
+    security: "OWASP-compliant-jwt"
+  });
+
+  return app.listen(4000, () => console.log("🚀 Custom Solution Ready"));
+};`}
+      </pre>
     </div>
   </div>
 );
 
-// 🌟 2. Cloud Solutions View
+// 🖼️ 2. Cloud Solutions Detail View (Full-Bleed Datacenter + SLA Grid)
 const CloudSolutionsView = ({ navigate }) => (
   <div className="space-y-16">
-    {/* Global Multi-Zone Network Map */}
-    <div className="bg-gradient-to-br from-blue-900 to-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
-      <div className="text-center mb-10">
-        <span className="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-blue-400/30">
-          Cloud Edge Distribution Map
+    {/* Full-Bleed Datacenter Hero Banner */}
+    <div className="relative rounded-3xl overflow-hidden shadow-2xl min-h-[380px] flex items-center p-8 sm:p-12 text-white">
+      <img
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
+        alt="Cloud Infrastructure"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-slate-900/85 to-transparent"></div>
+
+      <div className="relative z-10 max-w-xl space-y-4">
+        <span className="bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-cyan-400/30">
+          Global High-Speed Cloud
         </span>
-        <h2 className="text-3xl font-extrabold text-white mt-2">
-          Globally Distributed Server Infrastructure
+        <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight">
+          Serverless Infrastructure Powered by Edge CDN
         </h2>
-        <p className="text-blue-200 mt-2 max-w-2xl mx-auto text-sm">
-          Hosted across multi-region edge nodes ensuring sub-millisecond asset delivery and zero downtime.
+        <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
+          Zero downtime deployments, automated SSL certificate validation, and globally distributed servers on Render & Vercel.
         </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaNetworkWired className="text-4xl text-cyan-400 mx-auto mb-3" />
-          <h3 className="font-bold text-xl">280+ Edge CDN Nodes</h3>
-          <p className="text-xs text-blue-200 mt-1">Automatic geo-routing to closest server.</p>
-        </div>
-
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaSync className="text-4xl text-green-400 mx-auto mb-3" />
-          <h3 className="font-bold text-xl">Zero-Downtime CI/CD</h3>
-          <p className="text-xs text-blue-200 mt-1">Instant rolling deployment without drops.</p>
-        </div>
-
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaLock className="text-4xl text-yellow-400 mx-auto mb-3" />
-          <h3 className="font-bold text-xl">256-Bit SSL TLS 1.3</h3>
-          <p className="text-xs text-blue-200 mt-1">Automated HTTPS certificate renewals.</p>
-        </div>
       </div>
     </div>
 
-    {/* Cloud vs Traditional Comparison Table */}
-    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-gray-100 shadow-xl">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        Cloud Edge vs Traditional Hosting
-      </h2>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm border-collapse">
-          <thead>
-            <tr className="border-b border-gray-200 bg-gray-50 text-gray-700">
-              <th className="p-4 font-bold">Feature Metric</th>
-              <th className="p-4 font-bold text-blue-600">KodNexuz Cloud Architecture</th>
-              <th className="p-4 font-bold text-gray-400">Traditional Hosting</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            <tr>
-              <td className="p-4 font-semibold text-gray-800">Uptime SLA</td>
-              <td className="p-4 font-bold text-green-600">99.99% Multi-Zone Guarantee</td>
-              <td className="p-4 text-gray-500">98.5% Single Location</td>
-            </tr>
-            <tr>
-              <td className="p-4 font-semibold text-gray-800">Traffic Peak Scaling</td>
-              <td className="p-4 font-bold text-green-600">Instant Serverless Auto-Scale</td>
-              <td className="p-4 text-gray-500">Manual Server Upgrades</td>
-            </tr>
-            <tr>
-              <td className="p-4 font-semibold text-gray-800">Global Response Time</td>
-              <td className="p-4 font-bold text-green-600">&lt; 50ms Edge Latency</td>
-              <td className="p-4 text-gray-500">300ms - 800ms Server Latency</td>
-            </tr>
-          </tbody>
-        </table>
+    {/* SLA Metrics Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-gradient-to-br from-cyan-900 to-slate-900 text-white p-8 rounded-2xl border border-cyan-700/50 shadow-xl space-y-3">
+        <FaNetworkWired className="text-4xl text-cyan-400" />
+        <h3 className="text-xl font-bold">280+ Global Edge Nodes</h3>
+        <p className="text-xs text-cyan-200">Delivering static and dynamic content with sub-50ms latency globally.</p>
+      </div>
+
+      <div className="bg-gradient-to-br from-blue-900 to-slate-900 text-white p-8 rounded-2xl border border-blue-700/50 shadow-xl space-y-3">
+        <FaSync className="text-4xl text-blue-400" />
+        <h3 className="text-xl font-bold">Zero-Downtime Rolling Deploys</h3>
+        <p className="text-xs text-blue-200">Continuous integration pipelines ensuring non-stop uptime.</p>
+      </div>
+
+      <div className="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-8 rounded-2xl border border-indigo-700/50 shadow-xl space-y-3">
+        <FaLock className="text-4xl text-yellow-400" />
+        <h3 className="text-xl font-bold">TLS 1.3 256-Bit Encryption</h3>
+        <p className="text-xs text-indigo-200">Automatic renewal and enforcement of HTTPS security headers.</p>
       </div>
     </div>
   </div>
 );
 
-// 🌟 3. Team Collaboration View
+// 🖼️ 3. Team Collaboration Detail View (Real Team Photo + Circular Agile Workflow)
 const TeamCollaborationView = ({ navigate }) => (
   <div className="space-y-16">
-    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-pink-100 shadow-xl">
-      <div className="text-center mb-10">
-        <span className="bg-pink-100 text-pink-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          Agile Developer Ecosystem
-        </span>
-        <h2 className="text-3xl font-extrabold text-gray-900 mt-2">
-          Collaborative Project Sprint Flow
-        </h2>
-        <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-          Simulating real corporate software engineering environments for interns and mentors.
-        </p>
+    {/* Real Team Photo Showcase */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-pink-100 shadow-xl">
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-pink-200 order-2 lg:order-1">
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+          alt="Team Collaboration"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-pink-950/80 via-transparent to-transparent flex items-end p-6">
+          <span className="text-white font-semibold text-sm">Interactive Mentorship & Team Coding</span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-        {[
-          { title: "Sprint Backlog", desc: "Agile task assignment & Jira-style boards." },
-          { title: "Pair Coding", desc: "Collaborative Git branches & live reviews." },
-          { title: "Pull Request Audit", desc: "Senior developer code verification." },
-          { title: "Live Q&A Sessions", desc: "1-on-1 mentor guidance & daily standups." },
-        ].map((item, idx) => (
-          <div key={idx} className="bg-pink-50/50 p-6 rounded-2xl border border-pink-100 hover:shadow-md transition">
-            <div className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">
-              {idx + 1}
-            </div>
-            <h4 className="font-bold text-gray-900">{item.title}</h4>
-            <p className="text-xs text-gray-600 mt-1">{item.desc}</p>
-          </div>
-        ))}
+      <div className="space-y-6 order-1 lg:order-2">
+        <span className="bg-pink-100 text-pink-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          Real Corporate Mentorship
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+          Learn Side-by-Side with Senior Tech Engineers
+        </h2>
+        <p className="text-gray-600 leading-relaxed text-base">
+          Our collaborative developer community connects interns directly with experienced software leads for live code reviews, daily standups, and career guidance.
+        </p>
+      </div>
+    </div>
+
+    {/* Mentorship Workspaces */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="bg-pink-50/70 p-6 rounded-2xl border border-pink-200 text-center space-y-3">
+        <FaUsers className="text-3xl text-pink-600 mx-auto" />
+        <h3 className="font-bold text-gray-900 text-lg">Daily Agile Standups</h3>
+        <p className="text-xs text-gray-600">Simulating corporate sprint planning and ticket updates.</p>
+      </div>
+
+      <div className="bg-purple-50/70 p-6 rounded-2xl border border-purple-200 text-center space-y-3">
+        <FaCode className="text-3xl text-purple-600 mx-auto" />
+        <h3 className="font-bold text-gray-900 text-lg">1-on-1 Code Reviews</h3>
+        <p className="text-xs text-gray-600">Direct feedback on GitHub pull requests and architecture.</p>
+      </div>
+
+      <div className="bg-indigo-50/70 p-6 rounded-2xl border border-indigo-200 text-center space-y-3">
+        <FaBolt className="text-3xl text-indigo-600 mx-auto" />
+        <h3 className="font-bold text-gray-900 text-lg">Live Doubts Resolution</h3>
+        <p className="text-xs text-gray-600">Dedicated Telegram & Discord channels with sub-15min responses.</p>
       </div>
     </div>
   </div>
 );
 
-// 🌟 4. AI Integration View
+// 🖼️ 4. AI Integration Detail View (Robotic AI Photo + Terminal Generator)
 const AiIntegrationView = ({ navigate }) => (
   <div className="space-y-16">
-    <div className="bg-gradient-to-br from-purple-950 via-slate-900 to-indigo-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl">
-      <div className="text-center mb-10">
-        <span className="bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-purple-400/30">
-          Neural Intelligence Pipeline
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-800">
+      <div className="space-y-6">
+        <span className="bg-purple-500/20 text-purple-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-purple-400/30">
+          Google Gemini 2.0 Engine
         </span>
-        <h2 className="text-3xl font-extrabold text-white mt-2">
-          KodNexuz Multi-Model AI Engine 2.0
+        <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-white">
+          Intelligent Administrative Automation
         </h2>
-        <p className="text-purple-200 mt-2 max-w-2xl mx-auto text-sm">
-          Integrated with Google Gemini models and Brevo SMTP API for fail-safe administrative automation.
+        <p className="text-purple-200 text-base leading-relaxed">
+          KodNexuz AI processes user prompts, cross-references enrollment statistics, and generates transactional email drafts via Brevo API with 100% fail-safe reliability.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaRobot className="text-4xl text-purple-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Intent Processor</h3>
-          <p className="text-xs text-purple-200 mt-1">Parses user prompts & statistics queries instantly.</p>
-        </div>
-
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaTerminal className="text-4xl text-pink-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Gemini 2.0 Engine</h3>
-          <p className="text-xs text-purple-200 mt-1">Generates personalized email drafts & analytical counts.</p>
-        </div>
-
-        <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-          <FaShieldAlt className="text-4xl text-emerald-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Fail-Safe DB Fallback</h3>
-          <p className="text-xs text-purple-200 mt-1">Ensures 100% operational uptime if external API limits trigger.</p>
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-purple-500/30">
+        <img
+          src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80"
+          alt="AI Artificial Intelligence"
+          className="w-full h-80 object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent flex items-end p-6">
+          <span className="text-purple-300 font-mono text-xs">AI Engine 2.0 | Multi-Model Architecture</span>
         </div>
       </div>
     </div>
   </div>
 );
 
-// 🌟 5. Secure Systems View
+// 🖼️ 5. Secure Systems Detail View (Cyber Security Lock Image + Shield Specs)
 const SecureSystemsView = ({ navigate }) => (
   <div className="space-y-16">
-    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-emerald-100 shadow-xl">
-      <div className="text-center mb-10">
-        <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          Zero-Trust Security Defense
-        </span>
-        <h2 className="text-3xl font-extrabold text-gray-900 mt-2">
-          5-Layer Protection Architecture
-        </h2>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-emerald-100 shadow-xl">
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-emerald-200">
+        <img
+          src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
+          alt="Cyber Security System"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent flex items-end p-6">
+          <span className="text-white font-semibold text-sm">Enterprise Multi-Layer Encryption Guard</span>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {[
-          { layer: "Layer 1: Transport", title: "TLS 1.3 HTTPS Encryption", desc: "All network payload data in transit is encrypted using bank-grade TLS 1.3 protocol." },
-          { layer: "Layer 2: Network Firewall", title: "CORS & XSS Payload Sanitization", desc: "Strict origin header checks and input sanitization to block script injection attempts." },
-          { layer: "Layer 3: Authentication", title: "Bcrypt Password Salt Hashing", desc: "User passwords salted and hashed with 10 rounds of bcrypt prior to storage." },
-          { layer: "Layer 4: Session Security", title: "JWT Token Access Control", desc: "Cryptographically signed JSON Web Tokens with strict automatic expiration timers." },
-          { layer: "Layer 5: Scoping", title: "Role-Based Access Control (RBAC)", desc: "Strict database boundary separation between Admin dashboard capabilities and Student views." },
-        ].map((item, idx) => (
-          <div key={idx} className="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 flex items-start gap-4">
-            <div className="p-3 bg-emerald-600 text-white rounded-xl font-bold text-sm">
-              0{idx + 1}
-            </div>
-            <div>
-              <span className="text-xs font-bold text-emerald-600 uppercase tracking-wide">{item.layer}</span>
-              <h4 className="font-bold text-gray-900 text-base">{item.title}</h4>
-              <p className="text-xs text-gray-600 mt-1">{item.desc}</p>
-            </div>
-          </div>
-        ))}
+      <div className="space-y-6">
+        <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          Zero-Trust Protection Standard
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+          Bank-Grade Security for Every User
+        </h2>
+        <p className="text-gray-600 leading-relaxed text-base">
+          From bcrypt password hashing to cryptographic JWT sessions and strict CORS headers, our platform ensures your registration data is 100% immune to leaks.
+        </p>
       </div>
     </div>
   </div>
 );
 
-// 🌟 6. Data Analytics View
+// 🖼️ 6. Data Analytics Detail View (Data Charts Image + Interactive Metrics Dashboard)
 const DataAnalyticsView = ({ navigate }) => (
   <div className="space-y-16">
-    <div className="bg-white p-8 sm:p-12 rounded-3xl border border-indigo-100 shadow-xl text-center">
-      <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-        Interactive Visual Mockup
-      </span>
-      <h2 className="text-3xl font-extrabold text-gray-900 mt-2 mb-8">
-        Real-Time Administrative Metric Visualizer
-      </h2>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-indigo-100 shadow-xl">
+      <div className="space-y-6">
+        <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          Real-Time Insights
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+          Visual Analytics & Platform Metrics
+        </h2>
+        <p className="text-gray-600 leading-relaxed text-base">
+          Monitor course completions, active registrations, and credential verification logs in real-time.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-        <div className="bg-indigo-50/60 p-6 rounded-2xl border border-indigo-100">
-          <div className="text-xs font-bold text-indigo-600 uppercase">Active Registrations</div>
-          <div className="text-3xl font-extrabold text-gray-900 mt-2">12,480</div>
-          <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden">
-            <div className="bg-indigo-600 h-full w-[85%]"></div>
-          </div>
-        </div>
-
-        <div className="bg-pink-50/60 p-6 rounded-2xl border border-pink-100">
-          <div className="text-xs font-bold text-pink-600 uppercase">Course Completions</div>
-          <div className="text-3xl font-extrabold text-gray-900 mt-2">9,120</div>
-          <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden">
-            <div className="bg-pink-600 h-full w-[74%]"></div>
-          </div>
-        </div>
-
-        <div className="bg-purple-50/60 p-6 rounded-2xl border border-purple-100">
-          <div className="text-xs font-bold text-purple-600 uppercase">Verified Credentials</div>
-          <div className="text-3xl font-extrabold text-gray-900 mt-2">8,950</div>
-          <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden">
-            <div className="bg-purple-600 h-full w-[92%]"></div>
-          </div>
-        </div>
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-indigo-200">
+        <img
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+          alt="Data Analytics Dashboard"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
       </div>
     </div>
   </div>
 );
 
-// 🌟 7. Database Management View
+// 🖼️ 7. Database Management Detail View (Database Server Rack Image + Topology)
 const DatabaseManagementView = ({ navigate }) => (
   <div className="space-y-16">
-    <div className="bg-slate-900 text-white p-8 sm:p-12 rounded-3xl shadow-2xl">
-      <div className="text-center mb-10">
-        <span className="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-blue-400/30">
-          Distributed NoSQL Topology
-        </span>
-        <h2 className="text-3xl font-extrabold text-white mt-2">
-          MongoDB Atlas High-Throughput Cluster
-        </h2>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-slate-900 text-white p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-800">
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-blue-500/30">
+        <img
+          src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80"
+          alt="Database Servers"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-          <FaServer className="text-4xl text-blue-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Primary Master Node</h3>
-          <p className="text-xs text-gray-300 mt-1">Handles high-concurrency write operations & user sessions.</p>
-        </div>
-
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-          <FaDatabase className="text-4xl text-green-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Secondary Replicas</h3>
-          <p className="text-xs text-gray-300 mt-1">Replicated read scaling with sub-15ms search queries.</p>
-        </div>
-
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-          <FaLock className="text-4xl text-purple-400 mx-auto mb-3" />
-          <h3 className="font-bold text-lg">Continuous Snapshot Vault</h3>
-          <p className="text-xs text-gray-300 mt-1">Automated daily point-in-time database restoration.</p>
-        </div>
+      <div className="space-y-6">
+        <span className="bg-blue-500/20 text-blue-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-blue-400/30">
+          MongoDB Atlas Cluster
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-white">
+          Distributed NoSQL Cloud Reliability
+        </h2>
+        <p className="text-blue-200 text-base leading-relaxed">
+          High-concurrency data storage with sub-15ms query execution times and automated daily snapshot backups.
+        </p>
       </div>
     </div>
   </div>
 );
 
-// 🌟 8. Privacy First & 2-Factor OTP View
+// 🖼️ 8. Privacy First & 2-Factor OTP Detail View (Keycard Security Photo + 6-Step Visual Workflow)
 const PrivacyFirstView = ({ navigate }) => (
   <div className="space-y-16">
+    {/* Split Hero with Real High-Res Privacy Lock Image */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white p-8 sm:p-12 rounded-3xl border border-rose-100 shadow-xl">
+      <div className="space-y-6">
+        <span className="bg-rose-100 text-rose-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          Zero-Data-Leak Commitment
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+          Strict Privacy & 2-Factor OTP Verification
+        </h2>
+        <p className="text-gray-600 leading-relaxed text-base">
+          Every registration and login on KodNexuz requires a 6-digit one-time passcode delivered via Brevo transactional SMTP servers, guaranteeing 100% account protection.
+        </p>
+      </div>
+
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl group border border-rose-200">
+        <img
+          src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=80"
+          alt="Privacy Security Lock"
+          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-rose-950/80 via-transparent to-transparent flex items-end p-6">
+          <span className="text-white font-semibold text-sm">2-Factor OTP & Encryption Guard</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Visual 6-Step 2FA OTP Workflow Cards */}
     <div className="bg-gradient-to-br from-rose-950 via-slate-900 to-purple-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl">
       <div className="text-center mb-10">
         <span className="bg-rose-500/20 text-rose-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-rose-400/30">
-          Zero Data Leak Protection
+          Interactive OTP Verification Sequence
         </span>
-        <h2 className="text-3xl font-extrabold text-white mt-2">
-          Interactive 6-Step 2-Factor OTP Verification
-        </h2>
-        <p className="text-rose-200 mt-2 max-w-2xl mx-auto text-sm">
-          Ensuring 100% data confidentiality and authenticating every user registration via Brevo transactional SMTP API.
-        </p>
+        <h3 className="text-3xl font-extrabold text-white mt-2">
+          How KodNexuz Protects Your Account Step-by-Step
+        </h3>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[
           { step: "01", icon: <FaUserCheck />, title: "Registration Request", desc: "User submits account details on KodNexuz registration form." },
-          { step: "02", icon: <FaKey />, title: "Secret 6-Digit Gen", desc: "Cryptographic 6-digit OTP passcode generated in memory." },
+          { step: "02", icon: <FaKey />, title: "Secret 6-Digit Passcode", desc: "Cryptographic 6-digit OTP passcode generated in memory." },
           { step: "03", icon: <FaEnvelope />, title: "Brevo SMTP Dispatch", desc: "Passcode encrypted & dispatched via Brevo transactional servers." },
           { step: "04", icon: <FaShieldVirus />, title: "SPF/DKIM Validation", desc: "Email domain authenticated to guarantee zero spam delivery." },
           { step: "05", icon: <FaCheckCircle />, title: "OTP Passcode Input", desc: "User inputs 6-digit passcode into verification modal." },
@@ -596,7 +566,7 @@ const FeatureDetail = () => {
           ))}
         </div>
 
-        {/* 🎨 DIVERSE UNIQUE FEATURE VIEW LAYOUT */}
+        {/* 🎨 DIVERSE UNIQUE FEATURE VIEW WITH HIGH-RES REALISTIC IMAGES */}
         {CustomViewComponent && <CustomViewComponent navigate={navigate} />}
 
         {/* Call to Action Footer Card */}
