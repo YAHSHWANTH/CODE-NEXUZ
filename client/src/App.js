@@ -7,6 +7,7 @@ import AuthModal from "./components/AuthModal";
 import Navbar from "./components/Navbar";
 import RunningMessage from "./components/RunningMessage";
 import Home from "./components/Home";
+import EnterpriseImpact from "./components/EnterpriseImpact";
 import Features from "./components/Features";
 import Courses from "./components/Courses";
 import FAQ from "./components/FAQ";
@@ -175,6 +176,7 @@ const App = () => {
             element={
               <>
                 <div className="scroll-reveal"><Home /></div>
+                <div className="scroll-reveal"><EnterpriseImpact /></div>
                 <div className="scroll-reveal"><Features /></div>
                 <div className="scroll-reveal"><Courses /></div>
                 <div className="scroll-reveal"><PortalShowcase /></div>
