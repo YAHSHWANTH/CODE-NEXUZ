@@ -116,23 +116,20 @@ const App = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("reveal-visible");
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
     );
 
     const observeAll = () => {
-      const elements = document.querySelectorAll(selector);
+      const elements = document.querySelectorAll(`${selector}:not(.reveal-visible)`);
       elements.forEach((el) => observer.observe(el));
     };
 
-    // Trigger on mount and route changes with paint frame delay
-    const frameId = requestAnimationFrame(() => {
-      observeAll();
-    });
-
-    const interval = setInterval(observeAll, 800);
+    const frameId = requestAnimationFrame(observeAll);
+    const interval = setInterval(observeAll, 600);
 
     return () => {
       cancelAnimationFrame(frameId);

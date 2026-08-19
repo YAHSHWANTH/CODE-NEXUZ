@@ -123,9 +123,10 @@
 .scroll-reveal-card,
 .scroll-reveal-image {
   opacity: 0 !important;
+  visibility: hidden;
   transform: translateY(50px) scale(0.96);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, visibility;
 }
 
 .scroll-reveal-image {
@@ -137,6 +138,7 @@
 .scroll-reveal-card.reveal-visible,
 .scroll-reveal-image.reveal-visible {
   opacity: 1 !important;
+  visibility: visible !important;
   transform: translateY(0) scale(1) !important;
 }
 

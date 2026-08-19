@@ -235,7 +235,7 @@ const PortalShowcase = () => {
                 <div
                   key={tab.id}
                   onClick={() => setActiveTab(idx)}
-                  className={`p-5 rounded-2xl transition-all duration-300 cursor-pointer border ${
+                  className={`p-5 rounded-2xl transition-all duration-300 cursor-pointer border scroll-reveal-card delay-${idx + 1} ${
                     isActive
                       ? "bg-white border-purple-500 shadow-xl ring-2 ring-purple-400/20"
                       : "bg-white border-gray-200 hover:border-purple-300 hover:shadow-md"
