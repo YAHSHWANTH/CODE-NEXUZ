@@ -117,22 +117,34 @@
   opacity: 0;
 }
 
-/* 6. Codevia-style Scroll Reveal Animation */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* 6. Codevia-style Scroll Reveal Animation System */
+.scroll-reveal,
+.scroll-reveal-text,
+.scroll-reveal-card,
+.scroll-reveal-image {
+  opacity: 0 !important;
+  transform: translateY(36px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.scroll-reveal.reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
+.scroll-reveal-image {
+  transform: translateY(30px) scale(0.96);
 }
 
-.scroll-reveal-delay-1 { transition-delay: 0.15s; }
-.scroll-reveal-delay-2 { transition-delay: 0.3s; }
-.scroll-reveal-delay-3 { transition-delay: 0.45s; }
+.scroll-reveal.reveal-visible,
+.scroll-reveal-text.reveal-visible,
+.scroll-reveal-card.reveal-visible,
+.scroll-reveal-image.reveal-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+.scroll-reveal-delay-1, .delay-1 { transition-delay: 0.1s !important; }
+.scroll-reveal-delay-2, .delay-2 { transition-delay: 0.2s !important; }
+.scroll-reveal-delay-3, .delay-3 { transition-delay: 0.3s !important; }
+.delay-4 { transition-delay: 0.4s !important; }
+.delay-5 { transition-delay: 0.5s !important; }
 
 /* 7. Codevia Card Hover & Tilt Effects */
 .codevia-card-hover {

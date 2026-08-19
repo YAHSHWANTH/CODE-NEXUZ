@@ -97,8 +97,10 @@ const App = () => {
     }
   }, [location]);
 
-  // 🚀 Scroll reveal observer for Codevia-style text/section entrance animations
+  // 🚀 Senior UI/UX Scroll Reveal Observer
   useEffect(() => {
+    const selector = ".scroll-reveal, .scroll-reveal-text, .scroll-reveal-card, .scroll-reveal-image";
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -107,13 +109,26 @@ const App = () => {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
     );
 
-    const elements = document.querySelectorAll(".scroll-reveal");
-    elements.forEach((el) => observer.observe(el));
+    const observeAll = () => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach((el) => observer.observe(el));
+    };
 
-    return () => observer.disconnect();
+    // Trigger on mount and route changes with paint frame delay
+    const frameId = requestAnimationFrame(() => {
+      observeAll();
+    });
+
+    const interval = setInterval(observeAll, 800);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      clearInterval(interval);
+      observer.disconnect();
+    };
   }, [location]);
 
 

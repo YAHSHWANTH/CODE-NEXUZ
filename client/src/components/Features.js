@@ -70,11 +70,11 @@ const Features = () => {
     <section className="bg-gray-50 py-12 md:py-20" id="features">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
         {/* Title */}
-        <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+        <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight scroll-reveal-text">
           Features of <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">KodNexuz?</span>
         </h2>
         
-        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto scroll-reveal-text delay-1">
           At KodNexuz, we provide end-to-end solutions that combine innovation, efficiency, and security.
           Our team ensures seamless collaboration, cutting-edge technology, and personalized strategies for every client.
           Partner with us to accelerate growth and transform your business digitally.
@@ -86,7 +86,7 @@ const Features = () => {
             <div
               key={index}
               onClick={() => navigate(`/feature/${feature.slug}`)}
-              className="bg-white p-6 rounded-xl border border-gray-100 shadow-md codevia-card-hover hover:border-purple-300 cursor-pointer text-center group flex flex-col justify-between"
+              className={`bg-white p-6 rounded-xl border border-gray-100 shadow-md codevia-card-hover hover:border-purple-300 cursor-pointer text-center group flex flex-col justify-between scroll-reveal-card delay-${(index % 4) + 1}`}
             >
               <div>
                 <div className="w-14 h-14 mx-auto mb-4 bg-purple-50/60 group-hover:bg-purple-100 rounded-xl flex items-center justify-center transition-colors duration-300">

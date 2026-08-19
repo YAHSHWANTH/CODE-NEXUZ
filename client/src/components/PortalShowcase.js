@@ -62,7 +62,7 @@ const PortalShowcase = () => {
     <section className="py-16 md:py-24 bg-white text-gray-900 relative overflow-hidden" id="portal-showcase">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 scroll-reveal-text">
           <span className="inline-block bg-purple-100 text-purple-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-purple-200 mb-4">
             ✦ KODNEXUZ INNOVATION ECOSYSTEM
           </span>
@@ -81,7 +81,7 @@ const PortalShowcase = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Side (Interactive Portal Window Mockup with REALISTIC UI SCREENSHOT) - 7 cols */}
-          <div className="lg:col-span-7 bg-slate-900 rounded-3xl border border-gray-200 shadow-2xl overflow-hidden text-white">
+          <div className="lg:col-span-7 bg-slate-900 rounded-3xl border border-gray-200 shadow-2xl overflow-hidden text-white scroll-reveal-card">
             {/* Browser Header Bar */}
             <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center space-x-2">

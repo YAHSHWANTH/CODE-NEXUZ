@@ -71,22 +71,22 @@ const Courses = () => {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
           {/* Heading */}
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 codevia-mouse-tilt" data-tilt-factor="1.2">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4 codevia-mouse-tilt scroll-reveal-text" data-tilt-factor="1.2">
             Virtual Internships &{" "}
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               Courses
             </span>
           </h2>
-          <p className="text-gray-600 mb-12 text-lg">
+          <p className="text-gray-600 mb-12 text-lg scroll-reveal-text delay-1">
             Get started with KodNexuz Trending Internships & Courses!
           </p>
 
           {/* Courses Grid - 8 Trending Courses */}
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {courses.map((course) => (
+            {courses.map((course, idx) => (
               <div
                 key={course.id}
-                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-between border border-gray-100 codevia-card-hover hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out cursor-pointer group"
+                className={`bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-between border border-gray-100 codevia-card-hover hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out cursor-pointer group scroll-reveal-card delay-${(idx % 4) + 1}`}
                 onClick={() => {
                   if (window.openAuthModal) {
                     window.openAuthModal("signup");

@@ -39,7 +39,7 @@ const FAQ = () => {
     <section id="faq" className="py-16 md:py-24 bg-gray-50/50">
       <div className="max-w-4xl mx-auto px-6">
         {/* Header matching Image 2 with project brand gradient */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 scroll-reveal-text">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">
             Frequently Asked{" "}
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
@@ -58,7 +58,7 @@ const FAQ = () => {
             return (
               <div
                 key={index}
-                className={`bg-white border transition-all duration-200 rounded-2xl overflow-hidden ${
+                className={`bg-white border transition-all duration-200 rounded-2xl overflow-hidden scroll-reveal-card delay-${(index % 4) + 1} ${
                   isOpen
                     ? "border-purple-200 shadow-md ring-1 ring-purple-100"
                     : "border-gray-200 hover:border-gray-300 shadow-sm"

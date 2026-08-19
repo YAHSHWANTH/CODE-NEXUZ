@@ -7,7 +7,7 @@ const Careers = () => {
       {/* Top Section */}
       <section className="bg-white min-h-screen flex items-center pt-28 pb-16 md:py-0">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center w-full">
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left scroll-reveal-text">
             <h2 className="text-3.5xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight">
               Join With Us, Shape Your Future
             </h2>
@@ -30,7 +30,7 @@ const Careers = () => {
                 Start your journey
               </button>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center scroll-reveal-image delay-1">
             <img src="/stlogo.png" alt="Careers" width="438" height="438" className="max-w-full h-auto max-h-[350px] md:max-h-full" />
           </div>
         </div>
@@ -39,11 +39,11 @@ const Careers = () => {
       {/* Signup/Login Section */}
       <section id="signup-form" className="bg-gray-50 min-h-[60vh] flex items-center py-16">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-center w-full">
-          <div className="flex justify-center">
+          <div className="flex justify-center scroll-reveal-image">
             <img src="/logos.png" alt="Sign Up" width="540" height="360" className="max-w-full h-auto max-h-[300px] md:max-h-full" />
           </div>
 
-          <div className="w-full max-w-md mx-auto">
+          <div className="w-full max-w-md mx-auto scroll-reveal-card delay-1">
             <BorderGlow
               edgeSensitivity={30}
               glowColor="270 100 65"

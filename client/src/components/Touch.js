@@ -19,7 +19,7 @@ const Touch = () => {
   return (
     <section className="text-white w-full" style={{ backgroundColor: "#002147" }}>
       {/* Main Section */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center py-10 px-8 md:px-12">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center py-10 px-8 md:px-12 scroll-reveal-card">
         
         {/* LEFT SIDE - Logo + Social Media */}
         <div className="flex flex-col items-start md:flex-row md:items-center md:space-x-10 lg:space-x-14">
