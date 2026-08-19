@@ -86,7 +86,7 @@ const Features = () => {
             <div
               key={index}
               onClick={() => navigate(`/feature/${feature.slug}`)}
-              className={`bg-white p-6 rounded-xl border border-gray-100 shadow-md codevia-card-hover hover:border-purple-300 cursor-pointer text-center group flex flex-col justify-between scroll-reveal-card delay-${(index % 4) + 1}`}
+              className={`bg-white p-6 rounded-xl border border-gray-100 shadow-md codevia-card-hover hover:border-purple-300 cursor-pointer text-center group flex flex-col justify-between scroll-reveal-card delay-${index + 1}`}
             >
               <div>
                 <div className="w-14 h-14 mx-auto mb-4 bg-purple-50/60 group-hover:bg-purple-100 rounded-xl flex items-center justify-center transition-colors duration-300">

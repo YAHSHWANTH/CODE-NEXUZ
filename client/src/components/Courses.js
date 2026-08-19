@@ -86,7 +86,7 @@ const Courses = () => {
             {courses.map((course, idx) => (
               <div
                 key={course.id}
-                className={`bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-between border border-gray-100 codevia-card-hover hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out cursor-pointer group scroll-reveal-card delay-${(idx % 4) + 1}`}
+                className={`bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-between border border-gray-100 codevia-card-hover hover:border-pink-400 hover:shadow-xl hover:-translate-y-2 transform transition duration-300 ease-in-out cursor-pointer group scroll-reveal-card delay-${idx + 1}`}
                 onClick={() => {
                   if (window.openAuthModal) {
                     window.openAuthModal("signup");
