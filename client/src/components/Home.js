@@ -1,18 +1,10 @@
 // src/components/Home.js
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaBook, FaGraduationCap, FaCertificate } from "react-icons/fa";
 import BlurText from "./BlurText";
 
-const TAGLINES = [
-  "Quality Education & Certifications",
-  "AI-Driven Developer Platform",
-  "Scalable Software & Cloud Solutions",
-  "Learn, Build & Get Industry Badges"
-];
-
 const Home = ({ animateKey }) => {
   const videoRef = useRef(null);
-  const [taglineIndex, setTaglineIndex] = useState(0);
 
   useEffect(() => {
     // Programmatically ensure muted autoplay works smoothly across iOS & Android devices
@@ -22,13 +14,6 @@ const Home = ({ animateKey }) => {
         console.log("Autoplay prevented:", err);
       });
     }
-
-    // Codevia-style rotating tagline badge timer
-    const interval = setInterval(() => {
-      setTaglineIndex((prev) => (prev + 1) % TAGLINES.length);
-    }, 4500);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -59,20 +44,13 @@ const Home = ({ animateKey }) => {
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full">
         {/* Left Side - Responsive Text in original position */}
         <div className="space-y-6 text-center md:text-left animate-fade-in-left max-w-2xl mx-auto md:mx-0">
-          
-          {/* Codevia-Style Rotating Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-inner text-xs sm:text-sm font-semibold tracking-wider text-purple-300 uppercase">
-            <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping" />
-            <span>KODNEXUZ_CORE //</span>
-            <span key={taglineIndex} className="animate-badge-slide text-pink-300">
-              {TAGLINES[taglineIndex]}
-            </span>
-          </div>
-
           {/* WELCOME LINE */}
-          <p className="uppercase tracking-widest text-xs sm:text-sm font-semibold text-purple-300/90">
-            Welcome to KodNexuz
-          </p>
+          <div className="flex items-center justify-center md:justify-start gap-2">
+            <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping" />
+            <p className="uppercase tracking-widest text-xs sm:text-sm font-semibold text-purple-300">
+              Welcome to KodNexuz
+            </p>
+          </div>
 
           {/* MAIN QUOTE */}
           <div className="text-[22px] min-[380px]:text-[26px] sm:text-[34px] md:text-[38px] lg:text-[42px] xl:text-[48px] font-extrabold leading-tight text-white drop-shadow-md">
