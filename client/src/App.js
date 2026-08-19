@@ -24,12 +24,22 @@ const AdminEnrollments = lazy(() => import("./pages/AdminEnrollments"));
 const VerifyPage = lazy(() => import("./pages/VerifyPage"));
 const FeatureDetail = lazy(() => import("./pages/FeatureDetail"));
 
-// 🧭 Scroll-to-top on route change
+// 🧭 Scroll-to-top on route change + clean hash from address bar
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+    } else {
+      const sectionId = hash.replace("#", "");
+      const el = document.getElementById(sectionId);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+      }
+      // Clean up hash from browser address bar so kodnexuz.in/#features shows kodnexuz.in/ cleanly
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [pathname, hash]);
   return null;
 };
 

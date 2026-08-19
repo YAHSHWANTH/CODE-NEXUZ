@@ -672,13 +672,19 @@ const FeatureDetail = () => {
         
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <button
-            onClick={() => navigate("/#features")}
+            onClick={() => {
+              navigate("/");
+              setTimeout(() => {
+                const el = document.getElementById("features");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            }}
             className="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 hover:text-white transition mb-6 bg-purple-900/40 px-4 py-2 rounded-full border border-purple-700/50 backdrop-blur-sm cursor-pointer"
           >
             <FaArrowLeft /> Back to Features
           </button>
 
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 scroll-reveal-text">
             <div className="max-w-3xl">
               <span className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-4 shadow-md">
                 {feature.badge}
@@ -691,7 +697,7 @@ const FeatureDetail = () => {
               </p>
             </div>
             
-            <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl flex items-center justify-center shrink-0">
+            <div className="p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl flex items-center justify-center shrink-0 scroll-reveal-card delay-1">
               {feature.icon}
             </div>
           </div>
@@ -706,7 +712,7 @@ const FeatureDetail = () => {
           {feature.metrics.map((metric, idx) => (
             <div
               key={idx}
-              className="bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center"
+              className={`bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center codevia-card-hover scroll-reveal-card delay-${idx + 1}`}
             >
               <div className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent mb-1">
                 {metric.value}
@@ -719,7 +725,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 2: Deep Executive & Technical Narrative */}
-        <div className="space-y-6 border-b border-gray-100 pb-12">
+        <div className="space-y-6 border-b border-gray-100 pb-12 scroll-reveal-text">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
             <span className="text-purple-600">✦</span> Technical Capability Overview
           </h2>
@@ -732,7 +738,7 @@ const FeatureDetail = () => {
 
         {/* Section 3: Visual 3-Tier Layer Blueprint + Senior Dev Explanation */}
         <div className="space-y-8 border-b border-gray-100 pb-12">
-          <div>
+          <div className="scroll-reveal-text">
             <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Visual System Blueprint
             </span>
@@ -746,7 +752,7 @@ const FeatureDetail = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {feature.layers.map((layer, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-purple-50/60 to-indigo-50/60 p-6 rounded-2xl border border-purple-200 space-y-3">
+              <div key={idx} className={`bg-gradient-to-br from-purple-50/60 to-indigo-50/60 p-6 rounded-2xl border border-purple-200 space-y-3 codevia-card-hover scroll-reveal-card delay-${idx + 1}`}>
                 <div className="w-10 h-10 bg-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-base shadow-sm">
                   {layer.icon}
                 </div>
@@ -759,7 +765,7 @@ const FeatureDetail = () => {
           </div>
 
           {/* 💡 Senior Developer Explanatory Callout */}
-          <div className="bg-purple-50/70 p-6 rounded-2xl border border-purple-200 flex items-start gap-4">
+          <div className="bg-purple-50/70 p-6 rounded-2xl border border-purple-200 flex items-start gap-4 scroll-reveal-card delay-3">
             <FaLightbulb className="text-purple-600 text-2xl shrink-0 mt-1" />
             <div className="space-y-1">
               <h4 className="font-bold text-purple-950 text-base">Senior Engineering Blueprint Breakdown</h4>
@@ -774,7 +780,7 @@ const FeatureDetail = () => {
         <div className="space-y-6 border-b border-gray-100 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {feature.gallery.map((img, idx) => (
-              <div key={idx} className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80 bg-slate-900">
+              <div key={idx} className={`relative rounded-3xl overflow-hidden shadow-xl border border-gray-200 group h-80 bg-slate-900 scroll-reveal-image delay-${idx + 1}`}>
                 <img
                   src={img.url}
                   alt={img.caption}
@@ -792,7 +798,7 @@ const FeatureDetail = () => {
           </div>
 
           {/* 📸 Senior Developer Explanatory Callout */}
-          <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 flex items-start gap-4">
+          <div className="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 flex items-start gap-4 scroll-reveal-card delay-2">
             <FaCamera className="text-pink-400 text-xl shrink-0 mt-1" />
             <div className="space-y-1">
               <h4 className="font-bold text-white text-base">Production Environment & Code Inspection</h4>
@@ -804,7 +810,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 5: 5-Stage Delivery & Execution Lifecycle */}
-        <div className="bg-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl space-y-10">
+        <div className="bg-slate-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl space-y-10 scroll-reveal-card">
           <div className="text-center max-w-2xl mx-auto">
             <span className="bg-pink-500/20 text-pink-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-pink-500/30">
               Seamless Execution Method
@@ -816,7 +822,7 @@ const FeatureDetail = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
             {feature.lifecycle.map((item, idx) => (
-              <div key={idx} className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-3">
+              <div key={idx} className={`bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-3 codevia-card-hover scroll-reveal-card delay-${idx + 1}`}>
                 <span className="text-pink-400 font-extrabold text-3xl">{item.step}</span>
                 <h4 className="font-bold text-white text-base">{item.title}</h4>
                 <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
@@ -827,12 +833,12 @@ const FeatureDetail = () => {
 
         {/* Section 6: Real-World Enterprise Use Cases */}
         <div className="space-y-8 border-b border-gray-100 pb-12">
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center scroll-reveal-text">
             Real-World Enterprise Applications
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {feature.useCases.map((uc, idx) => (
-              <div key={idx} className="p-6 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-3">
+              <div key={idx} className={`p-6 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-3 codevia-card-hover scroll-reveal-card delay-${idx + 1}`}>
                 <h4 className="font-bold text-purple-900 text-lg">{uc.title}</h4>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{uc.desc}</p>
               </div>
@@ -840,16 +846,14 @@ const FeatureDetail = () => {
           </div>
         </div>
 
-
-
         {/* Section 8: Security & Compliance Safeguards Checklist */}
         <div className="space-y-6 border-b border-gray-100 pb-12">
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center scroll-reveal-text">
             Security & Quality Safeguards Checklist
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {feature.safeguards.map((sg, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+              <div key={idx} className={`flex items-start gap-3 p-4 bg-emerald-50/50 rounded-xl border border-emerald-100 scroll-reveal-card delay-${(idx % 4) + 1}`}>
                 <FaCheckCircle className="text-emerald-500 text-lg shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm font-semibold text-gray-800">{sg}</span>
               </div>
@@ -858,7 +862,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 9: Feature Technical Specifications Table */}
-        <div className="space-y-6 border-b border-gray-100 pb-12">
+        <div className="space-y-6 border-b border-gray-100 pb-12 scroll-reveal-card">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
             Technical Specifications & Standards
           </h3>
@@ -883,7 +887,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 10: Comprehensive Feature FAQs */}
-        <div className="space-y-6">
+        <div className="space-y-6 scroll-reveal-card">
           <div className="text-center max-w-xl mx-auto mb-8">
             <h3 className="text-3xl font-extrabold text-gray-900">Frequently Asked Questions</h3>
             <p className="text-gray-600 text-sm mt-2">Answers to key technical questions</p>
@@ -894,7 +898,7 @@ const FeatureDetail = () => {
         </div>
 
         {/* Section 11: Call to Action Conversion Banner */}
-        <div className="bg-gradient-to-r from-purple-900 via-slate-900 to-purple-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
+        <div className="bg-gradient-to-r from-purple-900 via-slate-900 to-purple-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden scroll-reveal-card">
           <div className="relative z-10 max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl sm:text-4xl font-extrabold">
               Experience Next-Gen Technology with <span className="bg-gradient-to-r from-pink-400 to-purple-300 bg-clip-text text-transparent">KodNexuz</span>
@@ -908,7 +912,11 @@ const FeatureDetail = () => {
                   if (window.openAuthModal) {
                     window.openAuthModal("signup");
                   } else {
-                    navigate("/#signup-form");
+                    navigate("/");
+                    setTimeout(() => {
+                      const el = document.getElementById("signup-form");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
                   }
                 }}
                 className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:opacity-90 transition cursor-pointer"
@@ -916,7 +924,13 @@ const FeatureDetail = () => {
                 Register & Get Started
               </button>
               <button
-                onClick={() => navigate("/#features")}
+                onClick={() => {
+                  navigate("/");
+                  setTimeout(() => {
+                    const el = document.getElementById("features");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }, 100);
+                }}
                 className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-lg transition backdrop-blur-sm cursor-pointer"
               >
                 Explore Other Features
