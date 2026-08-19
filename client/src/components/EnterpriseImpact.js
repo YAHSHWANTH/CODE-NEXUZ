@@ -91,7 +91,7 @@ const EnterpriseImpact = () => {
         {/* Stat Counters Grid with Gradual Number Increase Animation */}
         <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md codevia-card-hover text-center group">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaRocket className="text-pink-500 text-3xl mx-auto mb-2" />
             </div>
@@ -103,7 +103,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md codevia-card-hover text-center group">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaUserGraduate className="text-purple-500 text-3xl mx-auto mb-2" />
             </div>
@@ -115,7 +115,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md codevia-card-hover text-center group">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaHeart className="text-red-500 text-3xl mx-auto mb-2 animate-pulse" />
             </div>
@@ -127,7 +127,7 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition duration-300 text-center group">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md codevia-card-hover text-center group">
             <div className="group-hover:scale-110 transition-transform duration-300">
               <FaGlobe className="text-cyan-500 text-3xl mx-auto mb-2" />
             </div>

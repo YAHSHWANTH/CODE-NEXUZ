@@ -2,77 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  background-color: gray-50;
-  color: white;
-} */
-@keyframes slideIn {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-.animate-slideIn {
-  animation: slideIn 0.3s ease-out forwards;
-}
+/* 🚀 Codevia-Style Keyframe Animations */
 
-/* 🚀 Premium hardware-accelerated CSS animations to replace framer-motion */
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-100px);
+/* 1. Tagline Badge Entrance Animation */
+@keyframes badgeSlideIn {
+  0% {
     opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
   }
-  to {
-    transform: translateX(0);
+  100% {
     opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
-@keyframes slideInRight {
-  from {
-    transform: translateX(100px);
+.animate-badge-slide {
+  animation: badgeSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 2. Hero Heading Entrance Animation */
+@keyframes heroFadeIn {
+  0% {
     opacity: 0;
+    transform: translateY(32px);
+    filter: blur(4px);
   }
-  to {
-    transform: translateX(0);
+  100% {
     opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
-.animate-fade-in-left {
-  animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.animate-fade-in-right {
-  animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
+.animate-hero-fade {
+  animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* 🚀 Optimize font-display swap for slick icons to avoid render-blocking LCP delays */
-@font-face {
-  font-family: 'slick';
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  src: url('~slick-carousel/slick/fonts/slick.eot');
-  src: url('~slick-carousel/slick/fonts/slick.eot?#iefix') format('embedded-opentype'),
-       url('~slick-carousel/slick/fonts/slick.woff') format('woff'),
-       url('~slick-carousel/slick/fonts/slick.ttf') format('truetype'),
-       url('~slick-carousel/slick/fonts/slick.svg#slick') format('svg');
-}
-
-/* 🚀 Shifting gradient shine animation for attracting clicks */
+/* 3. Codevia Shifting Gradient Text Animation */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+.gradient-text-animate {
+  background: linear-gradient(270deg, #ec4899, #a855f7, #6366f1, #3b82f6, #ec4899);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite;
+}
+
 .animate-gradient-shift {
   background-size: 200% 200%;
   animation: gradientShift 4s ease infinite;
 }
 
-/* 🚀 Codevia-style Scroll Reveal Animation */
+/* 4. Codevia Tab / Element Slide Up Animation */
+@keyframes codeviaSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.animate-codevia-slide-up {
+  animation: codeviaSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 5. Legacy slide keyframes */
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-60px);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.animate-fade-in-left {
+  animation: slideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-fade-in-right {
+  animation: slideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.25s;
+  opacity: 0;
+}
+
+/* 6. Codevia-style Scroll Reveal Animation */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(35px);
@@ -85,20 +130,19 @@
   transform: translateY(0);
 }
 
-/* 🚀 Codevia-style dynamic mouse translate & tilt animation */
-.codevia-mouse-tilt {
-  transition: transform 0.25s ease-out;
-  will-change: transform;
-}
+.scroll-reveal-delay-1 { transition-delay: 0.15s; }
+.scroll-reveal-delay-2 { transition-delay: 0.3s; }
+.scroll-reveal-delay-3 { transition-delay: 0.45s; }
 
+/* 7. Codevia Card Hover & Tilt Effects */
 .codevia-card-hover {
-  transition: transform 0.25s ease-out, box-shadow 0.3s ease-out;
-  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform, box-shadow;
 }
 
 .codevia-card-hover:hover {
-  transform: translate(6px, -8px) scale(1.02);
-  box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.22);
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.25);
 }
 
 

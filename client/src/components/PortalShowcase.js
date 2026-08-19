@@ -100,7 +100,7 @@ const PortalShowcase = () => {
             <div className="p-6 sm:p-8 min-h-[400px] flex flex-col justify-between space-y-6">
               
               {/* Realistic Portal UI Screenshot Mockup Banner */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 group">
+              <div key={activeTab} className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/80 group animate-codevia-slide-up">
                 <img
                   src={tabsData[activeTab].image}
                   alt={tabsData[activeTab].title}
