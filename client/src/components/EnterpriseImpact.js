@@ -115,9 +115,9 @@ const EnterpriseImpact = () => {
             </div>
           </div>
 
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-md codevia-card-hover text-center group">
-            <div className="group-hover:scale-110 transition-transform duration-300">
-              <FaHeart className="text-red-500 text-3xl mx-auto mb-2 animate-pulse" />
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl codevia-card-hover text-center group">
+            <div className="group-hover:scale-105 transition-transform duration-300">
+              <FaHeart className="text-red-500 text-3xl mx-auto mb-2" />
             </div>
             <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
               <AnimatedCounter target={100} suffix="%" />

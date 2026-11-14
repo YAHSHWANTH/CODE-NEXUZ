@@ -120,7 +120,7 @@ const App = () => {
           }
         });
       },
-      { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
+      { threshold: 0.02, rootMargin: "0px 0px -10px 0px" }
     );
 
     const observeAll = () => {
@@ -129,7 +129,7 @@ const App = () => {
     };
 
     const frameId = requestAnimationFrame(observeAll);
-    const interval = setInterval(observeAll, 600);
+    const interval = setInterval(observeAll, 300);
 
     return () => {
       cancelAnimationFrame(frameId);

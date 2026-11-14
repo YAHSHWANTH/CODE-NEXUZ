@@ -45,18 +45,23 @@ const Home = ({ animateKey }) => {
         {/* Left Side - Responsive Text in original position */}
         <div className="space-y-6 text-center md:text-left animate-fade-in-left max-w-2xl mx-auto md:mx-0">
           {/* WELCOME LINE */}
-          <div className="flex items-center justify-center md:justify-start gap-2">
-            <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping" />
-            <p className="uppercase tracking-widest text-xs sm:text-sm font-semibold text-purple-300">
-              Welcome to KodNexuz
-            </p>
+          <div className="flex items-center justify-center md:justify-start">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+              </span>
+              <p className="uppercase tracking-widest text-xs font-semibold text-purple-200">
+                Welcome to KodNexuz
+              </p>
+            </div>
           </div>
 
           {/* MAIN QUOTE */}
           <div className="text-[22px] min-[380px]:text-[26px] sm:text-[34px] md:text-[38px] lg:text-[42px] xl:text-[48px] font-extrabold leading-tight text-white drop-shadow-md">
             <BlurText
               text="Learn. Grow. Get Certified"
-              delay={150}
+              delay={100}
               animateBy="words"
               direction="top"
               highlightStartIndex={2}
@@ -66,17 +71,17 @@ const Home = ({ animateKey }) => {
           </div>
 
           {/* FEATURE TAGS */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-2.5 sm:gap-4 mt-6">
-            <span className="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow transition-all duration-300 hover:scale-105 cursor-default">
-              <FaBook className="text-pink-400 text-sm animate-pulse" />
+          <div className="flex flex-wrap justify-center md:justify-start gap-2.5 sm:gap-3.5 mt-6">
+            <span className="flex items-center gap-2 px-3.5 py-1.5 bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 cursor-default">
+              <FaBook className="text-pink-400 text-sm" />
               Free Courses
             </span>
-            <span className="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow transition-all duration-300 hover:scale-105 cursor-default">
-              <FaGraduationCap className="text-purple-400 text-sm animate-bounce" />
+            <span className="flex items-center gap-2 px-3.5 py-1.5 bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 cursor-default">
+              <FaGraduationCap className="text-purple-300 text-sm" />
               Quality Education
             </span>
-            <span className="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow transition-all duration-300 hover:scale-105 cursor-default">
-              <FaCertificate className="text-indigo-400 text-sm animate-spin" />
+            <span className="flex items-center gap-2 px-3.5 py-1.5 bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md rounded-full text-xs font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 cursor-default">
+              <FaCertificate className="text-indigo-300 text-sm" />
               Certificates & Badges
             </span>
           </div>
@@ -92,7 +97,7 @@ const Home = ({ animateKey }) => {
           {/* ACTION BUTTONS */}
           <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3.5 sm:gap-4 pt-2">
             <button
-              className="w-full sm:w-auto bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white font-bold px-7 py-3 sm:px-8 sm:py-3.5 rounded-xl shadow-lg hover:shadow-purple-500/40 hover:scale-105 transition-all duration-300 text-base sm:text-lg cursor-pointer"
+              className="w-full sm:w-auto bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white font-bold px-7 py-3 sm:px-8 sm:py-3.5 rounded-xl shadow-lg shadow-purple-600/25 hover:shadow-purple-600/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 text-base sm:text-lg cursor-pointer"
               onClick={() => {
                 const element = document.getElementById("courses") || document.getElementById("signup-form");
                 if (element) {
@@ -103,7 +108,7 @@ const Home = ({ animateKey }) => {
               Explore Courses
             </button>
             <button
-              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-semibold px-7 py-3 sm:px-8 sm:py-3.5 rounded-xl shadow-md hover:scale-105 transition-all duration-300 text-base sm:text-lg cursor-pointer"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 font-semibold px-7 py-3 sm:px-8 sm:py-3.5 rounded-xl shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 text-base sm:text-lg cursor-pointer"
               onClick={() => {
                 if (window.openAuthModal) {
                   window.openAuthModal("signup");

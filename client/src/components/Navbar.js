@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -6,6 +6,15 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleCareerClick = () => {
     if (window.openAuthModal) {
@@ -49,50 +58,63 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md fixed w-full top-0 z-50">
+    <nav
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100"
+          : "bg-white/90 backdrop-blur-sm border-b border-gray-100/50"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 flex justify-between h-16 items-center">
         {/* Logo */}
         <div 
-          className="flex items-center space-x-3 cursor-pointer"
+          className="flex items-center space-x-3 cursor-pointer group"
           onClick={handleLogoClick}
         >
-          <img src="/logoo.png" alt="KodNexuz Logo" width="160" height="56" fetchpriority="high" className="h-14 w-auto object-contain py-1" />
+          <img
+            src="/logoo.png"
+            alt="KodNexuz Logo"
+            width="160"
+            height="56"
+            fetchpriority="high"
+            className="h-14 w-auto object-contain py-1 group-hover:opacity-90 transition-opacity duration-200"
+          />
         </div>
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex space-x-8 items-center">
           <button
             onClick={() => handleNavClick("home")}
-            className="cursor-pointer font-bold text-gray-800 hover:text-indigo-600 transition"
+            className="cursor-pointer font-bold text-gray-700 hover:text-purple-600 transition-colors duration-200"
           >
             Home
           </button>
 
           <button
             onClick={() => handleNavClick("features")}
-            className="cursor-pointer font-bold text-gray-800 hover:text-indigo-600 transition"
+            className="cursor-pointer font-bold text-gray-700 hover:text-purple-600 transition-colors duration-200"
           >
             Features
           </button>
 
           <button
             onClick={() => handleNavClick("courses")}
-            className="cursor-pointer font-bold text-gray-800 hover:text-indigo-600 transition"
+            className="cursor-pointer font-bold text-gray-700 hover:text-purple-600 transition-colors duration-200"
           >
             Courses
           </button>
 
           <button
             onClick={() => handleNavClick("faq")}
-            className="cursor-pointer font-bold text-gray-800 hover:text-indigo-600 transition"
+            className="cursor-pointer font-bold text-gray-700 hover:text-purple-600 transition-colors duration-200"
           >
             FAQ
           </button>
 
-          {/* Shining Career Button */}
+          {/* Professional Career Button */}
           <button
             onClick={handleCareerClick}
-            className="cursor-pointer bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white px-5 py-2 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-bold animate-gradient-shift"
+            className="cursor-pointer bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white px-5 py-2 rounded-xl shadow-md hover:shadow-lg hover:shadow-purple-500/25 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 font-bold"
           >
             Career
           </button>
@@ -136,7 +158,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => { setIsOpen(false); handleCareerClick(); }}
-              className="cursor-pointer text-center font-bold text-white bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 px-4 py-2 rounded-xl transition duration-300 animate-gradient-shift"
+              className="cursor-pointer text-center font-bold text-white bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 px-4 py-2.5 rounded-xl shadow-md transition duration-200"
             >
               Career
             </button>

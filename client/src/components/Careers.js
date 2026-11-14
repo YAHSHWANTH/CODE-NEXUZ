@@ -25,7 +25,7 @@ const Careers = () => {
                     document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-lg shadow-md hover:opacity-90 transition text-base sm:text-lg cursor-pointer"
+                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3.5 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-200 text-base sm:text-lg cursor-pointer font-semibold"
               >
                 Start your journey
               </button>
@@ -68,13 +68,13 @@ const Careers = () => {
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <button
                     onClick={() => window.openAuthModal ? window.openAuthModal("signup") : null}
-                    className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition duration-300 shadow-md hover:shadow-lg"
+                    className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                   >
                     Register Now
                   </button>
                   <button
                     onClick={() => window.openAuthModal ? window.openAuthModal("login") : null}
-                    className="flex-1 py-3 border border-purple-600 hover:bg-purple-50 text-purple-600 font-bold rounded-xl transition duration-300"
+                    className="flex-1 py-3 border border-purple-600 hover:bg-purple-50 text-purple-600 font-bold rounded-xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                   >
                     Login to Account
                   </button>

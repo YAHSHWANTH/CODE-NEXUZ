@@ -13,7 +13,7 @@ const buildKeyframes = (from, steps) => {
 
 const BlurText = ({
   text = '',
-  delay = 200,
+  delay = 100,
   className = '',
   animateBy = 'words',
   direction = 'top',
@@ -23,7 +23,7 @@ const BlurText = ({
   animationTo,
   easing = t => t,
   onAnimationComplete,
-  stepDuration = 0.35,
+  stepDuration = 0.25,
   highlightStartIndex = -1,
   highlightClass = ''
 }) => {
@@ -48,20 +48,15 @@ const BlurText = ({
 
   const defaultFrom = useMemo(
     () =>
-      direction === 'top' ? { filter: 'blur(10px)', opacity: 0, y: -50 } : { filter: 'blur(10px)', opacity: 0, y: 50 },
+      direction === 'top' ? { filter: 'blur(4px)', opacity: 0, y: -16 } : { filter: 'blur(4px)', opacity: 0, y: 16 },
     [direction]
   );
 
   const defaultTo = useMemo(
     () => [
-      {
-        filter: 'blur(5px)',
-        opacity: 0.5,
-        y: direction === 'top' ? 5 : -5
-      },
       { filter: 'blur(0px)', opacity: 1, y: 0 }
     ],
-    [direction]
+    []
   );
 
   const fromSnapshot = animationFrom ?? defaultFrom;

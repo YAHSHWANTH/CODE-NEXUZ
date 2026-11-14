@@ -34,7 +34,7 @@ const Touch = () => {
                 href="https://www.youtube.com/@CODENexus-032"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-red-600 hover:text-red-700 transition"
+                className="text-red-500 hover:text-red-400 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <FaYoutube />
               </a>
@@ -42,7 +42,7 @@ const Touch = () => {
                 href="https://www.linkedin.com/company/kodnexuz/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-500 transition"
+                className="text-blue-400 hover:text-blue-300 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <FaLinkedin />
               </a>
@@ -50,7 +50,7 @@ const Touch = () => {
                 href="https://x.com/CODENexus032"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition"
+                className="text-gray-300 hover:text-white hover:-translate-y-0.5 transition-all duration-200"
               >
                 <FaTwitter />
               </a>
@@ -58,7 +58,7 @@ const Touch = () => {
                 href="https://www.instagram.com/kodnexuz/?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-pink-400 hover:text-pink-500 transition"
+                className="text-pink-400 hover:text-pink-300 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <FaInstagram />
               </a>
